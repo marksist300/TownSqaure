@@ -38,6 +38,22 @@ const User = new Schema({
     type: Array,
     default: [],
   },
+  description: {
+    type: String,
+    max: 120,
+  },
+  location: {
+    type: String,
+    max: 50,
+  },
+  hometown: {
+    type: String,
+    max: 50,
+  },
+  relationship: {
+    type: Number,
+    enum: [1, 2, 3, 4],
+  },
 });
 
 module.exports = mongoose.model("User", User);

@@ -1,9 +1,7 @@
 const router = require("express").Router();
-const { updateUser, deleteUser } = require("../controllers/user");
+const { updateUser, deleteUser, getUser } = require("../controllers/user");
 //Get user
-router.get("/", (req, res) => {
-  res.send("<h1>User homepage</h1>");
-});
+router.get("/:id", getUser);
 
 //Delete user
 router.delete("/delete/:id", deleteUser);

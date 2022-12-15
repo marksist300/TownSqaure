@@ -12,18 +12,18 @@ const {
 router.post("/new", createPost);
 
 //Update posts
-router.put("/update", updatePost);
+router.put("/update/:id", updatePost);
 
 //Get all posts from followed users
-router.get("/fetchAll", fetchFollowedPosts);
+router.get("/fetchAll/", fetchFollowedPosts);
 
 //Get all user's posts
-router.get("/fetchUser", fetchUsersPosts);
+router.get("/fetchUser/:id", fetchUsersPosts);
 
 //Like a post
-router.put("/like", likePost);
+router.put("/like/:id", likePost);
 
 //Delete a post
-router.delete("/delete", deletePost);
+router.delete("/delete/:id", deletePost);
 
 module.exports = router;

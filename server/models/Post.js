@@ -12,7 +12,7 @@ const Post = new Schema({
     type: String,
     max: 500,
   },
-  like: {
+  likes: {
     type: Array,
   },
   date: {

@@ -19,6 +19,7 @@ app.use(morgan("common"));
 //Routes
 app.use("/users", require("./routes/users"));
 app.use("/auth", require("./routes/auth"));
+app.use("/post", require("./routes/posts"));
 
 app.get("/", (req, res) => {
   res.send("<h1>A page with nothing on it</h1>");

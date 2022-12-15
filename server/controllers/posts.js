@@ -1,3 +1,4 @@
+const { ConnectionStates } = require("mongoose");
 const Post = require("../models/Post");
 const User = require("../models/User");
 //Create posts
@@ -34,7 +35,7 @@ const fetchFollowedPosts = async (req, res) => {
     const friendsPosts = await Promise.all(
       requestingUser.following.map(friend => Post.find({ userId: friend }))
     );
-    res.status(200).json([...requestingUserPosts, ...friendsPosts]);
+    res.status(200).json(requestingUserPosts.concat(...friendsPosts));
   } catch (err) {
     res.status(500).json("Fetching posts unsuccessful", err.message);
   }

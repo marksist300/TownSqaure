@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Lobster+Two:wght@400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&display=swap");
 
 //Variables:
@@ -19,6 +18,11 @@ $title-font: "Lobster Two", cursive;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
 }
 
 h1 {

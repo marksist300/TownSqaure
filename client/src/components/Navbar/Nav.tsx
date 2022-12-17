@@ -7,32 +7,32 @@ const Nav = () => {
       <div className={style.navLeft}>
         <span className={style.logo}>TownSquare</span>
       </div>
-      <div className="nav-center">
+      <div className={style.navCenter}>
         <div className={style.searchBar}>
-          <Search className={style.glass} />
           <input
             placeholder="Search for friends, people, post... everything... here"
             type="text"
             className={style.searchInput}
           />
+          <Search className={style.glass} />
         </div>
       </div>
       <div className={style.navRight}>
-        <ul className="nav-links">
+        <ul className={style.navLinks}>
           <li className="nav-link">Homepage</li>
           <li className="nav-link">TimeLine</li>
         </ul>
-        <div className="nav-icon">
+        <div className={style.navIcons}>
           <Person />
-          <span className="nav-icon-badge">1</span>
+          <span className={style.navIconBadge}>1</span>
         </div>
-        <div className="nav-icon">
+        <div className={style.navIcons}>
           <Chat />
-          <span className="nav-icon-badge">2</span>
+          <span className={style.navIconBadge}>2</span>
         </div>
-        <div className="nav-icon">
+        <div className={style.navIcons}>
           <Notifications />
-          <span className="nav-icon-badge">3</span>
+          <span className={style.navIconBadge}>3</span>
         </div>
         <img src={user} alt="" className={style.userImg} />
       </div>

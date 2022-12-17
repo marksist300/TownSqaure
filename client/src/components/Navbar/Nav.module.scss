@@ -1,16 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Lobster+Two:wght@400;700&display=swap");
 nav {
   display: flex;
-  width: 100%;
+  position: sticky;
+  top: 0px;
   border-bottom: 1px solid #efefef;
   justify-content: space-between;
   align-items: center;
   padding: 0 0.5rem;
+  background-color: #242628;
 
   * {
     display: flex;
     align-items: center;
-    justify-content: center;
   }
 
   .logo {
@@ -56,9 +57,11 @@ nav {
     margin-left: auto;
     flex: 4;
     gap: 0.5rem;
+    padding-right: 0.5rem;
   }
 
   .navLinks {
+    margin-left: auto;
     gap: 0.4rem;
     cursor: pointer;
   }
@@ -73,6 +76,9 @@ nav {
   }
 
   .navIconBadge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: #ef3340;
     font-size: 0.7rem;
     border-radius: 50%;

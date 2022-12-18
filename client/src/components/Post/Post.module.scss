@@ -1,0 +1,84 @@
+.postSection {
+  margin: 2rem 0;
+  width: 100%;
+  background-color: #242628;
+  border-radius: 0.8rem;
+  box-shadow: 5px 3px 12px 3px rgba(255, 255, 255, 0.119);
+
+  .wrapper {
+    padding: 0.9rem;
+  }
+  .postTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .topLeft {
+    display: flex;
+    align-items: center;
+
+    .posterName {
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin: 0 0.7rem 0 0;
+      cursor: pointer;
+    }
+    .postDate {
+      font-size: 0.7rem;
+      position: relative;
+      top: 1px;
+    }
+  }
+  .posterProfileImg {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 0.8rem;
+    cursor: pointer;
+  }
+
+  .topRight {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .bottomLeft {
+      display: flex;
+      align-items: center;
+
+      .likeCons {
+        display: flex;
+        margin-right: 0.35rem;
+        cursor: pointer;
+      }
+
+      .likeCount {
+        font-size: 0.9rem;
+        cursor: pointer;
+      }
+    }
+
+    .commentSection {
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .commentSection:hover {
+      color: #fff;
+    }
+  }
+
+  .postImg {
+    margin: 1rem 0;
+    width: 100%;
+    max-height: 30rem;
+    object-fit: contain;
+  }
+}

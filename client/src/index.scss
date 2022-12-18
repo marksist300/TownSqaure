@@ -21,6 +21,9 @@ $blue: #2e86e0;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+* {
+  box-sizing: border-box;
+}
 html,
 body {
   margin: 0;

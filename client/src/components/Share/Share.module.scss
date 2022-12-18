@@ -1,0 +1,81 @@
+.shareSection {
+  width: 100%;
+  height: 10rem;
+  background-color: #242628;
+  border-radius: 0.8rem;
+  box-shadow: 5px 3px 12px 3px rgba(255, 255, 255, 0.119);
+}
+
+.wrapper {
+  padding: 0.9rem;
+
+  .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.8rem;
+
+    input {
+      border-radius: 0.5rem;
+      border: none;
+      border: 1px solid #8c8a8a4d;
+      padding: 0.3rem 0.7rem 0.3rem 0.5rem;
+      width: 90%;
+      position: relative;
+    }
+
+    input:focus {
+      outline: none;
+    }
+  }
+
+  .imgBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .profilePic {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+  }
+
+  hr {
+    margin: 1rem 0;
+  }
+
+  .bottom {
+    display: flex;
+    gap: 0.8rem;
+  }
+
+  .shareOptions {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    cursor: pointer;
+  }
+  .ShareOptionText {
+    font-size: 0.9rem;
+    line-height: 1.2rem;
+  }
+
+  .shareBtn {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    border-radius: 0.3rem;
+    background-color: #242628;
+    border: 1px solid #8c8a8a;
+    margin-left: auto;
+    cursor: pointer;
+    padding: 0.3rem 0.6rem;
+    align-self: center;
+    font-weight: 500;
+  }
+  .shareBtn:hover {
+    background-color: #3c3e41;
+  }
+}

@@ -13,7 +13,7 @@ import {
 } from "@mui/icons-material";
 const Sidebar = () => {
   return (
-    <article className={style.sidebarContainer}>
+    <section className={style.sidebarContainer}>
       <div className={style.wrapper}>
         <ul className={style.list}>
           <li className={style.listItem}>
@@ -107,7 +107,7 @@ const Sidebar = () => {
           </li>
         </ul>
       </div>
-    </article>
+    </section>
   );
 };
 

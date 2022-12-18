@@ -1,9 +1,11 @@
 import style from "./Feed.module.scss";
-
+import Share from "../Share/Share";
 const Feed = () => {
   return (
     <main className={style.feedContainer}>
-      <h1>Feed</h1>
+      <div className={style.wrapper}>
+        <Share />
+      </div>
     </main>
   );
 };

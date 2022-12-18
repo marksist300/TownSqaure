@@ -1,7 +1,7 @@
 import style from "./Contactsbar.module.scss";
 import { Cake } from "@mui/icons-material";
-import ad from "../../assets/ad/ad.png";
-import profilePic from "../../assets/profile/pic5.jpg";
+// import ad from "../../";
+// import profilePic from "../../assets/profile/pic5.jpg";
 const Contactsbar = () => {
   return (
     <section className={style.contactsContainer}>
@@ -19,14 +19,14 @@ const Contactsbar = () => {
             today
           </span>
         </div>
-        <img className={style.sponsorImg} src={ad} alt="" />
+        <img className={style.sponsorImg} src="assets/ad/ad.png" alt="" />
         <h4 className={style.title}>Friends Online</h4>
         <ul className={style.friendList}>
           <li className={style.friendLink}>
             <div className={style.friendProfileImgContainer}>
               <img
                 className={style.profilePic}
-                src={profilePic}
+                src="assets/profile/pic5.jpg"
                 alt="Friend's profile pic"
               />
               <span className={style.onlineStatus}></span>
@@ -37,7 +37,7 @@ const Contactsbar = () => {
             <div className={style.friendProfileImgContainer}>
               <img
                 className={style.profilePic}
-                src={profilePic}
+                src="assets/profile/pic5.jpg"
                 alt="Friend's profile pic"
               />
               <span className={style.onlineStatus}></span>
@@ -48,7 +48,7 @@ const Contactsbar = () => {
             <div className={style.friendProfileImgContainer}>
               <img
                 className={style.profilePic}
-                src={profilePic}
+                src="assets/profile/pic5.jpg"
                 alt="Friend's profile pic"
               />
               <span className={style.onlineStatus}></span>

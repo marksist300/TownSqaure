@@ -1,6 +1,6 @@
 import style from "./Nav.module.scss";
 import { Search, Person, Chat, Notifications } from "@mui/icons-material";
-import user from "../../assets/profile/pic8.jpg";
+// import user from "../../assets/profile/pic8.jpg";
 const Nav = () => {
   return (
     <nav className="nav-container">
@@ -34,7 +34,7 @@ const Nav = () => {
           <Notifications />
           <span className={style.navIconBadge}>3</span>
         </div>
-        <img src={user} alt="" className={style.userImg} />
+        <img src="assets/profile/pic8.jpg" alt="" className={style.userImg} />
       </div>
     </nav>
   );

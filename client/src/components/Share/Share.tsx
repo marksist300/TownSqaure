@@ -1,5 +1,5 @@
 import style from "./Share.module.scss";
-import profilePic from "../../assets/profile/pic8.jpg";
+// import profilePic from "../../assets/profile/pic8.jpg";
 import { PermMedia, EmojiEmotions, Label, Room } from "@mui/icons-material";
 const Share = () => {
   return (
@@ -7,7 +7,11 @@ const Share = () => {
       <div className={style.wrapper}>
         <div className={style.top}>
           <div className={style.imgBox}>
-            <img className={style.profilePic} src={profilePic} alt="" />
+            <img
+              className={style.profilePic}
+              src="/assets/profile/pic8.jpg"
+              alt=""
+            />
           </div>
           <input
             className={style.inputBox}

@@ -1,5 +1,5 @@
 import style from "./Sidebar.module.scss";
-import friendPic from "../../assets/profile/pic1.jpg";
+// import friendPic from "../../assets/profile/pic1.jpg";
 import {
   RssFeed,
   Chat,
@@ -60,7 +60,7 @@ const Sidebar = () => {
           <li className={style.friendLink}>
             <img
               className={style.friendLinkImg}
-              src={friendPic}
+              src="assets/profile/pic1.jpg"
               alt="Friend's profile photo"
             />
             <span className={style.friendLinkName}>Ann-Marie</span>
@@ -68,7 +68,7 @@ const Sidebar = () => {
           <li className={style.friendLink}>
             <img
               className={style.friendLinkImg}
-              src={friendPic}
+              src="assets/profile/pic1.jpg"
               alt="Friend's profile photo"
             />
             <span className={style.friendLinkName}>Ann-Marie</span>
@@ -76,7 +76,7 @@ const Sidebar = () => {
           <li className={style.friendLink}>
             <img
               className={style.friendLinkImg}
-              src={friendPic}
+              src="assets/profile/pic1.jpg"
               alt="Friend's profile photo"
             />
             <span className={style.friendLinkName}>Ann-Marie</span>
@@ -84,7 +84,7 @@ const Sidebar = () => {
           <li className={style.friendLink}>
             <img
               className={style.friendLinkImg}
-              src={friendPic}
+              src="assets/profile/pic1.jpg"
               alt="Friend's profile photo"
             />
             <span className={style.friendLinkName}>Ann-Marie</span>
@@ -92,7 +92,7 @@ const Sidebar = () => {
           <li className={style.friendLink}>
             <img
               className={style.friendLinkImg}
-              src={friendPic}
+              src="assets/profile/pic1.jpg"
               alt="Friend's profile photo"
             />
             <span className={style.friendLinkName}>Ann-Marie</span>
@@ -100,7 +100,7 @@ const Sidebar = () => {
           <li className={style.friendLink}>
             <img
               className={style.friendLinkImg}
-              src={friendPic}
+              src="assets/profile/pic1.jpg"
               alt="Friend's profile photo"
             />
             <span className={style.friendLinkName}>Ann-Marie</span>

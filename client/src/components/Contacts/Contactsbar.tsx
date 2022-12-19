@@ -1,8 +1,13 @@
 import style from "./Contactsbar.module.scss";
 import { Cake } from "@mui/icons-material";
-// import ad from "../../";
-// import profilePic from "../../assets/profile/pic5.jpg";
+import FriendsOnline from "../FriendsOnline/FriendsOnline";
+import { usersData as Users } from "../../dummyData";
+
 const Contactsbar = () => {
+  const users = Users.map(user => (
+    <FriendsOnline key={`Key${user.id}`} user={user} />
+  ));
+
   return (
     <section className={style.contactsContainer}>
       <div className={style.wrapper}>
@@ -21,41 +26,7 @@ const Contactsbar = () => {
         </div>
         <img className={style.sponsorImg} src="assets/ad/ad.png" alt="" />
         <h4 className={style.title}>Friends Online</h4>
-        <ul className={style.friendList}>
-          <li className={style.friendLink}>
-            <div className={style.friendProfileImgContainer}>
-              <img
-                className={style.profilePic}
-                src="assets/profile/pic5.jpg"
-                alt="Friend's profile pic"
-              />
-              <span className={style.onlineStatus}></span>
-            </div>
-            <span className={style.friendName}>Sarah Jones</span>
-          </li>
-          <li className={style.friendLink}>
-            <div className={style.friendProfileImgContainer}>
-              <img
-                className={style.profilePic}
-                src="assets/profile/pic5.jpg"
-                alt="Friend's profile pic"
-              />
-              <span className={style.onlineStatus}></span>
-            </div>
-            <span className={style.friendName}>Sarah Jones</span>
-          </li>
-          <li className={style.friendLink}>
-            <div className={style.friendProfileImgContainer}>
-              <img
-                className={style.profilePic}
-                src="assets/profile/pic5.jpg"
-                alt="Friend's profile pic"
-              />
-              <span className={style.onlineStatus}></span>
-            </div>
-            <span className={style.friendName}>Sarah Jones</span>
-          </li>
-        </ul>
+        {users}
       </div>
     </section>
   );

@@ -1,8 +1,9 @@
 .sidebarContainer {
   flex: 3;
-  height: 100vh;
+  height: calc(100vh - 5rem);
   overflow-y: scroll;
-
+  position: sticky;
+  top: 5rem;
   .wrapper {
     padding: 0.5rem;
   }
@@ -35,21 +36,6 @@
     color: #efefef;
     margin: 1.5rem 0;
     padding: 0;
-  }
-
-  .friendLink {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    cursor: pointer;
-    margin-bottom: 1rem;
-  }
-
-  .friendLinkImg {
-    height: 3rem;
-    width: 3rem;
-    border-radius: 50%;
-    object-fit: cover;
   }
 }
 

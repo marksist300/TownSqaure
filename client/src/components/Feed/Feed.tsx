@@ -8,6 +8,7 @@ const Feed = () => {
       key={item.id}
       likes={item.likes}
       img={item.img}
+      userId={item.userId}
       desc={item.description}
       comments={item.comments}
       date={item.date}

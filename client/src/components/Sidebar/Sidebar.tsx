@@ -1,5 +1,6 @@
 import style from "./Sidebar.module.scss";
-// import friendPic from "../../assets/profile/pic1.jpg";
+import { usersData as Users } from "../../dummyData";
+import FriendsSide from "../FriendsSide/FriendsSide";
 import {
   RssFeed,
   Chat,
@@ -12,6 +13,9 @@ import {
   Bookmark,
 } from "@mui/icons-material";
 const Sidebar = () => {
+  const users = Users.map(user => (
+    <FriendsSide key={`KeY1${user.id}`} user={user} />
+  ));
   return (
     <section className={style.sidebarContainer}>
       <div className={style.wrapper}>
@@ -56,56 +60,7 @@ const Sidebar = () => {
         <button className={style.showMoreBtn}>Show More</button>
         {/* break line for friend section */}
         <hr />
-        <ul className={style.friendList}>
-          <li className={style.friendLink}>
-            <img
-              className={style.friendLinkImg}
-              src="assets/profile/pic1.jpg"
-              alt="Friend's profile photo"
-            />
-            <span className={style.friendLinkName}>Ann-Marie</span>
-          </li>
-          <li className={style.friendLink}>
-            <img
-              className={style.friendLinkImg}
-              src="assets/profile/pic1.jpg"
-              alt="Friend's profile photo"
-            />
-            <span className={style.friendLinkName}>Ann-Marie</span>
-          </li>
-          <li className={style.friendLink}>
-            <img
-              className={style.friendLinkImg}
-              src="assets/profile/pic1.jpg"
-              alt="Friend's profile photo"
-            />
-            <span className={style.friendLinkName}>Ann-Marie</span>
-          </li>
-          <li className={style.friendLink}>
-            <img
-              className={style.friendLinkImg}
-              src="assets/profile/pic1.jpg"
-              alt="Friend's profile photo"
-            />
-            <span className={style.friendLinkName}>Ann-Marie</span>
-          </li>
-          <li className={style.friendLink}>
-            <img
-              className={style.friendLinkImg}
-              src="assets/profile/pic1.jpg"
-              alt="Friend's profile photo"
-            />
-            <span className={style.friendLinkName}>Ann-Marie</span>
-          </li>
-          <li className={style.friendLink}>
-            <img
-              className={style.friendLinkImg}
-              src="assets/profile/pic1.jpg"
-              alt="Friend's profile photo"
-            />
-            <span className={style.friendLinkName}>Ann-Marie</span>
-          </li>
-        </ul>
+        {users}
       </div>
     </section>
   );

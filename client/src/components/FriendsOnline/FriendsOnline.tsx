@@ -1,0 +1,27 @@
+import style from "./FriendsOnline.module.scss";
+type Props = {
+  user: {
+    profile: string;
+    name: string;
+    id: number;
+  };
+};
+const FriendsOnline = ({ user }: Props) => {
+  return (
+    <ul className={style.friendList}>
+      <li className={style.friendLink}>
+        <div className={style.friendProfileImgContainer}>
+          <img
+            className={style.profilePic}
+            src={user.profile}
+            alt="Friend's profile pic"
+          />
+          <span className={style.onlineStatus}></span>
+        </div>
+        <span className={style.friendName}>{user.name}</span>
+      </li>
+    </ul>
+  );
+};
+
+export default FriendsOnline;

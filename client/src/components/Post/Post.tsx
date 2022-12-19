@@ -1,18 +1,31 @@
+import { useState } from "react";
 import style from "./Post.module.scss";
 import { usersData as Users } from "../../dummyData";
 import { MoreVert, Favorite, ThumbUp } from "@mui/icons-material";
 
 type Props = {
-  likes: Number;
+  likes: number;
   img?: string;
   desc?: String;
   comments?: Number;
   date: String;
-  userId: Number;
+  userId: number;
 };
 const Post = ({ likes, img, desc, comments, date, userId }: Props) => {
+  const [like, setLike] = useState<React.SetStateAction<number>>(likes);
+  const [clickLike, setClickLike] =
+    useState<React.SetStateAction<Boolean>>(false);
   const userPic = Users.filter(item => item.id === userId);
-  console.log(userPic[0].name);
+
+  const likeClicker = () => {
+    if (clickLike === true) {
+      setLike((like: number) => (like -= 1));
+      setClickLike(false);
+    } else {
+      setLike((like: number) => (like += 1));
+      setClickLike(true);
+    }
+  };
   return (
     <article className={style.postSection}>
       <div className={style.wrapper}>
@@ -36,11 +49,19 @@ const Post = ({ likes, img, desc, comments, date, userId }: Props) => {
         </div>
         <div className={style.bottom}>
           <div className={style.bottomLeft}>
-            <Favorite htmlColor="#ef3340" className={style.likeCons} />
-            <ThumbUp htmlColor="#2e86e0" className={style.likeCons} />
+            <Favorite
+              htmlColor="#ef3340"
+              className={style.likeCons}
+              onClick={likeClicker}
+            />
+            <ThumbUp
+              htmlColor="#2e86e0"
+              className={style.likeCons}
+              onClick={likeClicker}
+            />
             <span
               className={style.likeCount}
-            >{`${likes} people like this`}</span>
+            >{`${like} people like this`}</span>
           </div>
           <div className={style.bottomRight}>
             <span

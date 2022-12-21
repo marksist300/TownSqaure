@@ -1,4 +1,5 @@
 import style from "./Profile.module.scss";
+import { Cake } from "@mui/icons-material";
 import Nav from "../../components/Navbar/Nav";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Feed from "../../components/Feed/Feed";
@@ -30,7 +31,7 @@ const Profile = () => {
           </div>
           <div className={style.profileBottom}>
             <Feed />
-            <Contactsbar />
+            <Contactsbar profile />
           </div>
         </div>
       </div>

@@ -1,0 +1,37 @@
+.infoTitle {
+  font-weight: 700;
+  font-size: 1.4rem;
+  margin: 0.3rem 0;
+}
+.infoBarContainer {
+  margin-bottom: 1.8rem;
+}
+.infoItem {
+  margin-bottom: 0.3rem;
+}
+
+.userInfoKey {
+  font-weight: 700;
+}
+
+.friendSection {
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.followingSection {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.userFollowing {
+  display: flex;
+  flex-direction: column;
+  margin: 2px;
+}
+.userFollowImg {
+  width: 6rem;
+  height: 6rem;
+  object-fit: cover;
+  cursor: pointer;
+}

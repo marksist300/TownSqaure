@@ -6,6 +6,7 @@ const HomepageContactsBar = () => {
   const users = Users.map(user => (
     <FriendsOnline key={`Key${user.id}`} user={user} />
   ));
+  const assetsPath = import.meta.env.VITE_PUBLIC_FOLDER;
 
   return (
     <>
@@ -22,7 +23,11 @@ const HomepageContactsBar = () => {
           today
         </span>
       </div>
-      <img className={style.sponsorImg} src="assets/ad/ad.png" alt="Advert" />
+      <img
+        className={style.sponsorImg}
+        src={assetsPath + "/ad/ad.png"}
+        alt="Advert"
+      />
       <h4 className={style.title}>Friends Online</h4>
       {users}
     </>

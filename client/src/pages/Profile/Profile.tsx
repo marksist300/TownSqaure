@@ -5,6 +5,8 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import Feed from "../../components/Feed/Feed";
 import Contactsbar from "../../components/Contacts/Contactsbar";
 const Profile = () => {
+  const assetsPath = import.meta.env.VITE_PUBLIC_FOLDER;
+
   return (
     <>
       <Nav />
@@ -15,12 +17,12 @@ const Profile = () => {
             <div className={style.profileCover}>
               <img
                 className={style.coverImg}
-                src="assets/posts/winter.png"
+                src={assetsPath + "posts/winter.png"}
                 alt="Profile cover photo"
               />
               <img
                 className={style.userImg}
-                src="assets/profile/pic8.jpg"
+                src={assetsPath + "/profile/pic8.jpg"}
                 alt="profile picture"
               />
             </div>
@@ -31,7 +33,7 @@ const Profile = () => {
           </div>
           <div className={style.profileBottom}>
             <Feed />
-            <Contactsbar profile />
+            <Contactsbar />
           </div>
         </div>
       </div>

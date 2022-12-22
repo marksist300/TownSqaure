@@ -16,6 +16,7 @@ const Post = ({ likes, img, desc, comments, date, userId }: Props) => {
   const [clickLike, setClickLike] =
     useState<React.SetStateAction<Boolean>>(false);
   const userPic = Users.filter(item => item.id === userId);
+  const assetsPath = import.meta.env.VITE_PUBLIC_FOLDER;
 
   const likeClicker = () => {
     if (clickLike === true) {
@@ -33,10 +34,10 @@ const Post = ({ likes, img, desc, comments, date, userId }: Props) => {
           <div className={style.topLeft}>
             <img
               className={style.posterProfileImg}
-              src={userPic[0].profile}
+              src={assetsPath + userPic[0].profile}
               alt="porifle pic of user"
             />
-            <span className={style.posterName}>{userPic[0].name}</span>
+            <span className={style.posterName}>Name</span>
             <span className={style.postDate}>{date}</span>
           </div>
           <div className={style.topRight}>
@@ -45,7 +46,11 @@ const Post = ({ likes, img, desc, comments, date, userId }: Props) => {
         </div>
         <div className={style.center}>
           <p className={style.postText}>{desc}</p>
-          <img src={img} alt="User post" className={style.postImg} />
+          <img
+            src={assetsPath + img}
+            alt="User post"
+            className={style.postImg}
+          />
         </div>
         <div className={style.bottom}>
           <div className={style.bottomLeft}>

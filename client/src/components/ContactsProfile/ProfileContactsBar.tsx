@@ -1,5 +1,7 @@
 import style from "./ProfileContactsBar.module.scss";
 const ProfileContactsBar = () => {
+  const assetsPath = import.meta.env.VITE_PUBLIC_FOLDER;
+
   return (
     <section className={style.sideBarSection}>
       <h4 className={style.infoTitle}>Name Information</h4>
@@ -21,7 +23,7 @@ const ProfileContactsBar = () => {
           <div className={style.userFollowing}>
             <img
               className={style.userFollowImg}
-              src="assets/profile/pic1.jpg"
+              src={assetsPath + "/profile/pic1.jpg"}
               alt=""
             />
             <span className={style.userFollowingName}>Jane Doe</span>
@@ -29,7 +31,7 @@ const ProfileContactsBar = () => {
           <div className={style.userFollowing}>
             <img
               className={style.userFollowImg}
-              src="assets/profile/pic2.jpg"
+              src={assetsPath + "/profile/pic2.jpg"}
               alt=""
             />
             <span className={style.userFollowingName}>Anna-Maria</span>
@@ -37,7 +39,7 @@ const ProfileContactsBar = () => {
           <div className={style.userFollowing}>
             <img
               className={style.userFollowImg}
-              src="assets/profile/pic3.jpg"
+              src={assetsPath + "/profile/pic3.jpg"}
               alt=""
             />
             <span className={style.userFollowingName}>Stan Jobs</span>

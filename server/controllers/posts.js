@@ -30,7 +30,7 @@ const updatePost = async (req, res) => {
 //Get all posts from followed users
 const fetchFollowedPosts = async (req, res) => {
   try {
-    const requestingUser = await User.findById(req.body.userId);
+    const requestingUser = await User.findById(req.params.userId);
     const requestingUserPosts = await Post.find({ userId: requestingUser._id });
     const friendsPosts = await Promise.all(
       requestingUser.following.map(friend => Post.find({ userId: friend }))

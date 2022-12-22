@@ -6,6 +6,7 @@ type Props = {
     id: number;
   };
 };
+const assetsPath = import.meta.env.VITE_PUBLIC_FOLDER;
 const FriendsOnline = ({ user }: Props) => {
   return (
     <ul className={style.friendList}>
@@ -13,7 +14,7 @@ const FriendsOnline = ({ user }: Props) => {
         <div className={style.friendProfileImgContainer}>
           <img
             className={style.profilePic}
-            src={user.profile}
+            src={assetsPath + user.profile}
             alt="Friend's profile pic"
           />
           <span className={style.onlineStatus}></span>

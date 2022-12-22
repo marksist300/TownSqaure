@@ -1,11 +1,14 @@
 import style from "./Nav.module.scss";
 import { Search, Person, Chat, Notifications } from "@mui/icons-material";
-// import user from "../../assets/profile/pic8.jpg";
+import { Link } from "react-router-dom";
+
 const Nav = () => {
   return (
     <nav className="nav-container">
       <div className={style.navLeft}>
-        <h2 className={style.logo}>TownSquare</h2>
+        <Link to="/" className={style.linkElement}>
+          <h2 className={style.logo}>TownSquare</h2>
+        </Link>
       </div>
       <div className={style.navCenter}>
         <div className={style.searchBar}>

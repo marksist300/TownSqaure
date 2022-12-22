@@ -1,0 +1,121 @@
+.loginPage {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wrapper {
+  width: 80%;
+  height: 80%;
+  max-width: 700px;
+  border: 2px solid rgba(255, 255, 255, 0.87);
+  display: flex;
+  flex-direction: column;
+  border-radius: 1rem;
+
+  .loginLeft,
+  .loginRight {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .logo {
+    font-size: 2rem;
+    padding-bottom: 0;
+    margin-bottom: 1rem;
+  }
+  .loginText {
+    font-size: 1.1rem;
+    padding-top: 0;
+    margin-top: 0;
+  }
+
+  .loginForm {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.8rem;
+    background-color: #2a2c2e;
+    border-radius: 1rem;
+    padding: 1rem;
+    .loginInput {
+      border-radius: 0.5rem;
+      border: 1px solid #8c8a8a4d;
+      padding: 0.3rem 0.7rem 0.3rem 0.5rem;
+      font-size: 1rem;
+      width: 100%;
+    }
+    .loginInput:focus {
+      outline: none;
+      border: 1px solid #8c8a8ac7;
+    }
+    .loginInput::placeholder {
+      color: rgba(255, 255, 255, 0.625);
+    }
+
+    .submitBtn {
+      display: flex;
+      align-content: center;
+      justify-content: center;
+      border-radius: 0.3rem;
+      width: 100%;
+      background-color: #242628;
+      border: 1px solid #8c8a8a;
+      cursor: pointer;
+      padding: 0.3rem 0.6rem;
+      align-self: center;
+      font-weight: 500;
+      font-size: 1rem;
+    }
+    .submitBtn:focus {
+      outline: none;
+      border: 1px solid #8c8a8ac7;
+      background-color: #3c3e41;
+    }
+    .submitBtn:hover {
+      background-color: #3c3e41;
+    }
+
+    .forgottenPassword {
+      cursor: pointer;
+      font-size: 0.9rem;
+      color: #ffbc20;
+    }
+
+    .registerBtn {
+      display: flex;
+      align-content: center;
+      justify-content: center;
+      border-radius: 0.3rem;
+      width: 80%;
+      background-color: #242628;
+      border: 1px solid #8c8a8a;
+      cursor: pointer;
+      padding: 0.3rem 0.6rem;
+      align-self: center;
+      font-weight: 500;
+      font-size: 1rem;
+    }
+    .registerBtn:hover {
+      background-color: #3c3e41;
+    }
+  }
+}
+
+@media screen and (min-width: 670px) {
+  .wrapper {
+    display: flex;
+    flex-direction: row;
+
+    .loginForm {
+      height: 80%;
+    }
+  }
+}

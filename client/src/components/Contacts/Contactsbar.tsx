@@ -5,7 +5,7 @@ import { usersData as Users } from "../../dummyData";
 import ProfileContactsBar from "../ContactsProfile/ProfileContactsBar";
 import HomepageContactsBar from "./HomepageContactsBar";
 
-const Contactsbar = ({ profile }) => {
+const Contactsbar = () => {
   return (
     <section className={style.contactsContainer}>
       <div className={style.wrapper}>

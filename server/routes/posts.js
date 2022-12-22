@@ -15,7 +15,7 @@ router.post("/new", createPost);
 router.put("/update/:id", updatePost);
 
 //Get all posts from followed users
-router.get("/fetchAll/", fetchFollowedPosts);
+router.get("/fetchAll/:id", fetchFollowedPosts);
 
 //Get all user's posts
 router.get("/fetchUser/:id", fetchUsersPosts);

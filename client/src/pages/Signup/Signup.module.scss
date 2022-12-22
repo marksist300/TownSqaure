@@ -1,4 +1,4 @@
-.loginPage {
+.signupPage {
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -15,8 +15,8 @@
   flex-direction: column;
   border-radius: 1rem;
 
-  .loginLeft,
-  .loginRight {
+  .signupLeft,
+  .signupRight {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -35,7 +35,7 @@
     margin-top: 0;
   }
 
-  .loginForm {
+  .signupForm {
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -45,18 +45,32 @@
     background-color: #2a2c2e;
     border-radius: 1rem;
     padding: 1rem;
-    .loginInput {
+
+    .namesSection {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      width: 100%;
+    }
+    @media screen and (min-width: 350px) {
+      .namesSection {
+        display: flex;
+        flex-direction: row;
+        gap: 0.2rem;
+      }
+    }
+    .signupInput {
       border-radius: 0.5rem;
       border: 1px solid #8c8a8a4d;
       padding: 0.3rem 0.7rem 0.3rem 0.5rem;
       font-size: 1rem;
       width: 100%;
     }
-    .loginInput:focus {
+    .signupInput:focus {
       outline: none;
       border: 1px solid #8c8a8ac7;
     }
-    .loginInput::placeholder {
+    .signupInput::placeholder {
       color: rgba(255, 255, 255, 0.625);
     }
 
@@ -66,7 +80,6 @@
       justify-content: center;
       border-radius: 0.3rem;
       width: 100%;
-      max-width: 300px;
       background-color: #242628;
       border: 1px solid #8c8a8a;
       cursor: pointer;
@@ -74,6 +87,7 @@
       align-self: center;
       font-weight: 500;
       font-size: 1rem;
+      max-width: 300px;
     }
     .submitBtn:focus {
       outline: none;
@@ -84,29 +98,10 @@
       background-color: #3c3e41;
     }
 
-    .forgottenPassword {
+    .goToAccount {
       cursor: pointer;
       font-size: 0.9rem;
       color: #ffbc20;
-    }
-
-    .registerBtn {
-      display: flex;
-      align-content: center;
-      justify-content: center;
-      border-radius: 0.3rem;
-      width: 80%;
-      max-width: 200px;
-      background-color: #242628;
-      border: 1px solid #8c8a8a;
-      cursor: pointer;
-      padding: 0.3rem 0.6rem;
-      align-self: center;
-      font-weight: 500;
-      font-size: 1rem;
-    }
-    .registerBtn:hover {
-      background-color: #3c3e41;
     }
   }
 }
@@ -116,7 +111,7 @@
     display: flex;
     flex-direction: row;
 
-    .loginForm {
+    .signupForm {
       height: 80%;
     }
   }

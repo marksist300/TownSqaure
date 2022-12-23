@@ -1,7 +1,9 @@
 const User = require("../models/User");
 const crypto = require("bcrypt");
+const cloudinary = require("../config/cloudinaryConfig");
 
 const updateUser = async (req, res) => {
+  //TODO: add cloudinary
   if (req.body.userId === req.params.id || req.user.isAdmin) {
     if (req.body.password) {
       try {
@@ -25,6 +27,7 @@ const updateUser = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
+  //TODO: add cloudinary
   if (req.body.userId === req.params.id || req.user.isAdmin) {
     try {
       const user = await User.findOneAndDelete(req.params.id);

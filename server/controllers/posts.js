@@ -1,8 +1,11 @@
-const { ConnectionStates } = require("mongoose");
 const Post = require("../models/Post");
 const User = require("../models/User");
+const cloudinary = require("../config/cloudinaryConfig");
+
 //Create posts
 const createPost = async (req, res) => {
+  //TODO: add cloudinary
+
   try {
     const post = new Post(req.body);
     const postCreated = await post.save();
@@ -14,6 +17,8 @@ const createPost = async (req, res) => {
 
 //Update posts
 const updatePost = async (req, res) => {
+  //TODO: add cloudinary
+
   try {
     const post = await Post.findById(req.params.id);
     if (post.userId === req.body.userId) {
@@ -35,7 +40,11 @@ const fetchFollowedPosts = async (req, res) => {
     const friendsPosts = await Promise.all(
       requestingUser.following.map(friend => Post.find({ userId: friend }))
     );
-    res.status(200).json(requestingUserPosts.concat(...friendsPosts));
+    if (friendsPosts) {
+      res.status(200).json(requestingUserPosts.concat(...friendsPosts));
+    } else {
+      res.status(200).json(requestingUserPosts);
+    }
   } catch (err) {
     res.status(500).json("Fetching posts unsuccessful", err.message);
   }

@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import style from "./Post.module.scss";
 import { MoreVert, Favorite, ThumbUp } from "@mui/icons-material";
+import { format } from "timeago.js";
 const server = import.meta.env.VITE_SERVER_DOMAIN;
 
 type Props = {
-  likes: number;
+  likes: string[];
   img: string;
   desc: string;
   comments?: number;
@@ -24,7 +25,8 @@ type User = {
 };
 
 const Post = ({ likes, img, desc, comments, date, userId }: Props) => {
-  const [like, setLike] = useState<React.SetStateAction<number>>(likes);
+  const [like, setLike] = useState<number>(likes.length);
+  console.log("likes: ", likes);
   const [user, setUser] = useState<User | null>(null);
   const [clickLike, setClickLike] =
     useState<React.SetStateAction<Boolean>>(false);
@@ -55,6 +57,12 @@ const Post = ({ likes, img, desc, comments, date, userId }: Props) => {
       setClickLike(true);
     }
   };
+
+  const likeCountText = (count: number) => {
+    if (count === 0) return "";
+    else if (count === 1) return `${count} person likes this`;
+    else return `${count} people like this`;
+  };
   return (
     <article className={style.postSection}>
       <div className={style.wrapper}>
@@ -62,11 +70,11 @@ const Post = ({ likes, img, desc, comments, date, userId }: Props) => {
           <div className={style.topLeft}>
             <img
               className={style.posterProfileImg}
-              src={user?.profilePic}
+              src={user?.profilePic || "assets/profile/default.png"}
               alt="profile pic of user"
             />
             <span className={style.posterName}>{user?.username}</span>
-            <span className={style.postDate}>{date}</span>
+            <span className={style.postDate}>{format(date)}</span>
           </div>
           <div className={style.topRight}>
             <MoreVert />
@@ -88,9 +96,7 @@ const Post = ({ likes, img, desc, comments, date, userId }: Props) => {
               className={style.likeCons}
               onClick={likeClicker}
             />
-            <span
-              className={style.likeCount}
-            >{`${like} people like this`}</span>
+            <span className={style.likeCount}>{likeCountText(like)}</span>
           </div>
           <div className={style.bottomRight}>
             <span

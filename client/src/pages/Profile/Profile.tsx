@@ -17,7 +17,7 @@ const Profile = () => {
             <div className={style.profileCover}>
               <img
                 className={style.coverImg}
-                src={assetsPath + "posts/winter.png"}
+                src={assetsPath + "/profile/coverDefault.jpg"}
                 alt="Profile cover photo"
               />
               <img
@@ -33,7 +33,7 @@ const Profile = () => {
           </div>
           <div className={style.profileBottom}>
             <Feed />
-            <Contactsbar />
+            <Contactsbar profile />
           </div>
         </div>
       </div>

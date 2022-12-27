@@ -6,7 +6,6 @@ import ProfileContactsBar from "../ContactsProfile/ProfileContactsBar";
 import HomepageContactsBar from "./HomepageContactsBar";
 
 const Contactsbar = ({ profile }) => {
-  console.log(profile);
   return (
     <section className={style.contactsContainer}>
       <div className={style.wrapper}>

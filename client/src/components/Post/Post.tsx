@@ -26,7 +26,6 @@ type User = {
 
 const Post = ({ likes, img, desc, comments, date, userId }: Props) => {
   const [like, setLike] = useState<number>(likes.length);
-  console.log("likes: ", likes);
   const [user, setUser] = useState<User | null>(null);
   const [clickLike, setClickLike] =
     useState<React.SetStateAction<Boolean>>(false);
@@ -41,7 +40,6 @@ const Post = ({ likes, img, desc, comments, date, userId }: Props) => {
         mode: "cors",
       });
       const data = await response.json();
-      console.log(Object.keys(data));
       setUser(data);
     };
     fetchUser();

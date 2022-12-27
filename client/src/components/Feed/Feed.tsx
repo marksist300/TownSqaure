@@ -24,7 +24,7 @@ const Feed = () => {
 
   const posts = postsData.map(item => (
     <Post
-      key={item.id}
+      key={item._id}
       likes={item.likes}
       img={item.img}
       userId={item.userId}

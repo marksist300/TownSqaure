@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import style from "./Post.module.scss";
 import { MoreVert, Favorite, ThumbUp } from "@mui/icons-material";
 import { format } from "timeago.js";
+import { Link } from "react-router-dom";
 const server = import.meta.env.VITE_SERVER_DOMAIN;
 
 type Props = {
@@ -66,11 +67,13 @@ const Post = ({ likes, img, desc, comments, date, userId }: Props) => {
       <div className={style.wrapper}>
         <div className={style.postTop}>
           <div className={style.topLeft}>
-            <img
-              className={style.posterProfileImg}
-              src={user?.profilePic || "assets/profile/default.png"}
-              alt="profile pic of user"
-            />
+            <Link to={`profile/${user?.username}`}>
+              <img
+                className={style.posterProfileImg}
+                src={user?.profilePic || "assets/profile/default.png"}
+                alt="profile pic of user"
+              />
+            </Link>
             <span className={style.posterName}>{user?.username}</span>
             <span className={style.postDate}>{format(date)}</span>
           </div>

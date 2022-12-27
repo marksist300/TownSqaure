@@ -3,7 +3,8 @@ const {
   createPost,
   updatePost,
   fetchFollowedPosts,
-  fetchUsersPosts,
+  fetchAllUsersPosts,
+  fetchUserPost,
   likePost,
   deletePost,
 } = require("../controllers/posts");
@@ -18,7 +19,10 @@ router.put("/update/:id", updatePost);
 router.get("/fetchAll/:id", fetchFollowedPosts);
 
 //Get all user's posts
-router.get("/fetchUser/:id", fetchUsersPosts);
+router.get("/fetchUserPosts/:username", fetchAllUsersPosts);
+
+//Get singular post from user
+router.get("/fetchOnePost/:id");
 
 //Like a post
 router.put("/like/:id", likePost);

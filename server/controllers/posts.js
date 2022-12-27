@@ -32,7 +32,7 @@ const updatePost = async (req, res) => {
   }
 };
 
-//Get all posts from followed users
+//Get all posts from followed users (both following and followed users)
 const fetchFollowedPosts = async (req, res) => {
   try {
     const requestingUser = await User.findById(req.params.id);
@@ -50,13 +50,24 @@ const fetchFollowedPosts = async (req, res) => {
   }
 };
 
-//Get all user's posts
-const fetchUsersPosts = async (req, res) => {
+//Get a specific post from a user (singular)
+const fetchUserPost = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
     res.status(200).json(post);
   } catch (err) {
     res.status(500).json("Fetching post unsuccessful", err.message);
+  }
+};
+
+//Get all posts from a specific user (multiple posts, one user)
+const fetchAllUsersPosts = async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.params.username });
+    const posts = await Post.find({ userId: user._id });
+    res.status(200).json(posts);
+  } catch (err) {
+    res.status(500).json("Fetching posts unsuccessful", err.message);
   }
 };
 
@@ -95,7 +106,8 @@ module.exports = {
   createPost,
   updatePost,
   fetchFollowedPosts,
-  fetchUsersPosts,
+  fetchAllUsersPosts,
+  fetchUserPost,
   likePost,
   deletePost,
 };

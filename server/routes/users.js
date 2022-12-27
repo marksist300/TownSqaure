@@ -7,7 +7,7 @@ const {
   unfollowUser,
 } = require("../controllers/user");
 //Get user
-router.get("/:id", getUser);
+router.get("/", getUser);
 
 //Delete user
 router.delete("/delete/:id", deleteUser);

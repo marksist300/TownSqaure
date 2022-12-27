@@ -43,8 +43,12 @@ const deleteUser = async (req, res) => {
 };
 
 const getUser = async (req, res) => {
+  const username = req.query.username;
+  const userId = req.query.userId;
   try {
-    const user = await User.findById(req.params.id).lean();
+    const user = userId
+      ? await User.findById(userId).lean()
+      : await User.findOne({ username: username }).lean();
     const { password, ...rest } = user;
     res.status(200).json(rest);
   } catch (err) {

@@ -12,7 +12,12 @@ const PORT = process.env.PORT;
 connectionToMongoDB();
 
 //middleware to control CORS
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "PUT", "POST", "DELETE"],
+  })
+);
 //middleware to access body data
 app.use(express.json());
 app.use(helmet());

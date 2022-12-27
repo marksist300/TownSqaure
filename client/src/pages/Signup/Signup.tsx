@@ -34,12 +34,12 @@ const Signup = () => {
             />
             <input
               className={style.signupInput}
-              type="text"
+              type="password"
               placeholder="Enter password"
             />
             <input
               className={style.signupInput}
-              type="text"
+              type="password"
               placeholder="Re-enter password"
             />
             <button className={style.submitBtn}>Signup</button>

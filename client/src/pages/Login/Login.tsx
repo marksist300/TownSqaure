@@ -20,7 +20,7 @@ const Login = () => {
             />
             <input
               className={style.loginInput}
-              type="text"
+              type="password"
               placeholder="Enter password here..."
             />
             <button className={style.submitBtn}>Log in</button>

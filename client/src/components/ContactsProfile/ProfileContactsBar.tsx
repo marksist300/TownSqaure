@@ -29,6 +29,9 @@ const ProfileContactsBar = ({ user }: User) => {
       case 4:
         return "Other";
         break;
+      default:
+        return "Unknown";
+        break;
     }
   };
   return (

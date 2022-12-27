@@ -3,7 +3,7 @@ import style from "./Feed.module.scss";
 import Share from "../Share/Share";
 import Post from "../Post/Post";
 type username = {
-  username: string;
+  username: string | undefined;
 };
 const Feed = ({ username }: username) => {
   const server = import.meta.env.VITE_SERVER_DOMAIN;

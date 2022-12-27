@@ -33,7 +33,7 @@ const Post = ({ likes, img, desc, comments, date, userId }: Props) => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const response = await fetch(`${server}/users/${userId}`, {
+      const response = await fetch(`${server}/users?userId=${userId}`, {
         headers: {
           "Content-Type": "Application/json",
         },
@@ -45,8 +45,7 @@ const Post = ({ likes, img, desc, comments, date, userId }: Props) => {
     };
     fetchUser();
   }, []);
-  // const userPic = user.filter(item => item.id === userId);
-  // console.log(user.username);
+
   const likeClicker = () => {
     if (clickLike === true) {
       setLike((like: number) => (like -= 1));
@@ -67,10 +66,10 @@ const Post = ({ likes, img, desc, comments, date, userId }: Props) => {
       <div className={style.wrapper}>
         <div className={style.postTop}>
           <div className={style.topLeft}>
-            <Link to={`profile/${user?.username}`}>
+            <Link to={`/profile/${user?.username}`}>
               <img
                 className={style.posterProfileImg}
-                src={user?.profilePic || "assets/profile/default.png"}
+                src={user?.profilePic || "/assets/profile/default.png"}
                 alt="profile pic of user"
               />
             </Link>

@@ -1,6 +1,7 @@
 import style from "./Nav.module.scss";
 import { Search, Person, Chat, Notifications } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+const assets = import.meta.env.VITE_PUBLIC_FOLDER;
 
 const Nav = () => {
   return (
@@ -37,7 +38,11 @@ const Nav = () => {
           <Notifications />
           <span className={style.navIconBadge}>3</span>
         </div>
-        <img src="assets/profile/pic8.jpg" alt="" className={style.userImg} />
+        <img
+          src={`${assets}/profile/pic8.jpg`}
+          alt=""
+          className={style.userImg}
+        />
       </div>
     </nav>
   );

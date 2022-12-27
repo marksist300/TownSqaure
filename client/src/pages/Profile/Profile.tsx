@@ -4,6 +4,7 @@ import Nav from "../../components/Navbar/Nav";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Feed from "../../components/Feed/Feed";
 import Contactsbar from "../../components/Contacts/Contactsbar";
+import { useParams } from "react-router";
 
 const server = import.meta.env.VITE_SERVER_DOMAIN;
 interface User {
@@ -22,18 +23,21 @@ interface User {
 const Profile = () => {
   const defaultimgs = "/assets/profile/";
   const [user, setUser] = useState<User | null>(null);
+  const params = useParams();
 
   useEffect(() => {
     const fetcher = async () => {
-      const response = await fetch(`${server}/users?username=Aaron Delta`, {
-        headers: {
-          "Content-Type": "Application/json",
-        },
-        method: "GET",
-        mode: "cors",
-      });
+      const response = await fetch(
+        `${server}/users?username=${params.username}`,
+        {
+          headers: {
+            "Content-Type": "Application/json",
+          },
+          method: "GET",
+          mode: "cors",
+        }
+      );
       const data = await response.json();
-      console.log(data);
       setUser(data);
     };
     fetcher();
@@ -48,12 +52,12 @@ const Profile = () => {
             <div className={style.profileCover}>
               <img
                 className={style.coverImg}
-                src={user?.cover || `${defaultimgs}coverDefault.jpg`}
+                src={user?.cover || `/${defaultimgs}coverDefault.jpg`}
                 alt="Profile cover photo"
               />
               <img
                 className={style.userImg}
-                src={user?.profilePic || `${defaultimgs}default.png`}
+                src={user?.profilePic || `/${defaultimgs}default.png`}
                 alt="profile picture"
               />
             </div>
@@ -63,7 +67,7 @@ const Profile = () => {
             <p className={style.profileDescription}>{user?.description}</p>
           </div>
           <div className={style.profileBottom}>
-            <Feed username="Stan Jobs" />
+            <Feed username={params.username} />
             <Contactsbar user={user} />
           </div>
         </div>

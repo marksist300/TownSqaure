@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react";
+import { createContext, ReactChildren, ReactNode, useReducer } from "react";
 import AuthReducer from "./AuthReducer";
 
 const INITIAL_STATE = {
@@ -8,15 +8,19 @@ const INITIAL_STATE = {
 };
 
 type AuthState = {
-  user: string | null;
-  isFetching: boolean | undefined;
+  user: object | null;
+  isFetching: boolean;
   error: boolean;
-  dispatch?: React.Dispatch<any>;
+  dispatch?: React.Dispatch<object>;
 };
+
+interface ChildrenProps {
+  children: AuthState;
+}
 
 export const AuthContext = createContext<AuthState>(INITIAL_STATE);
 
-export const AuthContextProvider = ({ children }: any) => {
+export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE);
 
   return (

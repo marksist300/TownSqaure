@@ -1,4 +1,13 @@
-const AuthReducer = (state: any, action: any) => {
+import React, { RefObject } from "react";
+
+type AuthState = {
+  user: object | null;
+  isFetching: boolean;
+  error: boolean;
+  dispatch?: React.Dispatch<object>;
+};
+
+const AuthReducer = (state: AuthState, action: any) => {
   switch (action.type) {
     case "LOGIN_INIT":
       return {

@@ -1,5 +1,3 @@
-import React, { RefObject } from "react";
-
 type AuthState = {
   user: object | null;
   isFetching: boolean;
@@ -25,7 +23,7 @@ const AuthReducer = (state: AuthState, action: any) => {
       return {
         user: null,
         isFetching: false,
-        error: action.payload,
+        error: true,
       };
     default:
       return state;

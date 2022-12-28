@@ -1,5 +1,6 @@
 import style from "./Signup.module.scss";
-import { HTMLInputTypeAttribute, useRef } from "react";
+import { useRef } from "react";
+import { Link } from "react-router-dom";
 
 const Signup = () => {
   const firstName = useRef<HTMLInputElement>(null);
@@ -71,7 +72,11 @@ const Signup = () => {
               ref={passwordCheck}
             />
             <button className={style.submitBtn}>Signup</button>
-            <span className={style.goToAccount}>Already have an account?</span>
+            <Link to="/login">
+              <span className={style.goToAccount}>
+                Already have an account?
+              </span>
+            </Link>
           </form>
           {/*Output error message is passwords don't match*/}
         </div>

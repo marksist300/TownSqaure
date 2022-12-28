@@ -16,7 +16,6 @@ const Login = () => {
       dispatch
     );
   };
-  console.log(user, isFetching, error);
   return (
     <main className={style.loginPage}>
       <div className={style.wrapper}>

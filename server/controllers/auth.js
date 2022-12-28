@@ -16,9 +16,9 @@ const signup = async (req, res) => {
 
     // server's response to signup request
     const user = await createUser.save();
-    res.status(200).json(user);
+    return res.status(200).json(user);
   } catch (err) {
-    res.status(500).json(err.message);
+    return res.status(500).json(err.message);
   }
 };
 
@@ -26,15 +26,21 @@ const login = async (req, res) => {
   try {
     //find user based on email
     const user = await User.findOne({ email: req.body.email });
-    !user && res.status(404).json("User Not Found");
-
-    //check the password validity
-    const validateUserPW = await crypto.compare(
-      req.body.password,
-      user.password
-    );
-    !validateUserPW && res.status(400).json("Incorrect Password");
-    res.status(200).json(user);
+    if (!user) {
+      return res.status(404).json("User Not Found");
+    } else if (user) {
+      //check the password validity
+      const validateUserPW = await crypto.compare(
+        req.body.password,
+        user.password
+      );
+      if (!validateUserPW) {
+        return res.status(400).json("Incorrect Password");
+      } else if (validateUserPW) {
+        console.log("user found successfully: ", user);
+        return res.status(200).json(user);
+      }
+    }
   } catch (err) {
     res.status(500).json(err.message);
   }

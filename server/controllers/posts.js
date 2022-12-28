@@ -9,9 +9,9 @@ const createPost = async (req, res) => {
   try {
     const post = new Post(req.body);
     const postCreated = await post.save();
-    res.status(200).json(postCreated);
+    return res.status(200).json(postCreated);
   } catch (err) {
-    res.status(500).json("Post creation unsuccessful", err.message);
+    return res.status(500).json("Post creation unsuccessful", err.message);
   }
 };
 
@@ -23,12 +23,12 @@ const updatePost = async (req, res) => {
     const post = await Post.findById(req.params.id);
     if (post.userId === req.body.userId) {
       await post.updateOne({ $set: req.body });
-      res.status(200).json("Post updated");
+      return res.status(200).json("Post updated");
     } else {
-      res.status(400).json("Cannot edit another user's post");
+      return res.status(400).json("Cannot edit another user's post");
     }
   } catch (err) {
-    res.status(500).json("Post update unsuccessful", err.message);
+    return res.status(500).json("Post update unsuccessful", err.message);
   }
 };
 
@@ -41,12 +41,12 @@ const fetchFollowedPosts = async (req, res) => {
       requestingUser.following.map(friend => Post.find({ userId: friend }))
     );
     if (friendsPosts) {
-      res.status(200).json(requestingUserPosts.concat(...friendsPosts));
+      return res.status(200).json(requestingUserPosts.concat(...friendsPosts));
     } else {
-      res.status(200).json(requestingUserPosts);
+      return res.status(200).json(requestingUserPosts);
     }
   } catch (err) {
-    res.status(500).json("Fetching posts unsuccessful", err.message);
+    return res.status(500).json("Fetching posts unsuccessful", err.message);
   }
 };
 
@@ -54,9 +54,9 @@ const fetchFollowedPosts = async (req, res) => {
 const fetchUserPost = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
-    res.status(200).json(post);
+    return res.status(200).json(post);
   } catch (err) {
-    res.status(500).json("Fetching post unsuccessful", err.message);
+    return res.status(500).json("Fetching post unsuccessful", err.message);
   }
 };
 
@@ -65,9 +65,9 @@ const fetchAllUsersPosts = async (req, res) => {
   try {
     const user = await User.findOne({ username: req.params.username });
     const posts = await Post.find({ userId: user._id });
-    res.status(200).json(posts);
+    return res.status(200).json(posts);
   } catch (err) {
-    res.status(500).json("Fetching posts unsuccessful", err.message);
+    return res.status(500).json("Fetching posts unsuccessful", err.message);
   }
 };
 
@@ -75,15 +75,18 @@ const fetchAllUsersPosts = async (req, res) => {
 const likePost = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
+    if (!post) {
+      return res.status(400).json("Post not found in Database");
+    }
     if (!post.likes.includes(req.body.userId)) {
       await post.updateOne({ $push: { likes: req.body.userId } });
-      res.status(200).json("Post liked");
+      return res.status(200).json("Post liked");
     } else {
       await post.updateOne({ $pull: { likes: req.body.userId } });
-      res.status(200).json("Post unliked");
+      return res.status(200).json("Post unliked");
     }
   } catch (err) {
-    res.status(500).json("Post like unsuccessful", err.message);
+    return res.status(500).json("Post like unsuccessful", err.message);
   }
 };
 
@@ -91,6 +94,9 @@ const likePost = async (req, res) => {
 const deletePost = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
+    if (!post) {
+      return res.status(400).json("Post not found in Database");
+    }
     if (post.userId === req.body.userId) {
       await post.deleteOne();
       res.status(200).json("Post deleted");

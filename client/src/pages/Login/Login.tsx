@@ -1,14 +1,22 @@
 import style from "./Login.module.scss";
-import React, { useRef } from "react";
-
+import React, { useContext, useRef } from "react";
+import { loginAPICall } from "../../components/apiCalls";
+import { AuthContext } from "../../context/AuthContext";
 const Login = () => {
   const email = useRef<HTMLInputElement>(null);
   const password = useRef<HTMLInputElement>(null);
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(email.current?.value, password.current?.value);
-  };
+  const { user, isFetching, error, dispatch } = useContext(AuthContext);
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const emailVal = email.current?.value;
+    const passwordVal = password.current?.value;
+    const data = await loginAPICall(
+      JSON.stringify({ email: emailVal, password: passwordVal }),
+      dispatch
+    );
+  };
+  console.log(user, isFetching, error);
   return (
     <main className={style.loginPage}>
       <div className={style.wrapper}>
@@ -36,11 +44,15 @@ const Login = () => {
               minLength={6}
               ref={password}
             />
-            <button className={style.submitBtn}>Log in</button>
+            <button className={style.submitBtn} disabled={isFetching}>
+              {isFetching ? "Logging in..." : "Log in"}
+            </button>
             <span className={style.forgottenPassword}>
               Forgotten Your Password?
             </span>
-            <button className={style.registerBtn}>Create an account</button>
+            <button className={style.registerBtn} disabled={isFetching}>
+              Create an account
+            </button>
           </form>
         </div>
       </div>

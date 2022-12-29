@@ -30,3 +30,21 @@ export const loginAPICall = async (userCredentials: any, dispatch: any) => {
     dispatch({ type: "LOGIN_FAIL", payload: error });
   }
 };
+
+export const signupAPICall = async (userCredentials: any, dispatch: any) => {
+  dispatch({ type: "SIGNUP_INIT" });
+  try {
+    const post = await fetch(`${server}/auth/signup`, {
+      headers: {
+        "Content-Type": "Application/json",
+      },
+      method: "POST",
+      mode: "cors",
+      body: userCredentials,
+    });
+    const data = await post.json();
+    dispatch({ type: "SIGNUP_SUCCEED", payload: data });
+  } catch (error) {
+    dispatch({ type: "SIGNUP_FAIL", payload: error });
+  }
+};

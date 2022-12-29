@@ -1,20 +1,32 @@
 import style from "./Signup.module.scss";
-import { useRef } from "react";
+import { useRef, useContext } from "react";
 import { Link } from "react-router-dom";
-
+import { signupAPICall } from "../../components/apiCalls";
+import { AuthContext } from "../../context/AuthContext";
 const Signup = () => {
+  const { user, isFetching, error, dispatch } = useContext(AuthContext);
+
   const firstName = useRef<HTMLInputElement>(null);
   const lastName = useRef<HTMLInputElement>(null);
   const email = useRef<HTMLInputElement>(null);
   const password = useRef<HTMLInputElement>(null);
   const passwordCheck = useRef<HTMLInputElement>(null);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (password.current?.value !== passwordCheck.current?.value) {
-      return "Error message";
+      return password.current?.setCustomValidity("Passwords don't match");
     } else {
-      const username = `${firstName.current?.value} ${lastName.current?.value}`;
+      const usernameVal = `${firstName.current?.value} ${lastName.current?.value}`;
+      const data = await signupAPICall(
+        JSON.stringify({
+          email: email.current?.value,
+          password: password.current?.value,
+          username: usernameVal,
+        }),
+        dispatch
+      );
+      console.log(data);
     }
   };
 

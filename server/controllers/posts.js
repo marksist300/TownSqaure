@@ -11,7 +11,7 @@ const createPost = async (req, res) => {
     const postCreated = await post.save();
     return res.status(200).json(postCreated);
   } catch (err) {
-    return res.status(500).json("Post creation unsuccessful", err.message);
+    return res.status(500).json({ "Post creation unsuccessful": err.message });
   }
 };
 
@@ -28,7 +28,7 @@ const updatePost = async (req, res) => {
       return res.status(400).json("Cannot edit another user's post");
     }
   } catch (err) {
-    return res.status(500).json("Post update unsuccessful", err.message);
+    return res.status(500).json({ "Post update unsuccessful": err.message });
   }
 };
 
@@ -36,17 +36,21 @@ const updatePost = async (req, res) => {
 const fetchFollowedPosts = async (req, res) => {
   try {
     const requestingUser = await User.findById(req.params.id);
+    console.log("user:::::>", requestingUser);
     const requestingUserPosts = await Post.find({ userId: requestingUser._id });
+    console.log("userPosts:::::>", requestingUser);
     const friendsPosts = await Promise.all(
       requestingUser.following.map(friend => Post.find({ userId: friend }))
     );
     if (friendsPosts) {
       return res.status(200).json(requestingUserPosts.concat(...friendsPosts));
-    } else {
+    } else if (!friendsPosts && requestingUserPosts) {
       return res.status(200).json(requestingUserPosts);
+    } else {
+      return res.status(404).json("No Posts found");
     }
   } catch (err) {
-    return res.status(500).json("Fetching posts unsuccessful", err.message);
+    return res.status(500).json({ "Fetching posts unsuccessful": err.message });
   }
 };
 
@@ -54,9 +58,13 @@ const fetchFollowedPosts = async (req, res) => {
 const fetchUserPost = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
-    return res.status(200).json(post);
+    if (post) {
+      return res.status(200).json(post);
+    } else {
+      return res.status(404).json("No posts found from user");
+    }
   } catch (err) {
-    return res.status(500).json("Fetching post unsuccessful", err.message);
+    return res.status(500).json({ "Fetching post unsuccessful": err.message });
   }
 };
 
@@ -65,9 +73,14 @@ const fetchAllUsersPosts = async (req, res) => {
   try {
     const user = await User.findOne({ username: req.params.username });
     const posts = await Post.find({ userId: user._id });
-    return res.status(200).json(posts);
+    if (user && posts) {
+      console.log("line 77", user, posts);
+      return res.status(200).json(posts);
+    } else {
+      return res.status(404).json("No posts found for that user");
+    }
   } catch (err) {
-    return res.status(500).json("Fetching posts unsuccessful", err.message);
+    return res.status(500).json({ "Fetching posts unsuccessful": err.message });
   }
 };
 
@@ -76,7 +89,7 @@ const likePost = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
     if (!post) {
-      return res.status(400).json("Post not found in Database");
+      return res.status(404).json("Post not found in Database");
     }
     if (!post.likes.includes(req.body.userId)) {
       await post.updateOne({ $push: { likes: req.body.userId } });
@@ -86,7 +99,7 @@ const likePost = async (req, res) => {
       return res.status(200).json("Post unliked");
     }
   } catch (err) {
-    return res.status(500).json("Post like unsuccessful", err.message);
+    return res.status(500).json({ "Post like unsuccessful": err.message });
   }
 };
 
@@ -95,7 +108,7 @@ const deletePost = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
     if (!post) {
-      return res.status(400).json("Post not found in Database");
+      return res.status(404).json("Post not found in Database");
     }
     if (post.userId === req.body.userId) {
       await post.deleteOne();
@@ -104,7 +117,7 @@ const deletePost = async (req, res) => {
       res.status(400).json("Cannot delete another user's post");
     }
   } catch (err) {
-    res.status(500).json("Post delete unsuccessful", err.message);
+    res.status(500).json({ "Post delete unsuccessful": err.message });
   }
 };
 

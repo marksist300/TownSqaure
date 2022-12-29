@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import style from "./Feed.module.scss";
 import Share from "../Share/Share";
 import Post from "../Post/Post";
+import { AuthContext } from "../../context/AuthContext";
 type username = {
   username: string | undefined;
 };

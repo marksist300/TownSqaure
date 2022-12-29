@@ -1,9 +1,14 @@
 import style from "./Nav.module.scss";
+import { useContext } from "react";
 import { Search, Person, Chat, Notifications } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
+
 const assets = import.meta.env.VITE_PUBLIC_FOLDER;
 
 const Nav = () => {
+  const { user } = useContext(AuthContext);
+  console.log(user);
   return (
     <nav className="nav-container">
       <div className={style.navLeft}>
@@ -38,11 +43,17 @@ const Nav = () => {
           <Notifications />
           <span className={style.navIconBadge}>3</span>
         </div>
-        <img
-          src={`${assets}/profile/pic8.jpg`}
-          alt=""
-          className={style.userImg}
-        />
+        <Link to={`/profile/${user?.username}`}>
+          <img
+            src={
+              user?.profilePic
+                ? user.profilePic
+                : `${assets}/profile/default.png`
+            }
+            alt=""
+            className={style.userImg}
+          />
+        </Link>
       </div>
     </nav>
   );

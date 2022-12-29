@@ -7,8 +7,20 @@ const INITIAL_STATE = {
   error: false,
 };
 
+interface User {
+  cover: string;
+  email: string;
+  followers: string[];
+  following: string[];
+  isAdmin: boolean;
+  password: string;
+  profilePic: string;
+  username: string;
+  _id: string;
+}
+
 type AuthState = {
-  user: object | null;
+  user: User | null;
   isFetching: boolean;
   error: boolean;
   dispatch?: React.Dispatch<object>;

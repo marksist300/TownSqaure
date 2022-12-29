@@ -5,7 +5,7 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import Feed from "../../components/Feed/Feed";
 import Contactsbar from "../../components/Contacts/Contactsbar";
 import { useParams } from "react-router";
-
+const assets = import.meta.env.VITE_PUBLIC_FOLDER;
 const server = import.meta.env.VITE_SERVER_DOMAIN;
 interface User {
   cover: string;
@@ -21,7 +21,6 @@ interface User {
 }
 
 const Profile = () => {
-  const defaultimgs = "/assets/profile/";
   const [user, setUser] = useState<User | null>(null);
   const params = useParams();
 
@@ -42,6 +41,7 @@ const Profile = () => {
     };
     fetcher();
   }, []);
+  console.log("from profile", user);
   return (
     <>
       <Nav />
@@ -52,12 +52,12 @@ const Profile = () => {
             <div className={style.profileCover}>
               <img
                 className={style.coverImg}
-                src={user?.cover || `/${defaultimgs}coverDefault.jpg`}
+                src={user?.cover || `${assets}/profile/coverDefault.jpg`}
                 alt="Profile cover photo"
               />
               <img
                 className={style.userImg}
-                src={user?.profilePic || `/${defaultimgs}default.png`}
+                src={user?.profilePic || `${assets}/profile/default.png`}
                 alt="profile picture"
               />
             </div>

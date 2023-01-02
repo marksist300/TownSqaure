@@ -12,7 +12,7 @@ const fetcher = async (url: string, bodyData: any) => {
   const data = await response.json();
   return data;
 };
-
+// LOGIN API CALL
 export const loginAPICall = async (userCredentials: any, dispatch: any) => {
   dispatch({ type: "LOGIN_INIT" });
   try {
@@ -30,6 +30,7 @@ export const loginAPICall = async (userCredentials: any, dispatch: any) => {
     dispatch({ type: "LOGIN_FAIL", payload: error });
   }
 };
+// SIGNUP API CALL
 
 export const signupAPICall = async (userCredentials: any, dispatch: any) => {
   dispatch({ type: "SIGNUP_INIT" });
@@ -49,6 +50,26 @@ export const signupAPICall = async (userCredentials: any, dispatch: any) => {
   }
 };
 
+//<----~POSTS~----->
+
+//Fetch
+export const fetchPostUser = async (userId: string) => {
+  try {
+    const response = await fetch(`${server}/users?userId=${userId}`, {
+      headers: {
+        "Content-Type": "Application/json",
+      },
+      method: "GET",
+      mode: "cors",
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error({ fetchPostUser_Error: error });
+  }
+};
+
+// Like a post
 export const likePostAPICall = async (postId: string, userId: string) => {
   try {
     const post = await fetch(`${server}/post/like/${postId}`, {
@@ -61,5 +82,7 @@ export const likePostAPICall = async (postId: string, userId: string) => {
     });
     const data = await post.json();
     return data;
-  } catch (error) {}
+  } catch (error) {
+    console.error({ likePost_Error: error });
+  }
 };

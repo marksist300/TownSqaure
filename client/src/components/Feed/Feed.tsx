@@ -24,7 +24,6 @@ const Feed = ({ username }: username) => {
 
   useEffect(() => {
     const fetcher = async () => {
-      console.log("fetching posts");
       let urlString = "";
       username
         ? (urlString = `${server}/post/fetchUserPosts/${username}`)

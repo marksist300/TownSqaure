@@ -1,10 +1,10 @@
 import { useState, useEffect, useContext } from "react";
 import style from "./Post.module.scss";
-import { MoreVert, Favorite, ThumbUp } from "@mui/icons-material";
+import { MoreVert, Favorite, ThumbUp, LinkedCamera } from "@mui/icons-material";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
-import { likePostAPICall } from "../../helpers/apiCalls";
+import { likePostAPICall, fetchPostUser } from "../../helpers/apiCalls";
 
 const server = import.meta.env.VITE_SERVER_DOMAIN;
 
@@ -33,48 +33,27 @@ type User = {
 const Post = ({ likes, img, desc, comments, date, userId, postId }: Props) => {
   const { user: currentUser } = useContext(AuthContext);
   const [like, setLike] = useState(likes.length);
-  const [currentlyLiked, setCurrentlyLiked] = useState(false);
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    if (currentUser) {
-      setCurrentlyLiked(likes.includes(currentUser._id));
-      // console.log("done", currentUser._id);
-      // console.log("likes", likes);
-      // console.log("currentllLiked:", currentlyLiked);
-    }
-  }, []);
-  // console.log("running", likes.includes(currentUser?._id));
-
-  useEffect(() => {
-    console.log("fetching data");
-    const fetchUser = async () => {
-      const response = await fetch(
-        `${server}/users?userId=${currentUser?._id}`,
-        {
-          headers: {
-            "Content-Type": "Application/json",
-          },
-          method: "GET",
-          mode: "cors",
-        }
-      );
-      const data = await response.json();
+    const fetch = async () => {
+      const data = await fetchPostUser(userId);
       setUser(data);
-      console.log(likes);
     };
-    fetchUser();
+    fetch();
   }, []);
 
   const likeClicker = async () => {
     try {
       const data = await likePostAPICall(postId, JSON.stringify(userId));
-      console.log(data);
+      if (data === "Post liked") {
+        setLike(liked => liked + 1);
+      } else if (data === "Post unliked") {
+        setLike(liked => liked - 1);
+      }
     } catch (error) {
       console.error(error);
     }
-    setLike(liked => (currentlyLiked ? (liked -= 1) : (liked += 1)));
-    setCurrentlyLiked(likedStatus => !likedStatus);
   };
 
   const likeCountText = (count: number) => {

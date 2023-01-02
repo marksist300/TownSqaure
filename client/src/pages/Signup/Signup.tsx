@@ -1,7 +1,7 @@
 import style from "./Signup.module.scss";
 import { useRef, useContext } from "react";
 import { Link } from "react-router-dom";
-import { signupAPICall } from "../../components/apiCalls";
+import { signupAPICall } from "../../helpers/apiCalls";
 import { AuthContext } from "../../context/AuthContext";
 const Signup = () => {
   const { user, isFetching, error, dispatch } = useContext(AuthContext);

@@ -1,6 +1,6 @@
 import style from "./Login.module.scss";
 import React, { useContext, useRef } from "react";
-import { loginAPICall } from "../../components/apiCalls";
+import { loginAPICall } from "../../helpers/apiCalls";
 import { AuthContext } from "../../context/AuthContext";
 const Login = () => {
   const email = useRef<HTMLInputElement>(null);

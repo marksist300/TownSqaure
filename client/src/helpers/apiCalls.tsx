@@ -48,3 +48,18 @@ export const signupAPICall = async (userCredentials: any, dispatch: any) => {
     dispatch({ type: "SIGNUP_FAIL", payload: error });
   }
 };
+
+export const likePostAPICall = async (postId: string, userId: string) => {
+  try {
+    const post = await fetch(`${server}/post/like/${postId}`, {
+      headers: {
+        "Content-Type": "Application/json",
+      },
+      method: "PUT",
+      mode: "cors",
+      body: JSON.stringify({ userId: `${userId}` }),
+    });
+    const data = await post.json();
+    return data;
+  } catch (error) {}
+};

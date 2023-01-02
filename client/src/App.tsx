@@ -13,7 +13,6 @@ import { AuthContext } from "./context/AuthContext";
 
 function App() {
   const { user, isFetching, error } = useContext(AuthContext);
-  console.log(user, isFetching, error);
   return (
     <Router>
       <div className="App">

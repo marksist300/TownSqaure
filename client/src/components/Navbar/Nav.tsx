@@ -8,7 +8,7 @@ const assets = import.meta.env.VITE_PUBLIC_FOLDER;
 
 const Nav = () => {
   const { user } = useContext(AuthContext);
-  console.log(user);
+
   return (
     <nav className="nav-container">
       <div className={style.navLeft}>

@@ -24,7 +24,7 @@ router.get("/fetchUserPosts/:username", fetchAllUsersPosts);
 //Get singular post from user
 router.get("/fetchOnePost/:id");
 
-//Like a post
+//Like/Unlike a post
 router.put("/like/:id", likePost);
 
 //Delete a post

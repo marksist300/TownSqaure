@@ -1,17 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import style from "./Post.module.scss";
 import { MoreVert, Favorite, ThumbUp } from "@mui/icons-material";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
+import { likePostAPICall } from "../../helpers/apiCalls";
+
 const server = import.meta.env.VITE_SERVER_DOMAIN;
 
 type Props = {
-  likes: string[];
-  img: string;
   desc: string;
-  comments?: number;
+  comments?: string[];
   date: string;
-  userId: number;
+  description?: string;
+  img: string;
+  likes: string[];
+  userId: string;
+  postId: string;
 };
 
 type User = {
@@ -25,35 +30,51 @@ type User = {
   followers: string;
 };
 
-const Post = ({ likes, img, desc, comments, date, userId }: Props) => {
-  const [like, setLike] = useState<number>(likes.length);
+const Post = ({ likes, img, desc, comments, date, userId, postId }: Props) => {
+  const { user: currentUser } = useContext(AuthContext);
+  const [like, setLike] = useState(likes.length);
+  const [currentlyLiked, setCurrentlyLiked] = useState(false);
   const [user, setUser] = useState<User | null>(null);
-  const [clickLike, setClickLike] =
-    useState<React.SetStateAction<Boolean>>(false);
 
   useEffect(() => {
+    if (currentUser) {
+      setCurrentlyLiked(likes.includes(currentUser._id));
+      // console.log("done", currentUser._id);
+      // console.log("likes", likes);
+      // console.log("currentllLiked:", currentlyLiked);
+    }
+  }, []);
+  // console.log("running", likes.includes(currentUser?._id));
+
+  useEffect(() => {
+    console.log("fetching data");
     const fetchUser = async () => {
-      const response = await fetch(`${server}/users?userId=${userId}`, {
-        headers: {
-          "Content-Type": "Application/json",
-        },
-        method: "GET",
-        mode: "cors",
-      });
+      const response = await fetch(
+        `${server}/users?userId=${currentUser?._id}`,
+        {
+          headers: {
+            "Content-Type": "Application/json",
+          },
+          method: "GET",
+          mode: "cors",
+        }
+      );
       const data = await response.json();
       setUser(data);
+      console.log(likes);
     };
     fetchUser();
   }, []);
 
-  const likeClicker = () => {
-    if (clickLike === true) {
-      setLike((like: number) => (like -= 1));
-      setClickLike(false);
-    } else {
-      setLike((like: number) => (like += 1));
-      setClickLike(true);
+  const likeClicker = async () => {
+    try {
+      const data = await likePostAPICall(postId, JSON.stringify(userId));
+      console.log(data);
+    } catch (error) {
+      console.error(error);
     }
+    setLike(liked => (currentlyLiked ? (liked -= 1) : (liked += 1)));
+    setCurrentlyLiked(likedStatus => !likedStatus);
   };
 
   const likeCountText = (count: number) => {

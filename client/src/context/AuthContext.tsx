@@ -1,5 +1,4 @@
 import { createContext, ReactNode, useReducer } from "react";
-import { usersData } from "../dummyData";
 import AuthReducer from "./AuthReducer";
 
 interface User {

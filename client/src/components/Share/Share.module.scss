@@ -49,6 +49,10 @@
   .bottom {
     display: flex;
     gap: 0.8rem;
+
+    .dataFileInput {
+      display: none;
+    }
   }
 
   .shareOptions {

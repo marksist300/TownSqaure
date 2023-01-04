@@ -4,25 +4,27 @@ import { PermMedia, EmojiEmotions, Label, Room } from "@mui/icons-material";
 import { AuthContext } from "../../context/AuthContext";
 import { createPost } from "../../helpers/apiCalls";
 
+interface Post {
+  userId: string;
+  description: string;
+  img?: string;
+}
 const Share = () => {
   const { user } = useContext(AuthContext);
-  const [file, setFile] = useState<object | null>(null);
-  const desc = useRef<HTMLInputElement>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-
+    const { img, description } = e.target.elements;
     if (user) {
-      const postData = {
-        userId: user._id,
-        description: desc.current?.value,
-      };
-      const newPost = await createPost(postData);
+      const formData: any = new FormData();
+      formData.append("userId", user._id);
+      formData.append("description", description.value);
+      formData.append("img", img.files[0]);
+      const newPost = await createPost(formData);
       console.log(newPost);
     } else {
       return console.error("Error with submit");
     }
-    console.log(desc.current?.value);
   };
   return (
     <article className={style.shareSection}>
@@ -40,19 +42,18 @@ const Share = () => {
             type="text"
             placeholder="What's on your mind?"
             name="description"
-            ref={desc}
           />
         </div>
         <hr />
         <div className={style.bottom}>
-          <label htmlFor="file" className={style.shareOptions}>
+          <label htmlFor="img" className={style.shareOptions}>
             <PermMedia htmlColor="#f9f9f9" className={style.shareIcon} />
             <span className={style.ShareOptionText}>Image or Video</span>
             <input
               type="file"
-              id="file"
-              name="file"
-              accept=".png,.jpg,.jpeg"
+              id="img"
+              name="img"
+              accept=".png,.jpg,.jpeg,.gif"
               className={style.dataFileInput}
             />
           </label>

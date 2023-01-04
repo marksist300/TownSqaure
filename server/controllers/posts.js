@@ -5,11 +5,20 @@ const cloudinary = require("../config/cloudinaryConfig");
 //Create posts
 const createPost = async (req, res) => {
   //TODO: add cloudinary
-
   try {
-    const post = new Post(req.body);
-    const postCreated = await post.save();
-    return res.status(200).json(postCreated);
+    const result = await cloudinary.uploader.upload(req.file.path);
+    if (result) {
+      const imgId = result.public_id;
+      const img = result.secure_url;
+      const post = new Post({ ...req.body, img });
+      const postCreated = await post.save();
+      console.log(post);
+      return res.status(200).json(postCreated);
+    } else {
+      // const post = new Post(req.body);
+      // const postCreated = await post.save();
+      return res.status(200).json(postCreated);
+    }
   } catch (err) {
     return res.status(500).json({ "Post creation unsuccessful": err.message });
   }
@@ -36,9 +45,7 @@ const updatePost = async (req, res) => {
 const fetchFollowedPosts = async (req, res) => {
   try {
     const requestingUser = await User.findById(req.params.id);
-    console.log("user:::::>", requestingUser);
     const requestingUserPosts = await Post.find({ userId: requestingUser._id });
-    console.log("userPosts:::::>", requestingUser);
     const friendsPosts = await Promise.all(
       requestingUser.following.map(friend => Post.find({ userId: friend }))
     );

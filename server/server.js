@@ -20,6 +20,11 @@ app.use(
 );
 //middleware to access body data
 app.use(express.json());
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
 app.use(helmet());
 app.use(morgan("common"));
 //Routes

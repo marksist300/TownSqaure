@@ -8,9 +8,9 @@ const {
   likePost,
   deletePost,
 } = require("../controllers/posts");
-
+const upload = require("../middleware/multer");
 //Create posts
-router.post("/new", createPost);
+router.post("/new", upload.single("img"), createPost);
 
 //Update posts
 router.put("/update/:id", updatePost);

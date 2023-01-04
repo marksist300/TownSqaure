@@ -88,15 +88,12 @@ export const likePostAPICall = async (postId: string, userId: string) => {
 };
 
 //Create a New Post
-export const createPost = async (postData: object) => {
+export const createPost = async (postData: Blob) => {
   try {
     const post = await fetch(`${server}/post/new`, {
-      headers: {
-        "Content-Type": "Application/json",
-      },
       method: "POST",
       mode: "cors",
-      body: JSON.stringify(postData),
+      body: postData,
     });
     const data = await post.json();
     return data;

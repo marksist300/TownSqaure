@@ -3,7 +3,6 @@ import { useContext, useState, useRef } from "react";
 import { PermMedia, EmojiEmotions, Label, Room } from "@mui/icons-material";
 import { AuthContext } from "../../context/AuthContext";
 import { createPost, createPostNoImg } from "../../helpers/apiCalls";
-
 interface Post {
   userId: string;
   description: string;
@@ -23,12 +22,12 @@ const Share = () => {
           formData.append("description", description.value);
           formData.append("img", img.files[0]);
           const newPost = await createPost(formData);
-          console.log(newPost);
+          window.location.reload();
         } else {
           const newPost = await createPostNoImg(
             JSON.stringify({ userId: user._id, description: description.value })
           );
-          console.log(newPost);
+          window.location.reload();
         }
       } catch (error) {
         return console.error("Error with submit");

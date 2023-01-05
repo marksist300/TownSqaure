@@ -87,10 +87,28 @@ export const likePostAPICall = async (postId: string, userId: string) => {
   }
 };
 
-//Create a New Post
+//Create a New Post With Img
 export const createPost = async (postData: Blob) => {
   try {
     const post = await fetch(`${server}/post/new`, {
+      method: "POST",
+      mode: "cors",
+      body: postData,
+    });
+    const data = await post.json();
+    return data;
+  } catch (error) {
+    console.error({ CreatePost_Error: error });
+  }
+};
+
+// Create post without IMG
+export const createPostNoImg = async (postData: any) => {
+  try {
+    const post = await fetch(`${server}/post/new`, {
+      headers: {
+        "Content-Type": "Application/json",
+      },
       method: "POST",
       mode: "cors",
       body: postData,

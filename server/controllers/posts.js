@@ -4,21 +4,22 @@ const cloudinary = require("../config/cloudinaryConfig");
 
 //Create posts
 const createPost = async (req, res) => {
-  //TODO: add cloudinary
   try {
-    const result = await cloudinary.uploader.upload(req.file.path);
-    if (result) {
-      const imgId = result.public_id;
-      const img = result.secure_url;
-      const post = new Post({ ...req.body, img });
-      const postCreated = await post.save();
-      console.log(post);
-      return res.status(200).json(postCreated);
+    if (req.file) {
+      const result = await cloudinary.uploader.upload(req?.file.path);
+      if (result) {
+        const cloudinaryId = result.public_id;
+        const img = result.secure_url;
+        const post = new Post({ ...req.body, img, cloudinaryId });
+        const postCreated = await post.save();
+        return res.status(200).json(postCreated);
+      }
     } else {
-      // const post = new Post(req.body);
-      // const postCreated = await post.save();
+      const post = new Post({ ...req.body });
+      const postCreated = await post.save();
       return res.status(200).json(postCreated);
     }
+    return res.status(200).json(postCreated);
   } catch (err) {
     return res.status(500).json({ "Post creation unsuccessful": err.message });
   }
@@ -112,8 +113,10 @@ const likePost = async (req, res) => {
 
 //Delete a post
 const deletePost = async (req, res) => {
+  // TODO ===>> finish
   try {
     const post = await Post.findById(req.params.id);
+    await cloudinary.uploader.destroy(post.cloudinaryId);
     if (!post) {
       return res.status(404).json("Post not found in Database");
     }

@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import style from "./Post.module.scss";
-import { MoreVert, Favorite, ThumbUp, LinkedCamera } from "@mui/icons-material";
+import { MoreVert, Favorite, ThumbUp } from "@mui/icons-material";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";

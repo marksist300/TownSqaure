@@ -2,7 +2,7 @@ import style from "./Share.module.scss";
 import { useContext, useState, useRef } from "react";
 import { PermMedia, EmojiEmotions, Label, Room } from "@mui/icons-material";
 import { AuthContext } from "../../context/AuthContext";
-import { createPost } from "../../helpers/apiCalls";
+import { createPost, createPostNoImg } from "../../helpers/apiCalls";
 
 interface Post {
   userId: string;
@@ -16,14 +16,23 @@ const Share = () => {
     e.preventDefault();
     const { img, description } = e.target.elements;
     if (user) {
-      const formData: any = new FormData();
-      formData.append("userId", user._id);
-      formData.append("description", description.value);
-      formData.append("img", img.files[0]);
-      const newPost = await createPost(formData);
-      console.log(newPost);
-    } else {
-      return console.error("Error with submit");
+      try {
+        if (img.files[0] !== undefined) {
+          const formData: any = new FormData();
+          formData.append("userId", user._id);
+          formData.append("description", description.value);
+          formData.append("img", img.files[0]);
+          const newPost = await createPost(formData);
+          console.log(newPost);
+        } else {
+          const newPost = await createPostNoImg(
+            JSON.stringify({ userId: user._id, description: description.value })
+          );
+          console.log(newPost);
+        }
+      } catch (error) {
+        return console.error("Error with submit");
+      }
     }
   };
   return (

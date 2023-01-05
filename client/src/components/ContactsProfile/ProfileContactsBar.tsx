@@ -16,7 +16,7 @@ interface User {
 const ProfileContactsBar = ({ user }: User) => {
   const assetsPath = import.meta.env.VITE_PUBLIC_FOLDER;
   const relationshipStatus = (num: number) => {
-    switch (num) {
+    switch (Number(num)) {
       case 1:
         return "Single";
         break;

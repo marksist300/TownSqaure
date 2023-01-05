@@ -11,7 +11,7 @@ const server = import.meta.env.VITE_SERVER_DOMAIN;
 type Props = {
   desc: string;
   comments?: string[];
-  date: string;
+  date: number;
   description?: string;
   img: string;
   likes: string[];

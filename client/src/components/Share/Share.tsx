@@ -1,5 +1,5 @@
 import style from "./Share.module.scss";
-import { useContext, useState, useRef } from "react";
+import { useContext } from "react";
 import { PermMedia, EmojiEmotions, Label, Room } from "@mui/icons-material";
 import { AuthContext } from "../../context/AuthContext";
 import { createPost, createPostNoImg } from "../../helpers/apiCalls";

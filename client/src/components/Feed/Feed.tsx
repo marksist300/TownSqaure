@@ -8,7 +8,7 @@ type username = {
 };
 
 interface Post {
-  date: string;
+  date: number;
   description: string;
   img: string;
   likes: string[];
@@ -36,7 +36,12 @@ const Feed = ({ username }: username) => {
         mode: "cors",
       });
       const data = await response.json();
-      setPostData(data);
+      setPostData(
+        data.sort(
+          (a: Post, b: Post) =>
+            Number(new Date(b.date)) - Number(new Date(a.date))
+        )
+      );
     };
     fetcher();
   }, [username, user]);

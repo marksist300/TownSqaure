@@ -1,4 +1,8 @@
 import style from "./ProfileContactsBar.module.scss";
+import { fetchFollowerList } from "../../helpers/apiCalls";
+import { useEffect, useState } from "react";
+import Following from "../Following/Following";
+import { FollowTheSignsRounded } from "@mui/icons-material";
 interface User {
   user: {
     cover: string;
@@ -11,10 +15,34 @@ interface User {
     following: string[];
     followers: string[];
     relationship: number;
+    _id: string;
   } | null;
+}
+
+interface Follow {
+  _id: string;
+  username: string;
+  profilePic: string;
 }
 const ProfileContactsBar = ({ user }: User) => {
   const assetsPath = import.meta.env.VITE_PUBLIC_FOLDER;
+  const [following, setFollowing] = useState<Follow[] | null>(null);
+
+  useEffect(() => {
+    const getFollowers = async () => {
+      try {
+        if (user) {
+          const followerList = await fetchFollowerList(user._id);
+          setFollowing(followerList);
+          console.log("followerList: ", followerList);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getFollowers();
+  }, []);
+
   const relationshipStatus = (num: number) => {
     switch (Number(num)) {
       case 1:
@@ -34,6 +62,10 @@ const ProfileContactsBar = ({ user }: User) => {
         break;
     }
   };
+
+  const followedUsers = following?.map(({ profilePic, username }) => (
+    <Following profilePic={profilePic} username={username} />
+  ));
   return (
     <section className={style.sideBarSection}>
       <h4 className={style.infoTitle}>About {user?.username.split(" ")[0]}</h4>
@@ -53,32 +85,7 @@ const ProfileContactsBar = ({ user }: User) => {
           </span>
         </div>
         <h4 className={style.friendSection}>Friends</h4>
-        <div className={style.followingSection}>
-          <div className={style.userFollowing}>
-            <img
-              className={style.userFollowImg}
-              src={assetsPath + "/profile/pic1.jpg"}
-              alt=""
-            />
-            <span className={style.userFollowingName}>Jane Doe</span>
-          </div>
-          <div className={style.userFollowing}>
-            <img
-              className={style.userFollowImg}
-              src={assetsPath + "/profile/pic2.jpg"}
-              alt=""
-            />
-            <span className={style.userFollowingName}>Anna-Maria</span>
-          </div>
-          <div className={style.userFollowing}>
-            <img
-              className={style.userFollowImg}
-              src={assetsPath + "/profile/pic3.jpg"}
-              alt=""
-            />
-            <span className={style.userFollowingName}>Stan Jobs</span>
-          </div>
-        </div>
+        <div className={style.followingSection}>{followedUsers}</div>
       </div>
     </section>
   );

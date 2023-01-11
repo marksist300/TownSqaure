@@ -119,3 +119,19 @@ export const createPostNoImg = async (postData: any) => {
     console.error({ CreatePost_Error: error });
   }
 };
+
+// <---follower list ----->
+
+export const fetchFollowerList = async (userId: string) => {
+  try {
+    console.log(userId);
+    const response = await fetch(`${server}/users/followers/${userId}`, {
+      method: "GET",
+      mode: "cors",
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error({ fetchPostUser_Error: error });
+  }
+};

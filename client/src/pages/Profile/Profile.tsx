@@ -18,8 +18,8 @@ interface User {
   following: string[];
   followers: string[];
   relationship: number;
+  _id: string;
 }
-
 const Profile = () => {
   const [user, setUser] = useState<User | null>(null);
   const params = useParams();
@@ -41,7 +41,6 @@ const Profile = () => {
     };
     fetcher();
   }, []);
-  console.log("from profile", user);
   return (
     <>
       <Nav />

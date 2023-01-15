@@ -7,33 +7,20 @@ import { AuthContext } from "../../context/AuthContext";
 import { likePostAPICall, fetchPostUser } from "../../helpers/apiCalls";
 import DotMenu from "../DotMenu/DotMenu";
 const server = import.meta.env.VITE_SERVER_DOMAIN;
+import { PostProps, PostUser } from "../../types";
 
-type Props = {
-  desc: string;
-  comments?: string[];
-  date: number;
-  description?: string;
-  img: string;
-  likes: string[];
-  userId: string;
-  postId: string;
-};
-
-type User = {
-  _id: number;
-  isAdmin: boolean;
-  username: string;
-  email: string;
-  profilePic: string;
-  cover: string;
-  following: string;
-  followers: string;
-};
-
-const Post = ({ likes, img, desc, comments, date, userId, postId }: Props) => {
+const Post = ({
+  likes,
+  img,
+  desc,
+  comments,
+  date,
+  userId,
+  postId,
+}: PostProps) => {
   const { user: currentUser } = useContext(AuthContext);
   const [like, setLike] = useState(likes.length);
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<PostUser | null>(null);
 
   useEffect(() => {
     const fetch = async () => {

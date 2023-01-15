@@ -1,12 +1,7 @@
 import style from "./FriendsSide.module.scss";
-type Props = {
-  user: {
-    profile: string;
-    name: string;
-    id: number;
-  };
-};
-const FriendsSide = ({ user }: Props) => {
+import { UserProps } from "../../types";
+
+const FriendsSide = ({ user }: UserProps) => {
   const assetsPath = import.meta.env.VITE_PUBLIC_FOLDER;
   return (
     <ul className={style.friendList}>

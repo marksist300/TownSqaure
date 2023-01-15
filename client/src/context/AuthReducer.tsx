@@ -1,11 +1,5 @@
 import { PlaylistAddOutlined } from "@mui/icons-material";
-
-type AuthState = {
-  user: object | null;
-  isFetching: boolean;
-  error: boolean;
-  dispatch?: React.Dispatch<object>;
-};
+import { AuthState } from "../types";
 
 const AuthReducer = (state: AuthState, action: any) => {
   switch (action.type) {

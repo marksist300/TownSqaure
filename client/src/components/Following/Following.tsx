@@ -1,10 +1,6 @@
 import style from "./Following.module.scss";
 const assetsPath = import.meta.env.VITE_PUBLIC_FOLDER;
-
-interface Follow {
-  username: string;
-  profilePic: string;
-}
+import { Follow } from "../../types";
 
 const Following = ({ profilePic, username }: Follow) => {
   return (

@@ -4,20 +4,7 @@ import FriendsOnline from "../FriendsOnline/FriendsOnline";
 import { usersData as Users } from "../../dummyData";
 import ProfileContactsBar from "../ContactsProfile/ProfileContactsBar";
 import HomepageContactsBar from "./HomepageContactsBar";
-interface User {
-  user: {
-    cover: string;
-    profilePic: string;
-    username: string;
-    description: string;
-    location: string;
-    hometown: string;
-    email: string;
-    following: string[];
-    followers: string[];
-    relationship: number;
-  } | null;
-}
+import { User } from "../../types";
 const Contactsbar = ({ user }: User) => {
   return (
     <section className={style.contactsContainer}>

@@ -3,11 +3,7 @@ import { useContext } from "react";
 import { PermMedia, EmojiEmotions, Label, Room } from "@mui/icons-material";
 import { AuthContext } from "../../context/AuthContext";
 import { createPost, createPostNoImg } from "../../helpers/apiCalls";
-interface Post {
-  userId: string;
-  description: string;
-  img?: string;
-}
+
 const Share = () => {
   const { user } = useContext(AuthContext);
 

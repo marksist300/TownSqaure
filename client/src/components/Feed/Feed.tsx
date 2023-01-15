@@ -3,24 +3,12 @@ import style from "./Feed.module.scss";
 import Share from "../Share/Share";
 import Post from "../Post/Post";
 import { AuthContext } from "../../context/AuthContext";
-type username = {
-  username: string | undefined;
-};
+import { PostType, Username } from "../../types";
 
-interface Post {
-  date: number;
-  description: string;
-  img: string;
-  likes: string[];
-  userId: string;
-  _id: string;
-  comments: string[];
-}
-
-const Feed = ({ username }: username) => {
+const Feed = ({ username }: Username) => {
   const { user } = useContext(AuthContext);
   const server = import.meta.env.VITE_SERVER_DOMAIN;
-  const [postsData, setPostData] = useState<Post[]>([]);
+  const [postsData, setPostData] = useState<PostType[]>([]);
 
   useEffect(() => {
     const fetcher = async () => {
@@ -38,7 +26,7 @@ const Feed = ({ username }: username) => {
       const data = await response.json();
       setPostData(
         data.sort(
-          (a: Post, b: Post) =>
+          (a: PostType, b: PostType) =>
             Number(new Date(b.date)) - Number(new Date(a.date))
         )
       );

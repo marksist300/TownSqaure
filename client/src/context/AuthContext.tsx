@@ -1,24 +1,6 @@
 import { createContext, ReactNode, useReducer } from "react";
 import AuthReducer from "./AuthReducer";
-
-interface User {
-  cover: string;
-  email: string;
-  followers?: string[];
-  following?: string[];
-  isAdmin: boolean;
-  password?: string;
-  profilePic?: string;
-  username: string;
-  _id: string;
-}
-
-type AuthState = {
-  user: User | null;
-  isFetching: boolean;
-  error: boolean;
-  dispatch?: React.Dispatch<object>;
-};
+import { AuthState } from "../types";
 
 const dummyUser = {
   _id: "63a5d21a31ac7abaf5e68a1d",

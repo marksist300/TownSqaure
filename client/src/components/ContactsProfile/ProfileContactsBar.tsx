@@ -3,21 +3,7 @@ import { fetchFollowerList } from "../../helpers/apiCalls";
 import { useEffect, useState } from "react";
 import Following from "../Following/Following";
 import { FollowTheSignsRounded } from "@mui/icons-material";
-interface User {
-  user: {
-    cover: string;
-    profilePic: string;
-    username: string;
-    description: string;
-    location: string;
-    hometown: string;
-    email: string;
-    following: string[];
-    followers: string[];
-    relationship: number;
-    _id: string;
-  } | null;
-}
+import { User } from "../../types";
 
 interface Follow {
   _id: string;

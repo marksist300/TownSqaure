@@ -5,7 +5,7 @@ import { format } from "timeago.js";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { likePostAPICall, fetchPostUser } from "../../helpers/apiCalls";
-
+import DotMenu from "../DotMenu/DotMenu";
 const server = import.meta.env.VITE_SERVER_DOMAIN;
 
 type Props = {
@@ -77,7 +77,8 @@ const Post = ({ likes, img, desc, comments, date, userId, postId }: Props) => {
             <span className={style.postDate}>{format(date)}</span>
           </div>
           <div className={style.topRight}>
-            <MoreVert />
+            {/* <MoreVert /> */}
+            <DotMenu />
           </div>
         </div>
         <div className={style.center}>

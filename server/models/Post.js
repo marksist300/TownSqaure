@@ -8,6 +8,9 @@ const Post = new Schema({
   img: {
     type: String,
   },
+  cloudinaryId: {
+    type: String,
+  },
   description: {
     type: String,
     max: 500,

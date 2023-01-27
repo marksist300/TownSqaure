@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import style from "./Post.module.scss";
-import { MoreVert, Favorite, ThumbUp } from "@mui/icons-material";
+import { Favorite, ThumbUp } from "@mui/icons-material";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
@@ -64,8 +64,7 @@ const Post = ({
             <span className={style.postDate}>{format(date)}</span>
           </div>
           <div className={style.topRight}>
-            {/* <MoreVert /> */}
-            <DotMenu />
+            <DotMenu postId={postId} userId={userId} />
           </div>
         </div>
         <div className={style.center}>

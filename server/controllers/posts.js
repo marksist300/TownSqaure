@@ -116,10 +116,14 @@ const deletePost = async (req, res) => {
   // TODO ===>> finish
   try {
     const post = await Post.findById(req.params.id);
-    await cloudinary.uploader.destroy(post.cloudinaryId);
+    const { userId } = req.body;
+
     if (!post) {
       return res.status(404).json("Post not found in Database");
     }
+
+    await cloudinary.uploader.destroy(post.cloudinaryId);
+
     if (post.userId === req.body.userId) {
       await post.deleteOne();
       res.status(200).json("Post deleted");

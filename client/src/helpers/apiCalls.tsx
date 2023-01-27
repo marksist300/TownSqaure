@@ -120,6 +120,25 @@ export const createPostNoImg = async (postData: any) => {
   }
 };
 
+// <---Delete Post ----->
+export const deletePost = async (postId: string, userId: string) => {
+  try {
+    const post = await fetch(`${server}/post/${postId}`, {
+      headers: {
+        "Content-Type": "Application/json",
+      },
+      method: "Delete",
+      mode: "cors",
+      body: JSON.stringify({ userId }),
+    });
+    const data = await post.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error({ DeletePost_Error: error });
+  }
+};
+
 // <---follower list ----->
 
 export const fetchFollowerList = async (userId: string) => {

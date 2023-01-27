@@ -1,16 +1,14 @@
 import style from "./DotMenu.module.scss";
-import {
-  useState,
-  useEffect,
-  useRef,
-  SyntheticEvent,
-  ChangeEvent,
-} from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { MoreVert } from "@mui/icons-material";
+import { AuthContext } from "../../context/AuthContext";
+import { deletePost } from "../../helpers/apiCalls";
 
-const DotMenu = () => {
+const DotMenu = ({ postId, userId }: { postId: string; userId: string }) => {
+  const { user } = useContext(AuthContext);
   const [displayMenu, setDisplayMenu] = useState(false);
   const clickRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (clickRef.current && !clickRef.current.contains(e.target as Node)) {
@@ -19,10 +17,31 @@ const DotMenu = () => {
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      // Unbind the event listener on clean up
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [clickRef]);
+
+  const handleClick = async (e: any, action: string) => {
+    e.preventDefault();
+    if (!user) {
+      return "No User";
+    }
+    if (user) {
+      try {
+        if (action === "delete") {
+          const res = await deletePost(postId, userId);
+          if (res) {
+            console.log(res);
+            window.location.reload();
+          }
+        } else {
+          console.log("failed");
+        }
+      } catch (error) {
+        return console.error("Error with submit");
+      }
+    }
+  };
 
   return (
     <div className={style.dropdown} ref={clickRef}>
@@ -36,8 +55,20 @@ const DotMenu = () => {
         id="menu"
       >
         <ul className={style.dropdownList}>
-          <li>Delete</li>
-          <li>Edit</li>
+          <li
+            onClick={e => {
+              handleClick(e, "delete");
+            }}
+          >
+            Delete
+          </li>
+          <li
+            onClick={e => {
+              handleClick(e, "edit");
+            }}
+          >
+            Edit
+          </li>
         </ul>
       </div>
     </div>

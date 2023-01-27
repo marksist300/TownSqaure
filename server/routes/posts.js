@@ -28,6 +28,6 @@ router.get("/fetchOnePost/:id");
 router.put("/like/:id", likePost);
 
 //Delete a post
-router.delete("/delete/:id", deletePost);
+router.delete("/:id", deletePost);
 
 module.exports = router;

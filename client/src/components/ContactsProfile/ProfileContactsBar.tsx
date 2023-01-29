@@ -2,7 +2,6 @@ import style from "./ProfileContactsBar.module.scss";
 import { fetchFollowerList } from "../../helpers/apiCalls";
 import { useEffect, useState } from "react";
 import Following from "../Following/Following";
-import { FollowTheSignsRounded } from "@mui/icons-material";
 import { User } from "../../types";
 
 interface Follow {
@@ -15,19 +14,18 @@ const ProfileContactsBar = ({ user }: User) => {
   const [following, setFollowing] = useState<Follow[] | null>(null);
 
   useEffect(() => {
-    const getFollowers = async () => {
+    const getFollowing = async () => {
       try {
         if (user) {
           const followerList = await fetchFollowerList(user._id);
           setFollowing(followerList);
-          console.log("followerList: ", followerList);
         }
       } catch (error) {
         console.error(error);
       }
     };
-    getFollowers();
-  }, []);
+    getFollowing();
+  }, [user!._id]);
 
   const relationshipStatus = (num: number) => {
     switch (Number(num)) {
@@ -49,8 +47,8 @@ const ProfileContactsBar = ({ user }: User) => {
     }
   };
 
-  const followedUsers = following?.map(({ profilePic, username }) => (
-    <Following profilePic={profilePic} username={username} />
+  const followedUsers = following?.map(({ profilePic, username }, i) => (
+    <Following profilePic={profilePic} username={username} key={i} />
   ));
   return (
     <section className={style.sideBarSection}>

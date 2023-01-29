@@ -9,7 +9,6 @@ const Contactsbar = ({ user }: User) => {
   return (
     <section className={style.contactsContainer}>
       <div className={style.wrapper}>
-        {/* <ProfileContactsBar /> */}
         {user ? <ProfileContactsBar user={user} /> : <HomepageContactsBar />}
       </div>
     </section>

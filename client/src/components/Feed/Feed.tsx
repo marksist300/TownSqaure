@@ -33,7 +33,6 @@ const Feed = ({ username }: Username) => {
     };
     fetcher();
   }, [username, user]);
-
   const posts = postsData.map(item => (
     <Post
       key={item._id}
@@ -50,7 +49,7 @@ const Feed = ({ username }: Username) => {
   return (
     <main className={style.feedContainer}>
       <div className={style.wrapper}>
-        <Share />
+        {username === user?.username && <Share />}
         {posts}
       </div>
     </main>

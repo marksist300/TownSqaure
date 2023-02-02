@@ -116,7 +116,6 @@ const deletePost = async (req, res) => {
   // TODO ===>> finish
   try {
     const post = await Post.findById(req.params.id);
-    const { userId } = req.body;
 
     if (!post) {
       return res.status(404).json("Post not found in Database");

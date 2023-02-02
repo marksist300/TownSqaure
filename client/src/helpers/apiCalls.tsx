@@ -143,7 +143,6 @@ export const deletePost = async (postId: string, userId: string) => {
 
 export const fetchFollowerList = async (userId: string) => {
   try {
-    console.log(userId);
     const response = await fetch(`${server}/users/followers/${userId}`, {
       method: "GET",
       mode: "cors",

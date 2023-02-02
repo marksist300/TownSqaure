@@ -30,12 +30,11 @@ const DotMenu = ({ postId, userId }: { postId: string; userId: string }) => {
       try {
         if (action === "delete") {
           const res = await deletePost(postId, userId);
-          if (res) {
-            console.log(res);
-            window.location.reload();
+          if (!res.ok) {
+            console.error(res);
           }
         } else {
-          console.log("failed");
+          window.location.reload();
         }
       } catch (error) {
         return console.error("Error with submit");

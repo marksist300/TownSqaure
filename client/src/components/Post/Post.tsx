@@ -64,7 +64,7 @@ const Post = ({
             <span className={style.postDate}>{format(date)}</span>
           </div>
           <div className={style.topRight}>
-            <DotMenu postId={postId} userId={userId} />
+            <DotMenu postId={postId} />
           </div>
         </div>
         <div className={style.center}>

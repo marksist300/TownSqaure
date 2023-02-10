@@ -4,11 +4,10 @@ import { MoreVert } from "@mui/icons-material";
 import { AuthContext } from "../../context/AuthContext";
 import { deletePost } from "../../helpers/apiCalls";
 
-const DotMenu = ({ postId, userId }: { postId: string; userId: string }) => {
+const DotMenu = ({ postId }: { postId: string }) => {
   const { user } = useContext(AuthContext);
   const [displayMenu, setDisplayMenu] = useState(false);
   const clickRef = useRef<HTMLInputElement>(null);
-
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (clickRef.current && !clickRef.current.contains(e.target as Node)) {
@@ -29,12 +28,12 @@ const DotMenu = ({ postId, userId }: { postId: string; userId: string }) => {
     if (user) {
       try {
         if (action === "delete") {
-          const res = await deletePost(postId, userId);
-          if (!res.ok) {
+          const res = await deletePost(postId, user._id);
+          if (res === "Post deleted") {
+            window.location.reload();
+          } else {
             console.error(res);
           }
-        } else {
-          window.location.reload();
         }
       } catch (error) {
         return console.error("Error with submit");

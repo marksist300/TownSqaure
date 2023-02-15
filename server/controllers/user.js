@@ -59,6 +59,8 @@ const getUser = async (req, res) => {
 const followUser = async (req, res) => {
   try {
     if (req.body.userId !== req.params.id) {
+      console.log(req.body.userId, req.params.id);
+
       const user = await User.findById(req.params.id);
       const requestingUser = await User.findById(req.body.userId);
       if (!user.followers.includes(req.body.userId)) {
@@ -66,21 +68,24 @@ const followUser = async (req, res) => {
         await requestingUser.updateOne({
           $push: { following: req.params.id },
         });
-        res.status(200).json("User followed");
+        console.log("done follow");
+        return res.status(200).json("User followed");
       } else {
-        res.status(400).json("Account already followed");
+        return res.status(400).json("Account already followed");
       }
     } else {
-      res.status(403).json("User's cannot follow themselves");
+      return res.status(403).json("User's cannot follow themselves");
     }
   } catch (err) {
-    res.status(500).json("Follow was not successful");
+    return res.status(500).json("Follow was not successful");
   }
 };
 
 const unfollowUser = async (req, res) => {
   try {
     if (req.body.userId !== req.params.id) {
+      console.log(req.body.userId, req.params.id);
+
       const user = await User.findById(req.params.id);
       const requestingUser = await User.findById(req.body.userId);
       if (user.followers.includes(req.body.userId)) {
@@ -88,15 +93,16 @@ const unfollowUser = async (req, res) => {
         await requestingUser.updateOne({
           $pull: { following: req.params.id },
         });
-        res.status(200).json("User Unfollowed");
+        console.log("done unfollow");
+        return res.status(200).json("User Unfollowed");
       } else {
-        res.status(400).json("Account is not followed");
+        return res.status(400).json("Account is not followed");
       }
     } else {
-      res.status(403).json("User's cannot unfollow themselves");
+      return res.status(403).json("User's cannot unfollow themselves");
     }
   } catch (err) {
-    res.status(500).json("Follow was not successful");
+    return res.status(500).json("Follow was not successful");
   }
 };
 

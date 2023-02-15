@@ -153,3 +153,39 @@ export const fetchFollowerList = async (userId: string) => {
     console.error({ fetchPostUser_Error: error });
   }
 };
+
+// Follow & Unfollow Users
+
+export const followUser = async (userId: string, currentUserId: string) => {
+  try {
+    const response = await fetch(`${server}/users/follow/${userId}`, {
+      headers: {
+        "Content-Type": "Application/json",
+      },
+      method: "put",
+      mode: "cors",
+      body: JSON.stringify({ userId: currentUserId }),
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error({ Error_Following_User: error });
+  }
+};
+
+export const unfollowUser = async (userId: string, currentUserId: string) => {
+  try {
+    const response = await fetch(`${server}/users/unfollow/${userId}`, {
+      headers: {
+        "Content-Type": "Application/json",
+      },
+      method: "put",
+      mode: "cors",
+      body: JSON.stringify({ userId: currentUserId }),
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error({ Error_Unfollowing_User: error });
+  }
+};

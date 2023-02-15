@@ -1,5 +1,9 @@
 import style from "./ProfileContactsBar.module.scss";
-import { fetchFollowerList } from "../../helpers/apiCalls";
+import {
+  fetchFollowerList,
+  followUser,
+  unfollowUser,
+} from "../../helpers/apiCalls";
 import { useContext, useEffect, useState } from "react";
 import Following from "../Following/Following";
 import { User } from "../../types";
@@ -20,6 +24,7 @@ const ProfileContactsBar = ({ user }: User) => {
   const [currentUsersFollowList, setCurrentUsersFollowList] = useState<
     string[] | null
   >(null);
+  const [alreadyFollowed, setAlreadyFollowed] = useState(false);
   const { user: currentUser } = useContext(AuthContext);
 
   //Get the displayed user and set into state all the people followed by the displayed user
@@ -52,15 +57,33 @@ const ProfileContactsBar = ({ user }: User) => {
       }
     };
     getFollowing();
-  }, [currentUser]);
+  }, [currentUser, user?._id]);
 
-  const handleClick = () => {
-    if (user) {
+  const handleClick = async () => {
+    if (user && currentUser) {
       if (currentUsersFollowList?.includes(user._id)) {
         // UNFOLLOW USER
+        //TODO Finish REducer function
+        console.log(currentUsersFollowList);
+        setCurrentUsersFollowList(prev =>
+          prev?.filter(elem => elem !== user._id)
+        );
+        const unfollow = await unfollowUser(user._id, currentUser._id);
+        console.log(user._id, currentUser._id);
+        console.log("Unfollowed");
+        console.log(unfollow);
       } else {
         // FOLLOW USER
+        console.log(currentUsersFollowList);
+
+        const follow = await followUser(user._id, currentUser._id);
+        console.log(user._id, currentUser._id);
+
+        console.log("Followed");
+        console.log(follow);
       }
+    } else {
+      throw new Error("User or Current User missing");
     }
   };
 

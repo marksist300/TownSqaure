@@ -37,7 +37,6 @@ const login = async (req, res) => {
       if (!validateUserPW) {
         return res.status(400).json("Incorrect Password");
       } else if (validateUserPW) {
-        console.log("user found successfully: ", user);
         return res.status(200).json(user);
       }
     }

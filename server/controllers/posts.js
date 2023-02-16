@@ -82,7 +82,6 @@ const fetchAllUsersPosts = async (req, res) => {
     const user = await User.findOne({ username: req.params.username });
     const posts = await Post.find({ userId: user._id });
     if (user && posts) {
-      console.log("line 77", user, posts);
       return res.status(200).json(posts);
     } else {
       return res.status(404).json("No posts found for that user");

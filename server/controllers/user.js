@@ -59,8 +59,6 @@ const getUser = async (req, res) => {
 const followUser = async (req, res) => {
   try {
     if (req.body.userId !== req.params.id) {
-      console.log(req.body.userId, req.params.id);
-
       const user = await User.findById(req.params.id);
       const requestingUser = await User.findById(req.body.userId);
       if (!user.followers.includes(req.body.userId)) {
@@ -68,7 +66,6 @@ const followUser = async (req, res) => {
         await requestingUser.updateOne({
           $push: { following: req.params.id },
         });
-        console.log("done follow");
         return res.status(200).json("User followed");
       } else {
         return res.status(400).json("Account already followed");
@@ -84,8 +81,6 @@ const followUser = async (req, res) => {
 const unfollowUser = async (req, res) => {
   try {
     if (req.body.userId !== req.params.id) {
-      console.log(req.body.userId, req.params.id);
-
       const user = await User.findById(req.params.id);
       const requestingUser = await User.findById(req.body.userId);
       if (user.followers.includes(req.body.userId)) {
@@ -93,7 +88,6 @@ const unfollowUser = async (req, res) => {
         await requestingUser.updateOne({
           $pull: { following: req.params.id },
         });
-        console.log("done unfollow");
         return res.status(200).json("User Unfollowed");
       } else {
         return res.status(400).json("Account is not followed");

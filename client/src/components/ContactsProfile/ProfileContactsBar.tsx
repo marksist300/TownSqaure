@@ -8,7 +8,7 @@ import { useContext, useEffect, useState } from "react";
 import Following from "../Following/Following";
 import { User } from "../../types";
 import { AuthContext } from "../../context/AuthContext";
-import { Add, ConstructionOutlined } from "@mui/icons-material";
+import { Add, Remove } from "@mui/icons-material";
 
 // TODO: FIX TYPE ERRORS
 interface Follow {
@@ -21,14 +21,17 @@ const ProfileContactsBar = ({ user }: User) => {
 
   //Who the user displayed on the page is following:
   const [following, setFollowing] = useState<Follow[] | null>(null);
-  const [currentUsersFollowList, setCurrentUsersFollowList] = useState<
-    string[]
-  >([]);
   const [alreadyFollowed, setAlreadyFollowed] = useState(false);
-  const { user: currentUser } = useContext(AuthContext);
-
+  const { user: currentUser, dispatch } = useContext(AuthContext);
   //Get the displayed user and set into state all the people followed by the displayed user
   useEffect(() => {
+    if (user && currentUser?.following?.includes(user._id)) {
+      console.log("setting followed");
+      setAlreadyFollowed(true);
+    } else {
+      setAlreadyFollowed(false);
+      console.log("setting followed");
+    }
     const getFollowing = async () => {
       try {
         if (user) {
@@ -42,45 +45,20 @@ const ProfileContactsBar = ({ user }: User) => {
     getFollowing();
   }, [user!._id]);
 
-  //Search the current/logged in user to set into state the users that she/he follows
-  useEffect(() => {
-    const getFollowing = async () => {
-      try {
-        if (currentUser) {
-          const followerList: Follow[] = await fetchFollowerList(
-            currentUser._id
-          );
-          setCurrentUsersFollowList(followerList.map(elem => elem._id));
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getFollowing();
-  }, [currentUser, user?._id]);
-
   const handleClick = async () => {
     if (user && currentUser) {
-      if (currentUsersFollowList?.includes(user._id)) {
+      if (currentUser?.following?.includes(user._id)) {
         // UNFOLLOW USER
-        //TODO Finish REducer function
-        console.log(currentUsersFollowList);
-        setCurrentUsersFollowList(prev =>
-          prev?.filter(elem => elem !== user._id)
-        );
-        const unfollow = await unfollowUser(user._id, currentUser._id);
-        console.log(user._id, currentUser._id);
-        console.log("Unfollowed");
-        console.log(unfollow);
+        await unfollowUser(user._id, currentUser._id);
+        setAlreadyFollowed(false);
+        dispatch({ type: "UNFOLLOW_USER", payload: user._id });
+        console.log(currentUser?.following);
       } else {
         // FOLLOW USER
-        console.log(currentUsersFollowList);
-
-        const follow = await followUser(user._id, currentUser._id);
-        console.log(user._id, currentUser._id);
-
-        console.log("Followed");
-        console.log(follow);
+        await followUser(user._id, currentUser._id);
+        setAlreadyFollowed(true);
+        dispatch({ type: "FOLLOW_USER", payload: user._id });
+        console.log(currentUser?.following);
       }
     } else {
       throw new Error("User or Current User missing");
@@ -108,11 +86,16 @@ const ProfileContactsBar = ({ user }: User) => {
   ));
   return (
     <section className={style.sideBarSection}>
-      {user?.username !== currentUser?.username && (
-        <button className={style.followBtn} onClick={handleClick}>
-          Follow <Add className={style.add} />
-        </button>
-      )}
+      {user?.username !== currentUser?.username &&
+        (alreadyFollowed ? (
+          <button className={style.followBtn} onClick={handleClick}>
+            Unfollow <Remove className={style.add} />
+          </button>
+        ) : (
+          <button className={style.followBtn} onClick={handleClick}>
+            Follow <Add className={style.add} />
+          </button>
+        ))}
       <h4 className={style.infoTitle}>About {user?.username.split(" ")[0]}</h4>
       <div className={style.infoBarContainer}>
         <div className={style.infoItem}>

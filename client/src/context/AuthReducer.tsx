@@ -1,4 +1,3 @@
-import { PlaylistAddOutlined } from "@mui/icons-material";
 import { AuthState } from "../types";
 
 const AuthReducer = (state: AuthState, action: any) => {

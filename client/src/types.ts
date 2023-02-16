@@ -68,5 +68,5 @@ export type AuthState = {
   user: PostUser | null;
   isFetching: boolean;
   error: boolean;
-  dispatch?: React.Dispatch<object>;
+  dispatch: any;
 };

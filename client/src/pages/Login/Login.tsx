@@ -13,7 +13,7 @@ const Login = () => {
     const passwordVal = password.current?.value;
     const data = await loginAPICall(
       JSON.stringify({ email: emailVal, password: passwordVal }),
-      dispatch
+      dispatch()
     );
   };
   return (

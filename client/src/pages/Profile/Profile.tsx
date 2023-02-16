@@ -51,7 +51,6 @@ const Profile = () => {
     } else if (currentUser?._id === user?._id) {
       setOwnHomePage(true);
     }
-    console.log("running effect");
   }, [params]);
   return (
     <>

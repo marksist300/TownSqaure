@@ -22,8 +22,8 @@ const ProfileContactsBar = ({ user }: User) => {
   //Who the user displayed on the page is following:
   const [following, setFollowing] = useState<Follow[] | null>(null);
   const [currentUsersFollowList, setCurrentUsersFollowList] = useState<
-    string[] | null
-  >(null);
+    string[]
+  >([]);
   const [alreadyFollowed, setAlreadyFollowed] = useState(false);
   const { user: currentUser } = useContext(AuthContext);
 

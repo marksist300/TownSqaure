@@ -7,8 +7,8 @@ export interface User {
     location: string;
     hometown: string;
     email: string;
-    following: string[];
-    followers: string[];
+    following?: string[];
+    followers?: string[];
     relationship: number;
     _id: string;
   } | null;
@@ -64,8 +64,22 @@ export type PostUser = {
   password?: string;
 };
 
+export type AuthUser = {
+  cover: string;
+  profilePic: string;
+  username: string;
+  description: string;
+  location: string;
+  hometown: string;
+  email: string;
+  following?: string[];
+  followers?: string[];
+  relationship: number;
+  _id: string;
+};
+
 export type AuthState = {
-  user: PostUser | null;
+  user: AuthUser | null;
   isFetching: boolean;
   error: boolean;
   dispatch: any;

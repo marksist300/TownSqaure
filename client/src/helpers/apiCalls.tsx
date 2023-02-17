@@ -25,7 +25,13 @@ export const loginAPICall = async (userCredentials: any, dispatch: any) => {
       body: userCredentials,
     });
     const data = await post.json();
-    dispatch({ type: "LOGIN_SUCCEED", payload: data });
+    if (data === "User Not Found" || data === "Incorrect Password") {
+      console.log("Error: ", data);
+      dispatch({ type: "LOGIN_FAIL", payload: data });
+    } else {
+      dispatch({ type: "LOGIN_SUCCEED", payload: data });
+      localStorage.setItem("user", JSON.stringify(data));
+    }
   } catch (error) {
     dispatch({ type: "LOGIN_FAIL", payload: error });
   }

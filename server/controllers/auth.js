@@ -1,10 +1,13 @@
 const User = require("../models/User");
 const crypto = require("bcrypt");
+const { createToken } = require("../config/jwt");
+jwt = require("jsonwebtoken");
+const SECRET_KEY = process.env.SECRET_KEY;
 
 const signup = async (req, res) => {
   try {
     //creat salt and hash the user's password
-    const salt = await crypto.genSalt(10);
+    const salt = await crypto.genSalt(12);
     const hashedPW = await crypto.hash(req.body.password, salt);
 
     //create the user with the hashed password
@@ -16,7 +19,9 @@ const signup = async (req, res) => {
 
     // server's response to signup request
     const user = await createUser.save();
-    return res.status(200).json(user);
+    const token = createToken(user);
+
+    return res.status(200).json({ username: user.username, token });
   } catch (err) {
     return res.status(500).json(err.message);
   }

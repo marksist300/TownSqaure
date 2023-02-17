@@ -26,7 +26,6 @@ const Signup = () => {
         }),
         dispatch
       );
-      console.log(data);
     }
   };
 

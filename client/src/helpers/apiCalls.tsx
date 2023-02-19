@@ -12,6 +12,7 @@ const fetcher = async (url: string, bodyData: any) => {
   const data = await response.json();
   return data;
 };
+
 // LOGIN API CALL
 export const loginAPICall = async (userCredentials: any, dispatch: any) => {
   dispatch({ type: "LOGIN_INIT" });
@@ -26,18 +27,17 @@ export const loginAPICall = async (userCredentials: any, dispatch: any) => {
     });
     const data = await post.json();
     if (data === "User Not Found" || data === "Incorrect Password") {
-      console.log("Error: ", data);
       dispatch({ type: "LOGIN_FAIL", payload: data });
     } else {
       dispatch({ type: "LOGIN_SUCCEED", payload: data });
-      localStorage.setItem("user", JSON.stringify(data));
+      localStorage.setItem("userToken", JSON.stringify(data.token));
     }
   } catch (error) {
     dispatch({ type: "LOGIN_FAIL", payload: error });
   }
 };
-// SIGNUP API CALL
 
+// SIGNUP API CALL
 export const signupAPICall = async (userCredentials: any, dispatch: any) => {
   dispatch({ type: "SIGNUP_INIT" });
   try {
@@ -50,6 +50,7 @@ export const signupAPICall = async (userCredentials: any, dispatch: any) => {
       body: userCredentials,
     });
     const data = await post.json();
+    localStorage.setItem("userToken", JSON.stringify(data.token));
     dispatch({ type: "SIGNUP_SUCCEED", payload: data });
   } catch (error) {
     dispatch({ type: "SIGNUP_FAIL", payload: error });

@@ -24,12 +24,14 @@ const Feed = ({ username }: Username) => {
         mode: "cors",
       });
       const data = await response.json();
-      setPostData(
-        data.sort(
-          (a: PostType, b: PostType) =>
-            Number(new Date(b.date)) - Number(new Date(a.date))
-        )
-      );
+      if (data) {
+        setPostData(
+          data.sort(
+            (a: PostType, b: PostType) =>
+              Number(new Date(b.date)) - Number(new Date(a.date))
+          )
+        );
+      }
     };
     fetcher();
   }, [username, user]);

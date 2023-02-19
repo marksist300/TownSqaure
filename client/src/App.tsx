@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -12,7 +12,19 @@ import Signup from "./pages/Signup/Signup";
 import { AuthContext } from "./context/AuthContext";
 
 function App() {
-  const { user, isFetching, error } = useContext(AuthContext);
+  useEffect(() => {
+    if (localStorage.getItem("user")) {
+      const storedUser = localStorage.getItem("user");
+      if (typeof storedUser === "string") {
+        dispatch({
+          type: "LOGIN_SUCCEED",
+          payload: JSON.parse(storedUser),
+        });
+      }
+    }
+  }, []);
+  const { user, isFetching, error, dispatch } = useContext(AuthContext);
+
   return (
     <Router>
       <div className="App">

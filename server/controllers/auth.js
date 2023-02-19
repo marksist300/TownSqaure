@@ -1,10 +1,12 @@
 const User = require("../models/User");
 const crypto = require("bcrypt");
+const { createToken } = require("../config/jwt");
+jwt = require("jsonwebtoken");
 
 const signup = async (req, res) => {
   try {
     //creat salt and hash the user's password
-    const salt = await crypto.genSalt(10);
+    const salt = await crypto.genSalt(12);
     const hashedPW = await crypto.hash(req.body.password, salt);
 
     //create the user with the hashed password
@@ -16,7 +18,20 @@ const signup = async (req, res) => {
 
     // server's response to signup request
     const user = await createUser.save();
-    return res.status(200).json(user);
+    const token = createToken(user);
+
+    return res.status(200).json({
+      user: {
+        cover: user.cover,
+        email: user.email,
+        followers: user.followers,
+        following: user.following,
+        profilePic: user.profilePic,
+        username: user.username,
+        _id: user._id,
+      },
+      token,
+    });
   } catch (err) {
     return res.status(500).json(err.message);
   }
@@ -37,7 +52,19 @@ const login = async (req, res) => {
       if (!validateUserPW) {
         return res.status(400).json("Incorrect Password");
       } else if (validateUserPW) {
-        return res.status(200).json(user);
+        const token = createToken(user);
+        return res.status(200).json({
+          user: {
+            cover: user.cover,
+            email: user.email,
+            followers: user.followers,
+            following: user.following,
+            profilePic: user.profilePic,
+            username: user.username,
+            _id: user._id,
+          },
+          token,
+        });
       }
     }
   } catch (err) {

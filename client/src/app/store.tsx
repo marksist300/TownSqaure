@@ -1,16 +1,18 @@
 import { configureStore } from "@reduxjs/toolkit";
-import loginReducer from "../features/login/loginSlice";
-import signupReducer from "../features/signup/signupSlice";
+import { apiSlice } from "./apiSlice";
+import authReducer from "../features/auth/authSlice";
 import postReducer from "../features/post/postSlice";
 import userReducer from "../features/user/userSlice";
 
 export const store = configureStore({
   reducer: {
-    login: loginReducer,
-    signup: signupReducer,
+    [apiSlice.reducerPath]: apiSlice.reducer,
+    auth: authReducer,
     post: postReducer,
     user: userReducer,
   },
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware().concat(apiSlice.middleware),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

@@ -9,6 +9,8 @@ import Following from "../Following/Following";
 import { User } from "../../types";
 import { AuthContext } from "../../context/AuthContext";
 import { Add, Remove } from "@mui/icons-material";
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
 
 // TODO: FIX TYPE ERRORS
 interface Follow {
@@ -22,7 +24,10 @@ const ProfileContactsBar = ({ user }: User) => {
   //Who the user displayed on the page is following:
   const [following, setFollowing] = useState<Follow[] | null>(null);
   const [alreadyFollowed, setAlreadyFollowed] = useState(false);
-  const { user: currentUser, dispatch } = useContext(AuthContext);
+  const { dispatch } = useContext(AuthContext);
+  // TODO change dispatch to Redux
+  const currentUser = useSelector((state: RootState) => state.user);
+
   //Get the displayed user and set into state all the people followed by the displayed user
   useEffect(() => {
     if (user && currentUser?.following?.includes(user._id)) {

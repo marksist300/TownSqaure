@@ -1,11 +1,13 @@
 import style from "./DotMenu.module.scss";
 import { useState, useEffect, useRef, useContext } from "react";
 import { MoreVert } from "@mui/icons-material";
-import { AuthContext } from "../../context/AuthContext";
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
 import { deletePost } from "../../helpers/apiCalls";
 
 const DotMenu = ({ postId }: { postId: string }) => {
-  const { user } = useContext(AuthContext);
+  const user = useSelector((state: RootState) => state.user);
+
   const [displayMenu, setDisplayMenu] = useState(false);
   const clickRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
@@ -25,7 +27,7 @@ const DotMenu = ({ postId }: { postId: string }) => {
     if (!user) {
       return "No User";
     }
-    if (user) {
+    if (user._id) {
       try {
         if (action === "delete") {
           const res = await deletePost(postId, user._id);

@@ -5,8 +5,9 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import Feed from "../../components/Feed/Feed";
 import Contactsbar from "../../components/Contacts/Contactsbar";
 import { useParams } from "react-router";
-import { useContext } from "react";
-import { AuthContext } from "../../context/AuthContext";
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
+
 const assets = import.meta.env.VITE_PUBLIC_FOLDER;
 const server = import.meta.env.VITE_SERVER_DOMAIN;
 interface User {
@@ -23,7 +24,7 @@ interface User {
   _id: string;
 }
 const Profile = () => {
-  const { user: currentUser } = useContext(AuthContext);
+  const currentUser = useSelector((state: RootState) => state.user);
   const [user, setUser] = useState<User | null>(null);
   const [OwnHomePage, setOwnHomePage] = useState(
     currentUser?._id !== user?._id
@@ -86,7 +87,11 @@ const Profile = () => {
           </div>
           <div className={style.profileBottom}>
             <Feed username={params.username} />
-            <Contactsbar user={user} />
+            {OwnHomePage === true ? (
+              <Contactsbar />
+            ) : (
+              <Contactsbar user={user} />
+            )}
           </div>
         </div>
       </div>

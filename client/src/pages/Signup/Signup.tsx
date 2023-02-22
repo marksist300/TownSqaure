@@ -49,14 +49,6 @@ const Signup = () => {
         dispatch(setLogin({ isLoggedIn: true, token }));
         dispatch(setUser({ ...user }));
       }
-      // const data = await signupAPICall(
-      //   JSON.stringify({
-      // email: email.current?.value,
-      // password: password.current?.value,
-      // username: usernameVal,
-      //   }),
-      //   dispatch
-      // );
     }
   };
 

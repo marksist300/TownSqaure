@@ -1,13 +1,13 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import style from "./Post.module.scss";
 import { Favorite, ThumbUp } from "@mui/icons-material";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
 import { likePostAPICall, fetchPostUser } from "../../helpers/apiCalls";
 import DotMenu from "../DotMenu/DotMenu";
-const server = import.meta.env.VITE_SERVER_DOMAIN;
 import { PostProps, PostUser } from "../../types";
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
 
 const Post = ({
   likes,
@@ -18,7 +18,7 @@ const Post = ({
   userId,
   postId,
 }: PostProps) => {
-  const { user: currentUser } = useContext(AuthContext);
+  const currnetUser = useSelector((state: RootState) => state.user);
   const [like, setLike] = useState(likes.length);
   const [user, setUser] = useState<PostUser | null>(null);
 

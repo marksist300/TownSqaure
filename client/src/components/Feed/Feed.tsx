@@ -1,15 +1,16 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import style from "./Feed.module.scss";
 import Share from "../Share/Share";
 import Post from "../Post/Post";
-import { AuthContext } from "../../context/AuthContext";
+import { useSelector } from "react-redux";
 import { PostType, Username } from "../../types";
+import { RootState } from "../../app/store";
 
 const Feed = ({ username }: Username) => {
-  const { user } = useContext(AuthContext);
   const server = import.meta.env.VITE_SERVER_DOMAIN;
   const [postsData, setPostData] = useState<PostType[]>([]);
-
+  const user = useSelector((state: RootState) => state.user);
+  console.log(username, user.username, username === user.username);
   useEffect(() => {
     const fetcher = async () => {
       let urlString = "";
@@ -24,7 +25,7 @@ const Feed = ({ username }: Username) => {
         mode: "cors",
       });
       const data = await response.json();
-      if (data) {
+      if (data.ok) {
         setPostData(
           data.sort(
             (a: PostType, b: PostType) =>

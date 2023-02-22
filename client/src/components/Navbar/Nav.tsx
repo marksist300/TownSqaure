@@ -2,12 +2,13 @@ import style from "./Nav.module.scss";
 import { useContext } from "react";
 import { Search, Person, Chat, Notifications } from "@mui/icons-material";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
 
 const assets = import.meta.env.VITE_PUBLIC_FOLDER;
 
 const Nav = () => {
-  const { user } = useContext(AuthContext);
+  const user = useSelector((state: RootState) => state.user);
 
   return (
     <nav className="nav-container">

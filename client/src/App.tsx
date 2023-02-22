@@ -11,7 +11,6 @@ import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "./app/store";
-import { setLogin } from "./features/auth/authSlice";
 import { setUser } from "./features/user/userSlice";
 import { useGetUserDataMutation } from "./features/auth/authApiSlice";
 import jwtDecode from "jwt-decode";
@@ -23,8 +22,6 @@ type JWT = {
 };
 function App() {
   const authState = useSelector((state: RootState) => state.auth);
-  const userState = useSelector((state: RootState) => state);
-  // console.log(userState);
   const dispatch = useDispatch();
 
   const [getUserData, { data, isLoading, isError, error }] =

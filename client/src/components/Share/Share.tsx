@@ -1,11 +1,11 @@
 import style from "./Share.module.scss";
-import { useContext } from "react";
 import { PermMedia, EmojiEmotions, Label, Room } from "@mui/icons-material";
-import { AuthContext } from "../../context/AuthContext";
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
 import { createPost, createPostNoImg } from "../../helpers/apiCalls";
 
 const Share = () => {
-  const { user } = useContext(AuthContext);
+  const user = useSelector((state: RootState) => state.user);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();

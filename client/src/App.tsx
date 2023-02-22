@@ -23,18 +23,22 @@ type JWT = {
 };
 function App() {
   const authState = useSelector((state: RootState) => state.auth);
+  const userState = useSelector((state: RootState) => state);
+  // console.log(userState);
   const dispatch = useDispatch();
 
   const [getUserData, { data, isLoading, isError, error }] =
     useGetUserDataMutation();
 
   useEffect(() => {
+    // Fetch User info if logged in and token valid
     console.log("running useEffect APP");
     const fetchData = async (id: string) => {
       const userinfo = await getUserData(id);
+      console.log("fetching data");
       //@ts-ignore
       const user = userinfo.data;
-      dispatch(setUser({ user }));
+      dispatch(setUser({ ...user }));
     };
 
     if (authState.token) {

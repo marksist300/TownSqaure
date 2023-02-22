@@ -47,7 +47,7 @@ const Signup = () => {
         //@ts-ignore
         const { token, user } = userData.data;
         dispatch(setLogin({ isLoggedIn: true, token }));
-        dispatch(setUser({ user }));
+        dispatch(setUser({ ...user }));
       }
       // const data = await signupAPICall(
       //   JSON.stringify({

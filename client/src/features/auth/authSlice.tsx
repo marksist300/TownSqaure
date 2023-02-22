@@ -39,4 +39,4 @@ export const { setSignup, setLogin, logout } = authSlice.actions;
 
 export default authSlice.reducer;
 
-export const authState = (state: authObj) => state;
+export const authState = (state: authObj) => state.auth;

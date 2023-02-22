@@ -41,12 +41,10 @@ const Login = () => {
 
       // @ts-ignore
       const { token, user } = userData.data;
+      console.log(user);
       if (token) {
         dispatch(setLogin({ isLoggedIn: true, token }));
-        dispatch(setUser({ user }));
-      }
-      if (data) {
-        console.log("User data is: ", data);
+        dispatch(setUser({ ...user }));
       }
     } catch (error) {}
   };

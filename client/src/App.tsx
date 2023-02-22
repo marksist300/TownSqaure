@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -9,35 +9,66 @@ import Home from "./pages/Home/Home";
 import Profile from "./pages/Profile/Profile";
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
-import { AuthContext } from "./context/AuthContext";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "./app/store";
+import { setLogin } from "./features/auth/authSlice";
+import { setUser } from "./features/user/userSlice";
+import { useGetUserDataMutation } from "./features/auth/authApiSlice";
+import jwtDecode from "jwt-decode";
 
+type JWT = {
+  id: string;
+  ia: number;
+  loggedIn: string;
+};
 function App() {
+  const authState = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
+
+  const [getUserData, { data, isLoading, isError, error }] =
+    useGetUserDataMutation();
+
   useEffect(() => {
-    if (localStorage.getItem("user")) {
-      const storedUser = localStorage.getItem("user");
-      if (typeof storedUser === "string") {
-        dispatch({
-          type: "LOGIN_SUCCEED",
-          payload: JSON.parse(storedUser),
-        });
+    console.log("running useEffect APP");
+    const fetchData = async (id: string) => {
+      const userinfo = await getUserData(id);
+      //@ts-ignore
+      const user = userinfo.data;
+      dispatch(setUser({ user }));
+    };
+
+    if (authState.token) {
+      const { isLoggedIn, token } = authState;
+      const currentToken = localStorage.getItem("token");
+      if (currentToken) {
+        const { id }: JWT = jwtDecode(currentToken);
+        if (id) {
+          fetchData(id);
+        }
       }
     }
-  }, []);
-  const { user, isFetching, error, dispatch } = useContext(AuthContext);
+  }, [authState.token]);
 
   return (
     <Router>
       <div className="App">
         <Routes>
-          <Route path="/" element={user ? <Home /> : <Signup />} />
+          <Route
+            path="/"
+            element={authState?.isLoggedIn ? <Home /> : <Signup />}
+          />
           <Route path="/profile/:username" element={<Profile />} />
           <Route
             path="/login"
-            element={user ? <Navigate to="/" replace /> : <Login />}
+            element={
+              authState?.isLoggedIn ? <Navigate to="/" replace /> : <Login />
+            }
           />
           <Route
             path="/signup"
-            element={user ? <Navigate to="/" replace /> : <Signup />}
+            element={
+              authState?.isLoggedIn ? <Navigate to="/" replace /> : <Signup />
+            }
           />
         </Routes>
       </div>

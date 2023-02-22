@@ -2,39 +2,44 @@ import style from "./Login.module.scss";
 import React, { useRef, useEffect } from "react";
 import { useLoginMutation } from "../../features/auth/authApiSlice";
 import { setLogin } from "../../features/auth/authSlice";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { setUser } from "../../features/user/userSlice";
-
+import { RootState } from "../../app/store";
 const Login = () => {
   const email = useRef<HTMLInputElement>(null);
   const password = useRef<HTMLInputElement>(null);
-  const user = useSelector(state => state);
+  const user = useSelector((state: RootState) => state);
 
   const [login, { data, isLoading, isSuccess, isError, error }] =
     useLoginMutation();
 
   const dispatch = useDispatch();
 
+  // check if user token already exists
   useEffect(() => {
     if (user?.auth) {
       const { isLoggedIn, token } = user.auth;
       const currentToken = localStorage.getItem("token");
       if (currentToken) {
-        console.log("token currenlty saved: ", currentToken);
+        dispatch(setLogin({ isLoggedIn: true, token: currentToken }));
       } else if (!currentToken && token) {
         localStorage.setItem("token", JSON.stringify(token));
+        console.log("setting token");
       }
     }
-    console.log(user);
+    console.log("running login useEffect");
   }, [user?.auth]);
 
+  //Handle login request and set user data into state if log successful
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const emailVal = email.current?.value;
     const passwordVal = password.current?.value;
     try {
       const userData = await login({ email: emailVal, password: passwordVal });
+
+      // @ts-ignore
       const { token, user } = userData.data;
       if (token) {
         dispatch(setLogin({ isLoggedIn: true, token }));

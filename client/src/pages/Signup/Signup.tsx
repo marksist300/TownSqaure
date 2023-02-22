@@ -1,10 +1,16 @@
 import style from "./Signup.module.scss";
-import { useRef, useContext } from "react";
+import { useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { signupAPICall } from "../../helpers/apiCalls";
-import { AuthContext } from "../../context/AuthContext";
+import { useSignupMutation } from "../../features/auth/authApiSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../../features/user/userSlice";
+import { setLogin } from "../../features/auth/authSlice";
+import { RootState } from "../../app/store";
 const Signup = () => {
-  const { user, isFetching, error, dispatch } = useContext(AuthContext);
+  const [signup, { data, isLoading, isSuccess, isError, error }] =
+    useSignupMutation();
+  const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state);
 
   const firstName = useRef<HTMLInputElement>(null);
   const lastName = useRef<HTMLInputElement>(null);
@@ -12,20 +18,45 @@ const Signup = () => {
   const password = useRef<HTMLInputElement>(null);
   const passwordCheck = useRef<HTMLInputElement>(null);
 
+  useEffect(() => {
+    if (user?.auth) {
+      const { isLoggedIn, token } = user.auth;
+      const currentToken = localStorage.getItem("token");
+
+      if (currentToken) {
+        dispatch(setLogin({ isLoggedIn: true, token }));
+      } else if (!currentToken && token) {
+        localStorage.setItem("token", JSON.stringify(token));
+      }
+    }
+  }, [user?.auth]);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (password.current?.value !== passwordCheck.current?.value) {
       return password.current?.setCustomValidity("Passwords don't match");
     } else {
       const usernameVal = `${firstName.current?.value} ${lastName.current?.value}`;
-      const data = await signupAPICall(
-        JSON.stringify({
-          email: email.current?.value,
-          password: password.current?.value,
-          username: usernameVal,
-        }),
-        dispatch
-      );
+      const userData = await signup({
+        email: email.current?.value,
+        password: password.current?.value,
+        username: usernameVal,
+      });
+      if (userData) {
+        //@ts-ignore
+        const { token, user } = userData.data;
+        dispatch(setLogin({ isLoggedIn: true, token }));
+        dispatch(setUser({ user }));
+      }
+      // const data = await signupAPICall(
+      //   JSON.stringify({
+      // email: email.current?.value,
+      // password: password.current?.value,
+      // username: usernameVal,
+      //   }),
+      //   dispatch
+      // );
     }
   };
 

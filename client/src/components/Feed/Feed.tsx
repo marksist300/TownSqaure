@@ -10,28 +10,32 @@ const Feed = ({ username }: Username) => {
   const server = import.meta.env.VITE_SERVER_DOMAIN;
   const [postsData, setPostData] = useState<PostType[]>([]);
   const user = useSelector((state: RootState) => state.user);
-  console.log(username, user.username, username === user.username);
   useEffect(() => {
     const fetcher = async () => {
       let urlString = "";
-      username
-        ? (urlString = `${server}/post/fetchUserPosts/${username}`)
-        : (urlString = `${server}/post/fetchAll/${user?._id}`);
-      const response = await fetch(urlString, {
-        headers: {
-          "Content-Type": "Application/json",
-        },
-        method: "GET",
-        mode: "cors",
-      });
-      const data = await response.json();
-      if (data.ok) {
-        setPostData(
-          data.sort(
-            (a: PostType, b: PostType) =>
-              Number(new Date(b.date)) - Number(new Date(a.date))
-          )
-        );
+      if (username) {
+        urlString = `${server}/post/fetchUserPosts/${username}`;
+      } else if (user?._id) {
+        urlString = `${server}/post/fetchAll/${user?._id}`;
+      }
+
+      if (urlString.length > 1) {
+        const response = await fetch(urlString, {
+          headers: {
+            "Content-Type": "Application/json",
+          },
+          method: "GET",
+          mode: "cors",
+        });
+        const data = await response.json();
+        if (data.ok) {
+          setPostData(
+            data.sort(
+              (a: PostType, b: PostType) =>
+                Number(new Date(b.date)) - Number(new Date(a.date))
+            )
+          );
+        }
       }
     };
     fetcher();

@@ -15,21 +15,6 @@ const Login = () => {
 
   const dispatch = useDispatch();
 
-  // check if user token already exists
-  useEffect(() => {
-    if (user?.auth) {
-      const { isLoggedIn, token } = user.auth;
-      const currentToken = localStorage.getItem("token");
-      if (currentToken) {
-        dispatch(setLogin({ isLoggedIn: true, token: currentToken }));
-      } else if (!currentToken && token) {
-        localStorage.setItem("token", JSON.stringify(token));
-        console.log("setting token");
-      }
-    }
-    console.log("running login useEffect");
-  }, [user?.auth]);
-
   //Handle login request and set user data into state if log successful
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -41,7 +26,6 @@ const Login = () => {
 
       // @ts-ignore
       const { token, user } = userData.data;
-      console.log(user);
       if (token) {
         dispatch(setLogin({ isLoggedIn: true, token }));
         dispatch(setUser({ ...user }));

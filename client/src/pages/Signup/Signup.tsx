@@ -18,19 +18,6 @@ const Signup = () => {
   const password = useRef<HTMLInputElement>(null);
   const passwordCheck = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    if (user?.auth) {
-      const { isLoggedIn, token } = user.auth;
-      const currentToken = localStorage.getItem("token");
-
-      if (currentToken) {
-        dispatch(setLogin({ isLoggedIn: true, token }));
-      } else if (!currentToken && token) {
-        localStorage.setItem("token", JSON.stringify(token));
-      }
-    }
-  }, [user?.auth]);
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 

@@ -12,6 +12,7 @@ import Signup from "./pages/Signup/Signup";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "./app/store";
 import { setUser } from "./features/user/userSlice";
+import { setLogin } from "./features/auth/authSlice";
 import { useGetUserDataMutation } from "./features/auth/authApiSlice";
 import jwtDecode from "jwt-decode";
 
@@ -27,25 +28,31 @@ function App() {
   const [getUserData, { data, isLoading, isError, error }] =
     useGetUserDataMutation();
 
+  // Fetch User info if logged in and token valid
   useEffect(() => {
-    // Fetch User info if logged in and token valid
-    console.log("running useEffect APP");
+    console.log("running useEffect APP on STARTUP");
+
+    //Function to fetch user's DATA
     const fetchData = async (id: string) => {
       const userinfo = await getUserData(id);
-      console.log("fetching data");
       //@ts-ignore
       const user = userinfo.data;
       dispatch(setUser({ ...user }));
     };
 
+    //
     if (authState.token) {
       const { isLoggedIn, token } = authState;
       const currentToken = localStorage.getItem("token");
       if (currentToken) {
         const { id }: JWT = jwtDecode(currentToken);
         if (id) {
+          dispatch(setLogin({ isLoggedIn: true, token: currentToken }));
           fetchData(id);
         }
+      } else if (!currentToken && token) {
+        localStorage.setItem("token", JSON.stringify(token));
+        dispatch(setLogin({ isLoggedIn: true, token: token }));
       }
     }
   }, [authState.token]);

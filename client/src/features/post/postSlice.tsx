@@ -1,29 +1,31 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { PostProps } from "../../types";
+type DataObj = {
+  posts: PostProps[];
+};
 
-export const postSlice = createSlice({
-  name: "post",
-  initialState: {
-    //Value e.g.:
-    value: 0,
-  },
+const INITIAL_STATE: DataObj = { posts: [] };
+
+// PUT POSTS INTO STATE
+// TODO: Set up RTK Query for posts
+export const postsSlice = createSlice({
+  name: "posts",
+  initialState: INITIAL_STATE,
   reducers: {
-    //Example from docs
-    increment: state => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
-      state.value += 1;
+    getAllPosts: (state, action) => {
+      state.posts.push(action.payload);
     },
-    decrement: state => {
-      state.value -= 1;
+    createPostWithImg: (state, action) => {
+      state.posts.push(action.payload);
     },
-    incrementByAmount: (state, action) => {
-      state.value += action.payload;
+    createPostNoImg: (state, action) => {
+      state.posts.push(action.payload);
     },
   },
 });
 
-export const { increment, decrement, incrementByAmount } = postSlice.actions;
+export const { createPostWithImg, createPostNoImg } = postsSlice.actions;
 
-export default postSlice.reducer;
+export default postsSlice.reducer;
+
+export const posts = (state: DataObj) => state.posts;

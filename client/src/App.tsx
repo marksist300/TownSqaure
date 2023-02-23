@@ -23,8 +23,8 @@ type JWT = {
 };
 function App() {
   const authState = useSelector((state: RootState) => state.auth);
+  const posts = useSelector((state: RootState) => state.posts);
   const dispatch = useDispatch();
-
   const [getUserData, { data, isLoading, isError, error }] =
     useGetUserDataMutation();
 
@@ -35,6 +35,7 @@ function App() {
     //Function to fetch user's DATA
     const fetchData = async (id: string) => {
       const userinfo = await getUserData(id);
+      console.log("fetching data");
       //@ts-ignore
       const user = userinfo.data;
       dispatch(setUser({ ...user }));

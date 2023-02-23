@@ -7,6 +7,7 @@ import Contactsbar from "../../components/Contacts/Contactsbar";
 import { useParams } from "react-router";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
+import { useGetProfileMutation } from "../../features/user/userApiSlice";
 
 const assets = import.meta.env.VITE_PUBLIC_FOLDER;
 const server = import.meta.env.VITE_SERVER_DOMAIN;
@@ -31,24 +32,19 @@ const Profile = () => {
   );
   const params = useParams();
 
+  const [getProfile, { data, isError, isLoading, error }] =
+    useGetProfileMutation();
+
+  //GET user data if user not current global user in state
   useEffect(() => {
     if (currentUser?._id !== user?._id) {
-      const fetcher = async () => {
-        const response = await fetch(
-          `${server}/users?username=${params.username}`,
-          {
-            headers: {
-              "Content-Type": "Application/json",
-            },
-            method: "GET",
-            mode: "cors",
-          }
-        );
-        const data = await response.json();
+      const fetchUserProfilePage = async () => {
+        console.log("running fetch on");
+        const result = await getProfile(params.username).unwrap();
         setOwnHomePage(false);
-        setUser(data);
+        setUser(result);
       };
-      fetcher();
+      fetchUserProfilePage();
     } else if (currentUser?._id === user?._id) {
       setOwnHomePage(true);
     }

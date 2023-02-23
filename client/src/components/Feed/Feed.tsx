@@ -5,32 +5,36 @@ import Post from "../Post/Post";
 import { useSelector } from "react-redux";
 import { PostType, Username } from "../../types";
 import { RootState } from "../../app/store";
+import {
+  useGetSpecificUsersPostsMutation,
+  useGetUserAndFollowedPostsMutation,
+} from "../../features/user/userApiSlice";
 
 const Feed = ({ username }: Username) => {
   const server = import.meta.env.VITE_SERVER_DOMAIN;
   const [postsData, setPostData] = useState<PostType[]>([]);
   const user = useSelector((state: RootState) => state.user);
+
+  const [getSpecificUsersPosts] = useGetSpecificUsersPostsMutation();
+  const [getUserAndFollowedPosts] = useGetUserAndFollowedPostsMutation();
+
+  //Fetch all a specific user's posts, if the page is not the loggedIn user
+  //else if logged in user:
+  //  fetch all the posts of a user's posts + the posts of those they follow
   useEffect(() => {
     const fetcher = async () => {
-      let urlString = "";
-      if (username) {
-        urlString = `${server}/post/fetchUserPosts/${username}`;
+      let data: [];
+      if (username !== user.username && username) {
+        data = await getSpecificUsersPosts(username).unwrap();
       } else if (user?._id) {
-        urlString = `${server}/post/fetchAll/${user?._id}`;
+        data = await getUserAndFollowedPosts(user._id).unwrap();
+      } else {
+        return;
       }
-
-      if (urlString.length > 1) {
-        const response = await fetch(urlString, {
-          headers: {
-            "Content-Type": "Application/json",
-          },
-          method: "GET",
-          mode: "cors",
-        });
-        const data = await response.json();
-        if (data.ok) {
+      if (data) {
+        if (data.length >= 1) {
           setPostData(
-            data.sort(
+            [...data].sort(
               (a: PostType, b: PostType) =>
                 Number(new Date(b.date)) - Number(new Date(a.date))
             )
@@ -40,6 +44,7 @@ const Feed = ({ username }: Username) => {
     };
     fetcher();
   }, [username, user]);
+
   const posts = postsData.map(item => (
     <Post
       key={item._id}

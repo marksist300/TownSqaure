@@ -18,16 +18,17 @@ const Post = ({
   userId,
   postId,
 }: PostProps) => {
-  const currnetUser = useSelector((state: RootState) => state.user);
+  const currentUser = useSelector((state: RootState) => state.user);
   const [like, setLike] = useState(likes.length);
   const [user, setUser] = useState<PostUser | null>(null);
-
   useEffect(() => {
-    const fetch = async () => {
-      const data = await fetchPostUser(userId);
-      setUser(data);
-    };
-    fetch();
+    if (userId !== currentUser._id) {
+      const fetch = async () => {
+        const data = await fetchPostUser(userId);
+        setUser(data);
+      };
+      fetch();
+    }
   }, []);
 
   const likeClicker = async () => {

@@ -13,6 +13,7 @@ const Share = () => {
     if (user) {
       try {
         if (img.files[0] !== undefined) {
+          //if an image file is attached upload a post with an image
           const formData: any = new FormData();
           formData.append("userId", user._id);
           formData.append("description", description.value);
@@ -20,6 +21,7 @@ const Share = () => {
           const newPost = await createPost(formData);
           window.location.reload();
         } else {
+          //No Image file is attached, create a post without an image.
           const newPost = await createPostNoImg(
             JSON.stringify({ userId: user._id, description: description.value })
           );

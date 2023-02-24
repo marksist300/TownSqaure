@@ -45,14 +45,12 @@ const updatePost = async (req, res) => {
 //Get all posts from followed users (both following and followed users)
 const fetchFollowedPosts = async (req, res) => {
   try {
-    console.timeLog("WORKING!");
     const requestingUser = await User.findById(req.params.id);
     const requestingUserPosts = await Post.find({ userId: requestingUser._id });
     const friendsPosts = await Promise.all(
       requestingUser.following.map(friend => Post.find({ userId: friend }))
     );
     if (friendsPosts) {
-      console.log(requestingUserPosts.concat(...friendsPosts));
       return res.status(200).json(requestingUserPosts.concat(...friendsPosts));
     } else if (!friendsPosts && requestingUserPosts) {
       return res.status(200).json(requestingUserPosts);

@@ -21,8 +21,9 @@ const Post = ({
   const currentUser = useSelector((state: RootState) => state.user);
   const [like, setLike] = useState(likes.length);
   const [user, setUser] = useState<PostUser | null>(null);
+  const postFromCurrentUser = userId === currentUser._id;
   useEffect(() => {
-    if (userId !== currentUser._id) {
+    if (!postFromCurrentUser) {
       const fetch = async () => {
         const data = await fetchPostUser(userId);
         setUser(data);
@@ -44,6 +45,14 @@ const Post = ({
     }
   };
 
+  const renderProfilePic = () => {
+    if (currentUser.profilePic !== "") {
+      return currentUser.profilePic;
+    } else {
+      return "/assets/profile/default.png";
+    }
+  };
+
   const likeCountText = (count: number) => {
     if (count === 0) return "";
     else if (count === 1) return `${count} person likes this`;
@@ -54,14 +63,26 @@ const Post = ({
       <div className={style.wrapper}>
         <div className={style.postTop}>
           <div className={style.topLeft}>
-            <Link to={`/profile/${user?.username}`}>
+            <Link
+              to={
+                postFromCurrentUser
+                  ? `/profile/${currentUser?.username}`
+                  : `/profile/${user?.username}` || "#"
+              }
+            >
               <img
                 className={style.posterProfileImg}
-                src={user?.profilePic || "/assets/profile/default.png"}
-                alt="profile pic of user"
+                src={
+                  postFromCurrentUser ? renderProfilePic() : user?.profilePic
+                }
+                alt="profile pic"
               />
             </Link>
-            <span className={style.posterName}>{user?.username}</span>
+            <span className={style.posterName}>
+              {postFromCurrentUser
+                ? currentUser.username
+                : user?.username || ""}
+            </span>
             <span className={style.postDate}>{format(date)}</span>
           </div>
           <div className={style.topRight}>

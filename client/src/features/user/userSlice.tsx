@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 type DataObj = {
   user: {
-    cover: string | null;
+    cover: string;
     profilePic: string | null;
     username: string | null;
     description: string | null;
@@ -17,17 +17,17 @@ type DataObj = {
 };
 
 const INITIAL_STATE = {
-  cover: null,
-  profilePic: null,
-  username: null,
-  description: null,
-  location: null,
-  hometown: null,
-  email: null,
+  cover: "",
+  profilePic: "",
+  username: "",
+  description: "",
+  location: "",
+  hometown: "",
+  email: "",
   following: [],
   followers: [],
-  relationship: null,
-  _id: null,
+  relationship: "",
+  _id: "",
 };
 
 export const userSlice = createSlice({

@@ -1,5 +1,4 @@
 import { apiSlice } from "../../app/apiSlice";
-import { PostProps } from "../../types";
 
 export const userApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({

@@ -2,7 +2,6 @@ import style from "./Share.module.scss";
 import { PermMedia, EmojiEmotions, Label, Room } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
-import { createPost, createPostNoImg } from "../../helpers/apiCalls";
 import { useCreatePostMutation } from "../../features/user/userApiSlice";
 
 const Share = () => {

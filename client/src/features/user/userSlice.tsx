@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import { INIT_USER_STATE } from "../../types";
 type DataObj = {
   user: {
     cover: string;
@@ -9,14 +9,14 @@ type DataObj = {
     location: string | null;
     hometown: string | null;
     email: string | null;
-    following?: string[] | [];
-    followers?: string[] | [];
+    following: string[];
+    followers: string[];
     relationship: number | null;
     _id: string | null;
   };
 };
 
-const INITIAL_STATE = {
+const INITIAL_STATE: INIT_USER_STATE = {
   cover: "",
   profilePic: "",
   username: "",
@@ -26,7 +26,7 @@ const INITIAL_STATE = {
   email: "",
   following: [],
   followers: [],
-  relationship: "",
+  relationship: null,
   _id: "",
 };
 
@@ -49,19 +49,27 @@ export const userSlice = createSlice({
       state.location = user.location ? user.location : state.location;
       state.hometown = user.hometown ? user.hometown : state.hometown;
       state.email = user.email ? user.email : state.email;
-      state.following = user.following ? user.following : state.following;
-      state.followers = user.followers ? user.followers : state.followers;
+      state.following = user.following
+        ? user.following.push(action.payload)
+        : state.following;
+      state.followers = user.followers
+        ? user.followers.push(action.payload)
+        : state.followers;
       state.relationship = user.relationship
         ? user.relationship
         : state.relationship;
     },
-    logout: state => {
-      return INITIAL_STATE;
+    setUnfollowUser: (state, action) => {
+      state.following = state.following.filter(elem => elem !== action.payload);
+    },
+    setFollowUser: (state, action: { payload: string }) => {
+      state.following.push(action.payload);
     },
   },
 });
 
-export const { setUser, updateUser, logout } = userSlice.actions;
+export const { setUser, updateUser, setUnfollowUser, setFollowUser } =
+  userSlice.actions;
 
 export default userSlice.reducer;
 

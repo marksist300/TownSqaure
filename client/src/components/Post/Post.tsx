@@ -86,7 +86,7 @@ const Post = ({
             <span className={style.postDate}>{format(date)}</span>
           </div>
           <div className={style.topRight}>
-            <DotMenu postId={postId} />
+            {postFromCurrentUser && <DotMenu postId={postId} />}
           </div>
         </div>
         <div className={style.center}>
@@ -110,7 +110,7 @@ const Post = ({
           <div className={style.bottomRight}>
             <span
               className={style.commentSection}
-            >{`${comments} comments`}</span>
+            >{`${comments} Comments`}</span>
           </div>
         </div>
       </div>

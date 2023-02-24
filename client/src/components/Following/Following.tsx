@@ -7,7 +7,7 @@ const Following = ({ profilePic, username }: Follow) => {
     <div className={style.userFollowing}>
       <img
         className={style.userFollowImg}
-        src={profilePic || assetsPath + "/profile/pic1.jpg"}
+        src={profilePic || assetsPath + "/assets/profile/default.png"}
         alt=""
       />
       <span className={style.userFollowingName}>{username}</span>

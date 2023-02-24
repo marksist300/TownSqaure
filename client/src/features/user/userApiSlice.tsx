@@ -27,6 +27,26 @@ export const userApiSlice = apiSlice.injectEndpoints({
         body: postdata,
       }),
     }),
+    fetchFollowerList: builder.mutation({
+      query: userId => ({
+        url: `/users/followers/${userId}`,
+        method: "GET",
+      }),
+    }),
+    followUser: builder.mutation({
+      query: ({ userId, currentUserId }) => ({
+        url: `/users/follow/${userId}`,
+        method: "PUT",
+        body: { currentUserId: currentUserId },
+      }),
+    }),
+    unFollowUser: builder.mutation({
+      query: ({ userId, currentUserId }) => ({
+        url: `/users/unfollow/${userId}`,
+        method: "PUT",
+        body: { currentUserId: currentUserId },
+      }),
+    }),
   }),
 });
 
@@ -35,4 +55,7 @@ export const {
   useGetSpecificUsersPostsMutation,
   useGetUserAndFollowedPostsMutation,
   useCreatePostMutation,
+  useFetchFollowerListMutation,
+  useFollowUserMutation,
+  useUnFollowUserMutation,
 } = userApiSlice;

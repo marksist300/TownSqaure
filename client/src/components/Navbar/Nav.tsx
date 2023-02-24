@@ -1,5 +1,4 @@
 import style from "./Nav.module.scss";
-import { useContext } from "react";
 import { Search, Person, Chat, Notifications } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";

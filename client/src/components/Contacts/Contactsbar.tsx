@@ -1,8 +1,8 @@
 import style from "./Contactsbar.module.scss";
 import ProfileContactsBar from "../ContactsProfile/ProfileContactsBar";
 import HomepageContactsBar from "./HomepageContactsBar";
-import { User } from "../../types";
 const Contactsbar = ({ user }: any) => {
+  // if there are user props: then
   return (
     <section className={style.contactsContainer}>
       <div className={style.wrapper}>

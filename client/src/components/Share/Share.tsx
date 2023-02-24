@@ -3,9 +3,11 @@ import { PermMedia, EmojiEmotions, Label, Room } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import { createPost, createPostNoImg } from "../../helpers/apiCalls";
+import { useCreatePostMutation } from "../../features/user/userApiSlice";
 
 const Share = () => {
   const user = useSelector((state: RootState) => state.user);
+  const [createPost] = useCreatePostMutation();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -18,13 +20,16 @@ const Share = () => {
           formData.append("userId", user._id);
           formData.append("description", description.value);
           formData.append("img", img.files[0]);
-          const newPost = await createPost(formData);
+          const newPost = await createPost(formData).unwrap();
+
           window.location.reload();
         } else {
           //No Image file is attached, create a post without an image.
-          const newPost = await createPostNoImg(
-            JSON.stringify({ userId: user._id, description: description.value })
-          );
+          const newPost = await createPost({
+            userId: user._id,
+            description: description.value,
+          }).unwrap();
+
           window.location.reload();
         }
       } catch (error) {

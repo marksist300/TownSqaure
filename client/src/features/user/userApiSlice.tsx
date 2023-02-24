@@ -21,6 +21,13 @@ export const userApiSlice = apiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+    createPost: builder.mutation({
+      query: postdata => ({
+        url: "/post/new",
+        method: "POST",
+        body: postdata,
+      }),
+    }),
   }),
 });
 
@@ -28,4 +35,5 @@ export const {
   useGetProfileMutation,
   useGetSpecificUsersPostsMutation,
   useGetUserAndFollowedPostsMutation,
+  useCreatePostMutation,
 } = userApiSlice;

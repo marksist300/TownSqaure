@@ -36,9 +36,8 @@ const ProfileContactsBar = ({ user }: User) => {
     //Function to fetch all followed users and set them into local state so as to have access to their images.
     const getFollowing = async () => {
       try {
-        if (user) {
+        if (user._id !== currentUser._id) {
           const followerList = await fetchFollowerList(user._id).unwrap();
-          console.log(followerList);
           setFollowing(followerList);
         }
       } catch (error) {

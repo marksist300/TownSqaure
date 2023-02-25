@@ -46,9 +46,7 @@ const Nav = () => {
         <Link to={`/profile/${user?.username}`}>
           <img
             src={
-              user?.profilePic
-                ? user.profilePic
-                : `${assets}/profile/default.png`
+              user?.profilePic ? user.profilePic : `/assets/profile/default.png`
             }
             alt=""
             className={style.userImg}

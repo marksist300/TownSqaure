@@ -1,5 +1,4 @@
 import style from "./Sidebar.module.scss";
-import { usersData as Users } from "../../dummyData";
 import FriendsSide from "../FriendsSide/FriendsSide";
 import {
   RssFeed,

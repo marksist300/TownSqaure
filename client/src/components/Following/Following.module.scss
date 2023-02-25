@@ -1,15 +1,24 @@
-.userFollowing {
-  display: flex;
-  flex-direction: column;
-  margin: 2px;
-}
-.userFollowImg {
-  width: 6rem;
-  height: 6rem;
-  object-fit: cover;
-  cursor: pointer;
-}
-.userFollowingName {
-  text-align: center;
-  width: 6rem;
+.parentLink {
+  color: rgba(255, 255, 255, 0.87);
+  text-decoration: none;
+  :hover {
+    color: #ffbd20;
+    transition: 0.3s;
+  }
+
+  .userFollowing {
+    display: flex;
+    flex-direction: column;
+    margin: 2px;
+  }
+  .userFollowImg {
+    width: 6rem;
+    height: 6rem;
+    object-fit: cover;
+    cursor: pointer;
+  }
+  .userFollowingName {
+    text-align: center;
+    width: 6rem;
+  }
 }

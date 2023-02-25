@@ -13,7 +13,7 @@ const Home = () => {
       <Nav />
       <div className={style.homeContainer}>
         <Sidebar />
-        <Feed username={user.username || undefined} />
+        <Feed />
         <Contactsbar />
       </div>
     </>

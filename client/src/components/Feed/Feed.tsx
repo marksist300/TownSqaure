@@ -9,9 +9,10 @@ import {
   useGetSpecificUsersPostsMutation,
   useGetUserAndFollowedPostsMutation,
 } from "../../features/user/userApiSlice";
+import { useParams } from "react-router-dom";
 
-const Feed = ({ username }: Username) => {
-  const server = import.meta.env.VITE_SERVER_DOMAIN;
+const Feed = () => {
+  const pageUserName = useParams().username;
   const [postsData, setPostData] = useState<PostType[]>([]);
   const user = useSelector((state: RootState) => state.user);
 
@@ -22,10 +23,12 @@ const Feed = ({ username }: Username) => {
   //else if logged in user:
   //  fetch all the posts of a user's posts + the posts of those they follow
   useEffect(() => {
+    console.log("***runing Effect in FEED***");
     const fetcher = async () => {
+      setPostData([]);
       let data: [];
-      if (username !== user.username && username) {
-        data = await getSpecificUsersPosts(username).unwrap();
+      if (user?.username !== pageUserName) {
+        data = await getSpecificUsersPosts(pageUserName).unwrap();
       } else if (user?._id) {
         data = await getUserAndFollowedPosts(user._id).unwrap();
       } else {
@@ -43,25 +46,27 @@ const Feed = ({ username }: Username) => {
       }
     };
     fetcher();
-  }, [username, user]);
+  }, [pageUserName, user]);
 
-  const posts = postsData.map(item => (
-    <Post
-      key={item._id}
-      likes={item.likes}
-      img={item.img}
-      userId={item.userId}
-      desc={item.description}
-      comments={item.comments}
-      date={item.date}
-      postId={item._id}
-    />
-  ));
+  const posts =
+    postsData &&
+    postsData.map(item => (
+      <Post
+        key={item._id}
+        likes={item.likes}
+        img={item.img}
+        userId={item.userId}
+        desc={item.description}
+        comments={item.comments}
+        date={item.date}
+        postId={item._id}
+      />
+    ));
 
   return (
     <main className={style.feedContainer}>
       <div className={style.wrapper}>
-        {username === user?.username && <Share />}
+        {user.username === pageUserName && <Share />}
         {posts}
       </div>
     </main>

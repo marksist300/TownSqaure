@@ -27,11 +27,13 @@ const ProfileContactsBar = ({ user }: User) => {
 
   //Get the displayed user and if different from current user set into state all the people followed by the displayed user
   useEffect(() => {
+    //TODO => for current Global User run this function at root level and set all followed users data into global state.
     //Function to fetch all followed users and set them into local state so as to have access to their images.
     const getFollowing = async () => {
       try {
         if (user) {
           const followerList = await fetchFollowerList(user._id).unwrap();
+          console.log(followerList);
           setFollowing(followerList);
         }
       } catch (error) {
@@ -46,7 +48,9 @@ const ProfileContactsBar = ({ user }: User) => {
       setAlreadyFollowed(false);
     }
     // Fetch all the users that the displayed user follows and set them into state
-    getFollowing();
+    if (user._id !== currentUser._id) {
+      getFollowing();
+    }
   }, [user!._id]);
 
   const handleClick = async () => {
@@ -67,7 +71,6 @@ const ProfileContactsBar = ({ user }: User) => {
           userId: user._id,
           currentUserId: currentUser._id,
         }).unwrap();
-
         setAlreadyFollowed(true);
         // Dispatch to CurrentUser GlobalState
         dispatch(setFollowUser(user._id));
@@ -126,6 +129,7 @@ const ProfileContactsBar = ({ user }: User) => {
           </span>
         </div>
         <h4 className={style.friendSection}>Friends</h4>
+        {/*TODO: => FIX STYLING OF FOLLOWED USERS*/}
         <div className={style.followingSection}>{followedUsers}</div>
       </div>
     </section>

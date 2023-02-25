@@ -13,6 +13,8 @@ import {
   Bookmark,
 } from "@mui/icons-material";
 const Sidebar = () => {
+  // TODO =>  REFACTOR -> make data dynamic
+
   const users = Users.map(user => (
     <FriendsSide key={`KeY1${user.id}`} user={user} />
   ));

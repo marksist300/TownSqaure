@@ -3,6 +3,8 @@ import { Cake } from "@mui/icons-material";
 import FriendsOnline from "../FriendsOnline/FriendsOnline";
 import { usersData as Users } from "../../dummyData";
 const HomepageContactsBar = () => {
+  // TODO =>  REFACTOR -> make data dynamic
+
   const users = Users.map(user => (
     <FriendsOnline key={`Key${user.id}`} user={user} />
   ));

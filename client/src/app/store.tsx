@@ -3,6 +3,7 @@ import { apiSlice } from "./apiSlice";
 import authReducer from "../features/auth/authSlice";
 import postReducer from "../features/post/postSlice";
 import userReducer from "../features/user/userSlice";
+import followingData from "../features/followed/followed.slice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     auth: authReducer,
     posts: postReducer,
     user: userReducer,
+    followed: followingData,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(apiSlice.middleware),

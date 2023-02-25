@@ -1,10 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { PostProps } from "../../types";
-type DataObj = {
-  followed: PostProps[];
-};
+import { INIT_USER_STATE } from "../../types";
+type DataObj = INIT_USER_STATE[];
 
-const INITIAL_STATE: DataObj = { followed: [] };
+const INITIAL_STATE: DataObj = [];
 
 export const followedSlice = createSlice({
   name: "followingData",
@@ -12,15 +10,13 @@ export const followedSlice = createSlice({
   reducers: {
     setFollowedUsers: (state, action) => {
       return action.payload;
-    },
-    updateFollowedUsers: (state, action: { payload: PostProps }) => {
-      state.followed.push(action.payload);
+      // return action.payload;
     },
   },
 });
 
-export const { setFollowedUsers, updateFollowedUsers } = followedSlice.actions;
+export const { setFollowedUsers } = followedSlice.actions;
 
 export default followedSlice.reducer;
 
-export const posts = (state: DataObj) => state;
+export const followed = (state: DataObj[]) => state;

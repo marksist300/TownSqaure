@@ -15,10 +15,15 @@ import { setUnfollowUser, setFollowUser } from "../../features/user/userSlice";
 const ProfileContactsBar = ({ user }: User) => {
   //Who the user displayed on the page is following:
   const currentUser = useSelector((state: RootState) => state.user);
+  const globalUserFollowingList = useSelector(
+    (state: RootState) => state.followed
+  );
+
   const [following, setFollowing] = useState([]);
   const [alreadyFollowed, setAlreadyFollowed] = useState(
     currentUser.following.includes(user._id)
   );
+
   const dispatch = useDispatch();
 
   const [fetchFollowerList] = useFetchFollowerListMutation();
@@ -49,6 +54,7 @@ const ProfileContactsBar = ({ user }: User) => {
     }
     // Fetch all the users that the displayed user follows and set them into state
     if (user._id !== currentUser._id) {
+      console.log("API REQUEST FOR USER DATA");
       getFollowing();
     }
   }, [user!._id]);
@@ -96,9 +102,17 @@ const ProfileContactsBar = ({ user }: User) => {
     }
   };
 
-  const followedUsers = following?.map(({ profilePic, username }, i) => (
-    <Following profilePic={profilePic} username={username} key={i} />
-  ));
+  const followedUsers =
+    user._id === currentUser._id
+      ? globalUserFollowingList?.map(
+          (
+            { profilePic, username }: { profilePic: string; username: string },
+            i
+          ) => <Following profilePic={profilePic} username={username} key={i} />
+        )
+      : following?.map(({ profilePic, username }, i) => (
+          <Following profilePic={profilePic} username={username} key={i} />
+        ));
 
   return (
     <section className={style.sideBarSection}>

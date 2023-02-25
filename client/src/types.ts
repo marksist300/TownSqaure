@@ -9,7 +9,7 @@ export interface User {
     email: string;
     following: string[];
     followers: string[];
-    relationship: number;
+    relationship: number | null;
     _id: string;
   };
 }

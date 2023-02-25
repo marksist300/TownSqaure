@@ -1,10 +1,9 @@
 import style from "./FriendsOnline.module.scss";
 import { Link } from "react-router-dom";
+import { User } from "../../types";
 
-const assetsPath = import.meta.env.VITE_PUBLIC_FOLDER;
-const FriendsOnline = ({ user }: any) => {
+const FriendsOnline = ({ user }: User) => {
   // TODO =>  REFACTOR -> make data dynamic
-  console.log(user);
   return (
     <Link to={`/profile/${user.username}`} className={style.parentLink}>
       <li className={style.friendLink}>

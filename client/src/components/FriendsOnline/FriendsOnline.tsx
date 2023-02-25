@@ -1,24 +1,24 @@
 import style from "./FriendsOnline.module.scss";
-import { UserProps } from "../../types";
+import { Link } from "react-router-dom";
 
 const assetsPath = import.meta.env.VITE_PUBLIC_FOLDER;
-const FriendsOnline = ({ user }: UserProps) => {
+const FriendsOnline = ({ user }: any) => {
   // TODO =>  REFACTOR -> make data dynamic
-
+  console.log(user);
   return (
-    <ul className={style.friendList}>
+    <Link to={`/profile/${user.username}`} className={style.parentLink}>
       <li className={style.friendLink}>
         <div className={style.friendProfileImgContainer}>
           <img
             className={style.profilePic}
-            src={assetsPath + user.profile}
+            src={user.profilePic || "/assets/profile/default.png"}
             alt="Friend's profile pic"
           />
           <span className={style.onlineStatus}></span>
         </div>
-        <span className={style.friendName}>{user.name}</span>
+        <span className={style.friendName}>{user.username || ""}</span>
       </li>
-    </ul>
+    </Link>
   );
 };
 

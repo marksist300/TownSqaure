@@ -12,11 +12,12 @@ import {
   Star,
   Bookmark,
 } from "@mui/icons-material";
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
 const Sidebar = () => {
-  // TODO =>  REFACTOR -> make data dynamic
-
-  const users = Users.map(user => (
-    <FriendsSide key={`KeY1${user.id}`} user={user} />
+  const globalFollowedUsers = useSelector((state: RootState) => state.followed);
+  const users = globalFollowedUsers.map(user => (
+    <FriendsSide key={`KeY1${user._id}`} user={user} />
   ));
   return (
     <section className={style.sidebarContainer}>
@@ -62,7 +63,7 @@ const Sidebar = () => {
         <button className={style.showMoreBtn}>Show More</button>
         {/* break line for friend section */}
         <hr />
-        {users}
+        <ul className={style.friendList}>{users}</ul>
       </div>
     </section>
   );

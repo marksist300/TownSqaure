@@ -1,19 +1,20 @@
 import style from "./FriendsSide.module.scss";
-import { UserProps } from "../../types";
+import { Link } from "react-router-dom";
 
-const FriendsSide = ({ user }: UserProps) => {
-  const assetsPath = import.meta.env.VITE_PUBLIC_FOLDER;
+import { User } from "../../types";
+
+const FriendsSide = ({ user }: User) => {
   return (
-    <ul className={style.friendList}>
+    <Link to={`/profile/${user.username}`} className={style.parentLink}>
       <li className={style.friendLink}>
         <img
           className={style.friendLinkImg}
-          src={assetsPath + user.profile}
+          src={user.profilePic || "/assets/profile/default.png"}
           alt="Friend's profile photo"
         />
-        <span className={style.friendLinkName}>{user.name}</span>
+        <span className={style.friendLinkName}>{user.username || ""}</span>
       </li>
-    </ul>
+    </Link>
   );
 };
 

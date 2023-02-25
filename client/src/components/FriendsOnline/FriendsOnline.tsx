@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { User } from "../../types";
 
 const FriendsOnline = ({ user }: User) => {
-  // TODO =>  REFACTOR -> make data dynamic
   return (
     <Link to={`/profile/${user.username}`} className={style.parentLink}>
       <li className={style.friendLink}>

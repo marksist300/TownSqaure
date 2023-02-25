@@ -6,7 +6,7 @@ import { RootState } from "../../app/store";
 const HomepageContactsBar = () => {
   // TODO =>  REFACTOR -> make data dynamic
   const globalFollowedUsers = useSelector((state: RootState) => state.followed);
-  console.log("global Follows ", globalFollowedUsers);
+
   const users = globalFollowedUsers.map(user => (
     <FriendsOnline key={`Key${user._id}`} user={user} />
   ));

@@ -15,8 +15,10 @@ import { setUser } from "./features/user/userSlice";
 import { setLogin } from "./features/auth/authSlice";
 import { useGetUserDataMutation } from "./features/auth/authApiSlice";
 import { useGetGlobalFollowedUsersMutation } from "./features/followed/followedApiSlice";
+import { useGetUserAndFollowedPostsMutation } from "./features/user/userApiSlice";
 import jwtDecode from "jwt-decode";
 import { setFollowedUsers } from "./features/followed/followed.slice";
+import { getAllPosts } from "./features/post/postSlice";
 
 type JWT = {
   id: string;
@@ -24,19 +26,26 @@ type JWT = {
   loggedIn: string;
 };
 function App() {
+  //TODO: Fetch all current Global users own and followed posts and set them into global state.
+
   const authState = useSelector((state: RootState) => state.auth);
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
   const [getUserData, { data, isLoading, isError, error }] =
     useGetUserDataMutation();
   const [getGlobalFollowedUsers] = useGetGlobalFollowedUsersMutation();
+  const [getUserAndFollowedPosts] = useGetUserAndFollowedPostsMutation();
 
   //Function to take user's follow list and fetch the data of each individual user the Global user follows
   //That data is then set into state globally to be used throughout hte app.
   const fetchDataOfFollowedUsers = async (id: string) => {
     const followedUsersData = await getGlobalFollowedUsers(id).unwrap();
     dispatch(setFollowedUsers(followedUsersData));
-    console.log("display followed user's data: ", followedUsersData);
+  };
+
+  const fetchUsersAndFollowedPostsINIT = async (id: string) => {
+    const allUsersAndFollowedData = await getUserAndFollowedPosts(id).unwrap();
+    dispatch(getAllPosts(allUsersAndFollowedData));
   };
 
   // Fetch User info if logged in and token valid
@@ -69,11 +78,20 @@ function App() {
     }
   }, [authState.token]);
 
+  //Run a fetch for all followed users and set them into state
   useEffect(() => {
     if (user._id) {
       fetchDataOfFollowedUsers(user._id);
     }
   }, [user.following]);
+
+  //Run a fetch for all global user's and followed users' posts and set them into state
+  useEffect(() => {
+    console.log("***UseEffect=> INIT global POST STATE");
+    if (user._id) {
+      fetchUsersAndFollowedPostsINIT(user._id);
+    }
+  }, [user._id]);
 
   return (
     <Router>

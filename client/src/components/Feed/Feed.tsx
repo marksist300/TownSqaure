@@ -3,21 +3,18 @@ import style from "./Feed.module.scss";
 import Share from "../Share/Share";
 import Post from "../Post/Post";
 import { useSelector } from "react-redux";
-import { PostType, Username } from "../../types";
+import { PostType } from "../../types";
 import { RootState } from "../../app/store";
-import {
-  useGetSpecificUsersPostsMutation,
-  useGetUserAndFollowedPostsMutation,
-} from "../../features/user/userApiSlice";
+import { useGetSpecificUsersPostsMutation } from "../../features/user/userApiSlice";
 import { useParams } from "react-router-dom";
 
 const Feed = () => {
   const pageUserName = useParams().username;
   const [postsData, setPostData] = useState<PostType[]>([]);
   const user = useSelector((state: RootState) => state.user);
+  const postGlobalState = useSelector((state: RootState) => state.posts);
 
   const [getSpecificUsersPosts] = useGetSpecificUsersPostsMutation();
-  const [getUserAndFollowedPosts] = useGetUserAndFollowedPostsMutation();
 
   //Fetch all a specific user's posts, if the page is not the loggedIn user
   //else if logged in user:
@@ -26,11 +23,11 @@ const Feed = () => {
     console.log("***runing Effect in FEED***");
     const fetcher = async () => {
       setPostData([]);
-      let data: [];
+      let data: PostType[];
       if (user?.username !== pageUserName && pageUserName) {
         data = await getSpecificUsersPosts(pageUserName).unwrap();
       } else if (user?._id) {
-        data = await getUserAndFollowedPosts(user._id).unwrap();
+        data = postGlobalState;
       } else {
         return;
       }
@@ -46,7 +43,7 @@ const Feed = () => {
       }
     };
     fetcher();
-  }, [pageUserName, user]);
+  }, [pageUserName, user, postGlobalState]);
 
   const posts =
     postsData &&

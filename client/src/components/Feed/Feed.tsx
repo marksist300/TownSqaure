@@ -27,7 +27,7 @@ const Feed = () => {
     const fetcher = async () => {
       setPostData([]);
       let data: [];
-      if (user?.username !== pageUserName) {
+      if (user?.username !== pageUserName && pageUserName) {
         data = await getSpecificUsersPosts(pageUserName).unwrap();
       } else if (user?._id) {
         data = await getUserAndFollowedPosts(user._id).unwrap();

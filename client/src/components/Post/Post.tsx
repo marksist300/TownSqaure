@@ -3,7 +3,10 @@ import style from "./Post.module.scss";
 import { Favorite, ThumbUp } from "@mui/icons-material";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
-import { likePostAPICall, fetchPostUser } from "../../helpers/apiCalls";
+import { useLikePostApiCallMutation } from "../../features/post/postApiSlice";
+//TODO: Handle Like and Unlike via Redux and RTKQ => POST component 👆🏻
+import { useFetchPostUserMutation } from "../../features/user/userApiSlice";
+
 import DotMenu from "../DotMenu/DotMenu";
 import { PostProps, PostUser } from "../../types";
 import { useSelector } from "react-redux";
@@ -22,19 +25,25 @@ const Post = ({
   const [like, setLike] = useState(likes.length);
   const [user, setUser] = useState<PostUser | null>(null);
   const postFromCurrentUser = userId === currentUser._id;
+  const [fetchPostUser] = useFetchPostUserMutation();
+  const [likePostApiCall] = useLikePostApiCallMutation();
+
+  //Fetch user photo and details to display on post, if the poster was not the current user.
   useEffect(() => {
     if (!postFromCurrentUser) {
       const fetch = async () => {
-        const data = await fetchPostUser(userId);
+        const data = await fetchPostUser(userId).unwrap();
         setUser(data);
       };
       fetch();
     }
   }, []);
 
+  //Handle the like button, increment or decrement count
   const likeClicker = async () => {
     try {
-      const data = await likePostAPICall(postId, JSON.stringify(userId));
+      const data = await likePostApiCall({ postId, userId }).unwrap();
+
       if (data === "Post liked") {
         setLike(liked => liked + 1);
       } else if (data === "Post unliked") {
@@ -58,6 +67,7 @@ const Post = ({
     else if (count === 1) return `${count} person likes this`;
     else return `${count} people like this`;
   };
+
   return (
     <article className={style.postSection}>
       <div className={style.wrapper}>

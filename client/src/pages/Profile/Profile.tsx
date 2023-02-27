@@ -32,7 +32,6 @@ const Profile = () => {
 
   //GET user data if user not current global user in state
   useEffect(() => {
-    console.log("userEffect running in profile");
     if (currentUser?.username !== params.username) {
       const fetchUserProfilePage = async () => {
         const result = await getProfile(params.username).unwrap();

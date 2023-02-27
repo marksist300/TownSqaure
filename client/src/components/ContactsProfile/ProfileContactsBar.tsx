@@ -53,7 +53,6 @@ const ProfileContactsBar = ({ user }: User) => {
     }
     // Fetch all the users that the displayed user follows and set them into state
     if (user._id !== currentUser._id) {
-      console.log("API REQUEST FOR USER DATA");
       getFollowing();
     }
   }, [user!._id]);

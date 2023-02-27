@@ -43,7 +43,6 @@ const DotMenu = ({ postId }: { postId: string }) => {
 
           //@ts-ignore
           if (res!.data === "Post deleted") {
-            console.log("DELETING post FROM STATE");
             dispatch(deletePostFromState(postId));
           } else {
             console.error(res);

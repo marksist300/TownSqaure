@@ -20,17 +20,12 @@ const Feed = () => {
   //else if logged in user:
   //  fetch all the posts of a user's posts + the posts of those they follow
   useEffect(() => {
-    console.log("***runing Effect in FEED***");
     const fetcher = async () => {
       setPostData([]);
       let data: PostType[];
       if (user?.username !== pageUserName && pageUserName) {
         data = await getSpecificUsersPosts(pageUserName).unwrap();
-      }
-      // else if (user?._id) {
-      //   data = postGlobalState;
-      // }
-      else {
+      } else {
         return;
       }
       if (data) {
@@ -82,7 +77,11 @@ const Feed = () => {
   return (
     <main className={style.feedContainer}>
       <div className={style.wrapper}>
-        {user.username === pageUserName && <Share />}
+        {user.username === pageUserName ? (
+          <Share />
+        ) : !pageUserName ? (
+          <Share />
+        ) : null}
         {posts}
       </div>
     </main>

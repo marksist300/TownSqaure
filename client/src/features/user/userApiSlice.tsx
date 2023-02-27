@@ -15,6 +15,12 @@ export const userApiSlice = apiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+    fetchPostUser: builder.mutation({
+      query: userId => ({
+        url: `/users?userId=${userId}`,
+        method: "GET",
+      }),
+    }),
     followUser: builder.mutation({
       query: ({ userId, currentUserId }) => ({
         url: `/users/follow/${userId}`,
@@ -34,6 +40,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useGetProfileMutation,
+  useFetchPostUserMutation,
   useFetchFollowerListMutation,
   useFollowUserMutation,
   useUnFollowUserMutation,

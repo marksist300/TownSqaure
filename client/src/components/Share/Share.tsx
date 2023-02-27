@@ -31,7 +31,6 @@ const Share = () => {
             userId: user._id,
             description: description.value,
           }).unwrap();
-          console.log(newPost);
           dispatch(newPostToState(newPost));
         }
       } catch (error) {

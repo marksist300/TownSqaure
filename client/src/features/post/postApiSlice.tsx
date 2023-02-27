@@ -29,6 +29,13 @@ export const postApiSlice = apiSlice.injectEndpoints({
         body: { userId: userId },
       }),
     }),
+    likePostApiCall: builder.mutation({
+      query: ({ postId, userId }: { postId: string; userId: string }) => ({
+        url: `/post/like/${postId}`,
+        method: "PUT",
+        body: { userId },
+      }),
+    }),
   }),
 });
 
@@ -37,4 +44,5 @@ export const {
   useGetSpecificUsersPostsMutation,
   useGetUserAndFollowedPostsMutation,
   useDeletePostMutation,
+  useLikePostApiCallMutation,
 } = postApiSlice;

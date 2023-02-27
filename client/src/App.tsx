@@ -26,7 +26,7 @@ type JWT = {
   loggedIn: string;
 };
 function App() {
-  //TODO: Manage delete posts by removing them from global state
+  //TODO: Handle Like and Unlike via Redux and RTKQ => POST component
   const authState = useSelector((state: RootState) => state.auth);
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
@@ -49,12 +49,9 @@ function App() {
 
   // Fetch User info if logged in and token valid
   useEffect(() => {
-    console.log("running useEffect APP on STARTUP");
-
     //Function to fetch user's DATA and set into state
     const fetchData = async (id: string) => {
       const userinfo = await getUserData(id);
-      console.log("fetching data");
       //@ts-ignore
       const user = userinfo.data;
       dispatch(setUser({ ...user }));
@@ -86,7 +83,6 @@ function App() {
 
   //Run a fetch for all global user's and followed users' posts and set them into state
   useEffect(() => {
-    console.log("***UseEffect=> INIT global POST STATE");
     if (user._id) {
       fetchUsersAndFollowedPostsINIT(user._id);
     }

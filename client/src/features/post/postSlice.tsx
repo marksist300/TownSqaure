@@ -10,17 +10,13 @@ export const postsSlice = createSlice({
     getAllPosts: (state, action) => {
       return action.payload;
     },
-    createPostWithImg: (state, action) => {
-      state.push(action.payload);
-    },
-    createPostNoImg: (state, action) => {
+    newPostToState: (state, action) => {
       state.push(action.payload);
     },
   },
 });
 
-export const { getAllPosts, createPostWithImg, createPostNoImg } =
-  postsSlice.actions;
+export const { getAllPosts, newPostToState } = postsSlice.actions;
 
 export default postsSlice.reducer;
 

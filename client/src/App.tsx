@@ -15,7 +15,7 @@ import { setUser } from "./features/user/userSlice";
 import { setLogin } from "./features/auth/authSlice";
 import { useGetUserDataMutation } from "./features/auth/authApiSlice";
 import { useGetGlobalFollowedUsersMutation } from "./features/followed/followedApiSlice";
-import { useGetUserAndFollowedPostsMutation } from "./features/user/userApiSlice";
+import { useGetUserAndFollowedPostsMutation } from "./features/post/postApiSlice";
 import jwtDecode from "jwt-decode";
 import { setFollowedUsers } from "./features/followed/followed.slice";
 import { getAllPosts } from "./features/post/postSlice";
@@ -26,7 +26,7 @@ type JWT = {
   loggedIn: string;
 };
 function App() {
-  //TODO: Manage new posts by placing them into state.
+  //TODO: Manage delete posts by removing them from global state
   const authState = useSelector((state: RootState) => state.auth);
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();

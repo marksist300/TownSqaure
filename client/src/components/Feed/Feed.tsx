@@ -5,7 +5,7 @@ import Post from "../Post/Post";
 import { useSelector } from "react-redux";
 import { PostType } from "../../types";
 import { RootState } from "../../app/store";
-import { useGetSpecificUsersPostsMutation } from "../../features/user/userApiSlice";
+import { useGetSpecificUsersPostsMutation } from "../../features/post/postApiSlice";
 import { useParams } from "react-router-dom";
 
 const Feed = () => {

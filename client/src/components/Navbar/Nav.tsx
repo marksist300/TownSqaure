@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 
-const assets = import.meta.env.VITE_PUBLIC_FOLDER;
-
 const Nav = () => {
   const user = useSelector((state: RootState) => state.user);
 

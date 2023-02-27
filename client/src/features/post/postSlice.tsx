@@ -13,10 +13,14 @@ export const postsSlice = createSlice({
     newPostToState: (state, action) => {
       state.push(action.payload);
     },
+    deletePostFromState: (state, action) => {
+      return state.filter(post => post._id !== action.payload);
+    },
   },
 });
 
-export const { getAllPosts, newPostToState } = postsSlice.actions;
+export const { getAllPosts, newPostToState, deletePostFromState } =
+  postsSlice.actions;
 
 export default postsSlice.reducer;
 

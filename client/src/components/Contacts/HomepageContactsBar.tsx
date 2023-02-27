@@ -3,6 +3,7 @@ import { Cake } from "@mui/icons-material";
 import FriendsOnline from "../FriendsOnline/FriendsOnline";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
+
 const HomepageContactsBar = () => {
   // TODO =>  REFACTOR -> make data dynamic
   const globalFollowedUsers = useSelector((state: RootState) => state.followed);

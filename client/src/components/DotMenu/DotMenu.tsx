@@ -1,12 +1,15 @@
 import style from "./DotMenu.module.scss";
-import { useState, useEffect, useRef, useContext } from "react";
+import { useState, useEffect, useRef } from "react";
 import { MoreVert } from "@mui/icons-material";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../app/store";
-import { deletePost } from "../../helpers/apiCalls";
+import { deletePostFromState } from "../../features/post/postSlice";
+import { useDeletePostMutation } from "../../features/post/postApiSlice";
 
 const DotMenu = ({ postId }: { postId: string }) => {
   const user = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch();
+  const [deletePost] = useDeletePostMutation();
 
   const [displayMenu, setDisplayMenu] = useState(false);
   const clickRef = useRef<HTMLInputElement>(null);
@@ -22,7 +25,10 @@ const DotMenu = ({ postId }: { postId: string }) => {
     };
   }, [clickRef]);
 
-  const handleClick = async (e: any, action: string) => {
+  const handleClick = async (
+    e: React.MouseEvent<HTMLLIElement, MouseEvent>,
+    action: string
+  ) => {
     e.preventDefault();
     if (!user) {
       return "No User";
@@ -30,9 +36,15 @@ const DotMenu = ({ postId }: { postId: string }) => {
     if (user._id) {
       try {
         if (action === "delete") {
-          const res = await deletePost(postId, user._id);
-          if (res === "Post deleted") {
-            window.location.reload();
+          const res = await deletePost({
+            userId: user._id,
+            postId,
+          });
+
+          //@ts-ignore
+          if (res!.data === "Post deleted") {
+            console.log("DELETING post FROM STATE");
+            dispatch(deletePostFromState(postId));
           } else {
             console.error(res);
           }

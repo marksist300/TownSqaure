@@ -1,10 +1,15 @@
 import style from "./Contactsbar.module.scss";
 import { Cake } from "@mui/icons-material";
 import FriendsOnline from "../FriendsOnline/FriendsOnline";
-import { usersData as Users } from "../../dummyData";
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
+
 const HomepageContactsBar = () => {
-  const users = Users.map(user => (
-    <FriendsOnline key={`Key${user.id}`} user={user} />
+  // TODO =>  REFACTOR -> make data dynamic
+  const globalFollowedUsers = useSelector((state: RootState) => state.followed);
+
+  const users = globalFollowedUsers.map(user => (
+    <FriendsOnline key={`Key${user._id}`} user={user} />
   ));
   const assetsPath = import.meta.env.VITE_PUBLIC_FOLDER;
 
@@ -29,7 +34,7 @@ const HomepageContactsBar = () => {
         alt="Advert"
       />
       <h4 className={style.title}>Friends Online</h4>
-      {users}
+      <ul className={style.friendList}>{users}</ul>
     </>
   );
 };

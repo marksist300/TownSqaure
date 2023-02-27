@@ -1,4 +1,9 @@
-.friendList {
+.parentLink {
+  color: rgba(255, 255, 255, 0.87);
+  text-decoration: none;
+  :hover {
+    font-weight: bold;
+  }
   .friendLink {
     padding-bottom: 0.9rem;
     display: flex;

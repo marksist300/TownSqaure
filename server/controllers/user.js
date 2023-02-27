@@ -58,11 +58,11 @@ const getUser = async (req, res) => {
 
 const followUser = async (req, res) => {
   try {
-    if (req.body.userId !== req.params.id) {
+    if (req.body.currentUserId !== req.params.id) {
       const user = await User.findById(req.params.id);
-      const requestingUser = await User.findById(req.body.userId);
-      if (!user.followers.includes(req.body.userId)) {
-        await user.updateOne({ $push: { followers: req.body.userId } });
+      const requestingUser = await User.findById(req.body.currentUserId);
+      if (!user.followers.includes(req.body.currentUserId)) {
+        await user.updateOne({ $push: { followers: req.body.currentUserId } });
         await requestingUser.updateOne({
           $push: { following: req.params.id },
         });
@@ -80,11 +80,13 @@ const followUser = async (req, res) => {
 
 const unfollowUser = async (req, res) => {
   try {
-    if (req.body.userId !== req.params.id) {
+    if (req.body.currentUserId !== req.params.id) {
       const user = await User.findById(req.params.id);
-      const requestingUser = await User.findById(req.body.userId);
-      if (user.followers.includes(req.body.userId)) {
-        await user.updateOne({ $pull: { followers: req.body.userId } });
+      // console.log("user from page:", user);
+      const requestingUser = await User.findById(req.body.currentUserId);
+      // console.log("current user: ", requestingUser);
+      if (user.followers.includes(req.body.currentUserId)) {
+        await user.updateOne({ $pull: { followers: req.body.currentUserId } });
         await requestingUser.updateOne({
           $pull: { following: req.params.id },
         });

@@ -1,17 +1,19 @@
 import style from "./Following.module.scss";
-const assetsPath = import.meta.env.VITE_PUBLIC_FOLDER;
+import { Link } from "react-router-dom";
 import { Follow } from "../../types";
 
 const Following = ({ profilePic, username }: Follow) => {
   return (
-    <div className={style.userFollowing}>
-      <img
-        className={style.userFollowImg}
-        src={profilePic || assetsPath + "/profile/pic1.jpg"}
-        alt=""
-      />
-      <span className={style.userFollowingName}>{username}</span>
-    </div>
+    <Link to={`/profile/${username}`} className={style.parentLink}>
+      <div className={style.userFollowing}>
+        <img
+          className={style.userFollowImg}
+          src={profilePic || "/assets/profile/default.png"}
+          alt=""
+        />
+        <span className={style.userFollowingName}>{username}</span>
+      </div>
+    </Link>
   );
 };
 

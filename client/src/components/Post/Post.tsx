@@ -1,13 +1,16 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import style from "./Post.module.scss";
 import { Favorite, ThumbUp } from "@mui/icons-material";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
-import { likePostAPICall, fetchPostUser } from "../../helpers/apiCalls";
+import { useLikePostApiCallMutation } from "../../features/post/postApiSlice";
+//TODO: Handle Like and Unlike via Redux and RTKQ => POST component 👆🏻
+import { useFetchPostUserMutation } from "../../features/user/userApiSlice";
+
 import DotMenu from "../DotMenu/DotMenu";
-const server = import.meta.env.VITE_SERVER_DOMAIN;
 import { PostProps, PostUser } from "../../types";
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
 
 const Post = ({
   likes,
@@ -18,21 +21,29 @@ const Post = ({
   userId,
   postId,
 }: PostProps) => {
-  const { user: currentUser } = useContext(AuthContext);
+  const currentUser = useSelector((state: RootState) => state.user);
   const [like, setLike] = useState(likes.length);
   const [user, setUser] = useState<PostUser | null>(null);
+  const postFromCurrentUser = userId === currentUser._id;
+  const [fetchPostUser] = useFetchPostUserMutation();
+  const [likePostApiCall] = useLikePostApiCallMutation();
 
+  //Fetch user photo and details to display on post, if the poster was not the current user.
   useEffect(() => {
-    const fetch = async () => {
-      const data = await fetchPostUser(userId);
-      setUser(data);
-    };
-    fetch();
+    if (!postFromCurrentUser) {
+      const fetch = async () => {
+        const data = await fetchPostUser(userId).unwrap();
+        setUser(data);
+      };
+      fetch();
+    }
   }, []);
 
+  //Handle the like button, increment or decrement count
   const likeClicker = async () => {
     try {
-      const data = await likePostAPICall(postId, JSON.stringify(userId));
+      const data = await likePostApiCall({ postId, userId }).unwrap();
+
       if (data === "Post liked") {
         setLike(liked => liked + 1);
       } else if (data === "Post unliked") {
@@ -43,28 +54,49 @@ const Post = ({
     }
   };
 
+  const renderProfilePic = () => {
+    if (currentUser.profilePic !== "") {
+      return currentUser.profilePic;
+    } else {
+      return "/assets/profile/default.png";
+    }
+  };
+
   const likeCountText = (count: number) => {
     if (count === 0) return "";
     else if (count === 1) return `${count} person likes this`;
     else return `${count} people like this`;
   };
+
   return (
     <article className={style.postSection}>
       <div className={style.wrapper}>
         <div className={style.postTop}>
           <div className={style.topLeft}>
-            <Link to={`/profile/${user?.username}`}>
+            <Link
+              to={
+                postFromCurrentUser
+                  ? `/profile/${currentUser?.username}`
+                  : `/profile/${user?.username}` || "#"
+              }
+            >
               <img
                 className={style.posterProfileImg}
-                src={user?.profilePic || "/assets/profile/default.png"}
-                alt="profile pic of user"
+                src={
+                  postFromCurrentUser ? renderProfilePic() : user?.profilePic
+                }
+                alt="profile pic"
               />
             </Link>
-            <span className={style.posterName}>{user?.username}</span>
+            <span className={style.posterName}>
+              {postFromCurrentUser
+                ? currentUser.username
+                : user?.username || ""}
+            </span>
             <span className={style.postDate}>{format(date)}</span>
           </div>
           <div className={style.topRight}>
-            <DotMenu postId={postId} />
+            {postFromCurrentUser && <DotMenu postId={postId} />}
           </div>
         </div>
         <div className={style.center}>
@@ -88,7 +120,7 @@ const Post = ({
           <div className={style.bottomRight}>
             <span
               className={style.commentSection}
-            >{`${comments} comments`}</span>
+            >{`${comments} Comments`}</span>
           </div>
         </div>
       </div>

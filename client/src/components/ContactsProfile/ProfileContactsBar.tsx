@@ -1,64 +1,83 @@
 import style from "./ProfileContactsBar.module.scss";
-import {
-  fetchFollowerList,
-  followUser,
-  unfollowUser,
-} from "../../helpers/apiCalls";
-import { useContext, useEffect, useState } from "react";
-import Following from "../Following/Following";
+import { useEffect, useState } from "react";
 import { User } from "../../types";
-import { AuthContext } from "../../context/AuthContext";
 import { Add, Remove } from "@mui/icons-material";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../app/store";
+import Following from "../Following/Following";
+import {
+  useFetchFollowerListMutation,
+  useUnFollowUserMutation,
+  useFollowUserMutation,
+} from "../../features/user/userApiSlice";
+import { setUnfollowUser, setFollowUser } from "../../features/user/userSlice";
 
-// TODO: FIX TYPE ERRORS
-interface Follow {
-  _id: string;
-  username: string;
-  profilePic: string;
-}
 const ProfileContactsBar = ({ user }: User) => {
-  const assetsPath = import.meta.env.VITE_PUBLIC_FOLDER;
-
   //Who the user displayed on the page is following:
-  const [following, setFollowing] = useState<Follow[] | null>(null);
-  const [alreadyFollowed, setAlreadyFollowed] = useState(false);
-  const { user: currentUser, dispatch } = useContext(AuthContext);
-  //Get the displayed user and set into state all the people followed by the displayed user
+  const currentUser = useSelector((state: RootState) => state.user);
+  const globalUserFollowingList = useSelector(
+    (state: RootState) => state.followed
+  );
+
+  const [following, setFollowing] = useState([]);
+  const [alreadyFollowed, setAlreadyFollowed] = useState(
+    currentUser.following.includes(user._id)
+  );
+
+  const dispatch = useDispatch();
+
+  const [fetchFollowerList] = useFetchFollowerListMutation();
+  const [unFollowUser] = useUnFollowUserMutation();
+  const [followUser] = useFollowUserMutation();
+
+  //Get the displayed user and if different from current user set into state all the people followed by the displayed user
   useEffect(() => {
-    if (user && currentUser?.following?.includes(user._id)) {
-      console.log("setting followed");
-      setAlreadyFollowed(true);
-    } else {
-      setAlreadyFollowed(false);
-      console.log("setting followed");
-    }
+    //TODO => for current Global User run this function at root level and set all followed users data into global state.
+    //Function to fetch all followed users and set them into local state so as to have access to their images.
     const getFollowing = async () => {
       try {
-        if (user) {
-          const followerList = await fetchFollowerList(user._id);
+        if (user._id !== currentUser._id) {
+          const followerList = await fetchFollowerList(user._id).unwrap();
           setFollowing(followerList);
         }
       } catch (error) {
         console.error(error);
       }
     };
-    getFollowing();
+
+    //if not current user's own page check if page displayed user's page is followed by current user
+    if (user && currentUser.following.includes(user?._id)) {
+      setAlreadyFollowed(true);
+    } else {
+      setAlreadyFollowed(false);
+    }
+    // Fetch all the users that the displayed user follows and set them into state
+    if (user._id !== currentUser._id) {
+      getFollowing();
+    }
   }, [user!._id]);
 
   const handleClick = async () => {
-    if (user && currentUser) {
-      if (currentUser?.following?.includes(user._id)) {
+    if (currentUser._id !== user?._id) {
+      if (currentUser.following.includes(user._id)) {
         // UNFOLLOW USER
-        await unfollowUser(user._id, currentUser._id);
+        await unFollowUser({
+          userId: user._id,
+          currentUserId: currentUser._id,
+        }).unwrap();
+
         setAlreadyFollowed(false);
-        dispatch({ type: "UNFOLLOW_USER", payload: user._id });
-        console.log(currentUser?.following);
+        // Dispatch to CurrentUser GlobalState
+        dispatch(setUnfollowUser(user._id));
       } else {
         // FOLLOW USER
-        await followUser(user._id, currentUser._id);
+        const output = await followUser({
+          userId: user._id,
+          currentUserId: currentUser._id,
+        }).unwrap();
         setAlreadyFollowed(true);
-        dispatch({ type: "FOLLOW_USER", payload: user._id });
-        console.log(currentUser?.following);
+        // Dispatch to CurrentUser GlobalState
+        dispatch(setFollowUser(user._id));
       }
     } else {
       throw new Error("User or Current User missing");
@@ -81,12 +100,21 @@ const ProfileContactsBar = ({ user }: User) => {
     }
   };
 
-  const followedUsers = following?.map(({ profilePic, username }, i) => (
-    <Following profilePic={profilePic} username={username} key={i} />
-  ));
+  const followedUsers =
+    user._id === currentUser._id
+      ? globalUserFollowingList?.map(
+          (
+            { profilePic, username }: { profilePic: string; username: string },
+            i
+          ) => <Following profilePic={profilePic} username={username} key={i} />
+        )
+      : following?.map(({ profilePic, username }, i) => (
+          <Following profilePic={profilePic} username={username} key={i} />
+        ));
+
   return (
     <section className={style.sideBarSection}>
-      {user?.username !== currentUser?.username &&
+      {currentUser._id !== user?._id &&
         (alreadyFollowed ? (
           <button className={style.followBtn} onClick={handleClick}>
             Unfollow <Remove className={style.add} />
@@ -113,6 +141,7 @@ const ProfileContactsBar = ({ user }: User) => {
           </span>
         </div>
         <h4 className={style.friendSection}>Friends</h4>
+        {/*TODO: => FIX STYLING OF FOLLOWED USERS*/}
         <div className={style.followingSection}>{followedUsers}</div>
       </div>
     </section>

@@ -1,13 +1,11 @@
 import style from "./Nav.module.scss";
-import { useContext } from "react";
 import { Search, Person, Chat, Notifications } from "@mui/icons-material";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
-
-const assets = import.meta.env.VITE_PUBLIC_FOLDER;
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
 
 const Nav = () => {
-  const { user } = useContext(AuthContext);
+  const user = useSelector((state: RootState) => state.user);
 
   return (
     <nav className="nav-container">
@@ -46,9 +44,7 @@ const Nav = () => {
         <Link to={`/profile/${user?.username}`}>
           <img
             src={
-              user?.profilePic
-                ? user.profilePic
-                : `${assets}/profile/default.png`
+              user?.profilePic ? user.profilePic : `/assets/profile/default.png`
             }
             alt=""
             className={style.userImg}

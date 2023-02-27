@@ -1,14 +1,21 @@
-.friendLink {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  cursor: pointer;
-  margin-bottom: 1rem;
-}
+.parentLink {
+  color: rgba(255, 255, 255, 0.87);
+  text-decoration: none;
+  :hover {
+    font-weight: bold;
+  }
+  .friendLink {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    margin-bottom: 1rem;
+  }
 
-.friendLinkImg {
-  height: 3rem;
-  width: 3rem;
-  border-radius: 50%;
-  object-fit: cover;
+  .friendLinkImg {
+    height: 3rem;
+    width: 3rem;
+    border-radius: 50%;
+    object-fit: cover;
+  }
 }

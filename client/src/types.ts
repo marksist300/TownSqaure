@@ -7,11 +7,25 @@ export interface User {
     location: string;
     hometown: string;
     email: string;
-    following?: string[];
-    followers?: string[];
-    relationship: number;
+    following: string[];
+    followers: string[];
+    relationship: number | null;
     _id: string;
-  } | null;
+  };
+}
+
+export interface INIT_USER_STATE {
+  cover: string;
+  profilePic: string;
+  username: string;
+  description: string;
+  location: string;
+  hometown: string;
+  email: string;
+  following: string[];
+  followers: string[];
+  relationship: number | null;
+  _id: string;
 }
 
 export interface PostType {

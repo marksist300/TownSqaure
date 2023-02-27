@@ -1,11 +1,14 @@
 import style from "./Share.module.scss";
-import { useContext } from "react";
 import { PermMedia, EmojiEmotions, Label, Room } from "@mui/icons-material";
-import { AuthContext } from "../../context/AuthContext";
-import { createPost, createPostNoImg } from "../../helpers/apiCalls";
-
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../app/store";
+import { useCreatePostMutation } from "../../features/post/postApiSlice";
+import { newPostToState } from "../../features/post/postSlice";
+import { PostType } from "../../types";
 const Share = () => {
-  const { user } = useContext(AuthContext);
+  const user = useSelector((state: RootState) => state.user);
+  const [createPost] = useCreatePostMutation();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -13,17 +16,22 @@ const Share = () => {
     if (user) {
       try {
         if (img.files[0] !== undefined) {
+          //if an image file is attached upload a post with an image
           const formData: any = new FormData();
           formData.append("userId", user._id);
           formData.append("description", description.value);
           formData.append("img", img.files[0]);
-          const newPost = await createPost(formData);
-          window.location.reload();
+          const newPost: Promise<PostType> = await createPost(
+            formData
+          ).unwrap();
+          dispatch(newPostToState(newPost));
         } else {
-          const newPost = await createPostNoImg(
-            JSON.stringify({ userId: user._id, description: description.value })
-          );
-          window.location.reload();
+          //No Image file is attached, create a post without an image.
+          const newPost: Promise<PostType> = await createPost({
+            userId: user._id,
+            description: description.value,
+          }).unwrap();
+          dispatch(newPostToState(newPost));
         }
       } catch (error) {
         return console.error("Error with submit");

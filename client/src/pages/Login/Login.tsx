@@ -1,21 +1,38 @@
 import style from "./Login.module.scss";
-import React, { useContext, useRef } from "react";
-import { loginAPICall } from "../../helpers/apiCalls";
-import { AuthContext } from "../../context/AuthContext";
+import React, { useRef, useEffect } from "react";
+import { useLoginMutation } from "../../features/auth/authApiSlice";
+import { setLogin } from "../../features/auth/authSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { setUser } from "../../features/user/userSlice";
+import { RootState } from "../../app/store";
 const Login = () => {
   const email = useRef<HTMLInputElement>(null);
   const password = useRef<HTMLInputElement>(null);
-  const { user, isFetching, error, dispatch } = useContext(AuthContext);
+  const user = useSelector((state: RootState) => state);
 
+  const [login, { data, isLoading, isSuccess, isError, error }] =
+    useLoginMutation();
+
+  const dispatch = useDispatch();
+
+  //Handle login request and set user data into state if log successful
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const emailVal = email.current?.value;
     const passwordVal = password.current?.value;
-    const data = await loginAPICall(
-      JSON.stringify({ email: emailVal, password: passwordVal }),
-      dispatch
-    );
+    try {
+      const userData = await login({ email: emailVal, password: passwordVal });
+
+      // @ts-ignore
+      const { token, user } = userData.data;
+      if (token) {
+        dispatch(setLogin({ isLoggedIn: true, token }));
+        dispatch(setUser({ ...user }));
+      }
+    } catch (error) {}
   };
+
   return (
     <main className={style.loginPage}>
       <div className={style.wrapper}>
@@ -43,13 +60,13 @@ const Login = () => {
               minLength={6}
               ref={password}
             />
-            <button className={style.submitBtn} disabled={isFetching}>
-              {isFetching ? "Logging in..." : "Log in"}
+            <button className={style.submitBtn} disabled={isLoading}>
+              {isLoading ? "Logging in..." : "Log in"}
             </button>
             <span className={style.forgottenPassword}>
               Forgotten Your Password?
             </span>
-            <button className={style.registerBtn} disabled={isFetching}>
+            <button className={style.registerBtn} disabled={isLoading}>
               Create an account
             </button>
           </form>

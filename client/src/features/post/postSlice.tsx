@@ -3,8 +3,6 @@ import { PostType } from "../../types";
 
 const INITIAL_STATE: PostType[] = [];
 
-// PUT POSTS INTO STATE
-// TODO: Set up RTK Query for posts
 export const postsSlice = createSlice({
   name: "posts",
   initialState: INITIAL_STATE,

@@ -1,5 +1,6 @@
 import { apiSlice } from "../../app/apiSlice";
 
+//TODO: Manage new posts by placing them into state.
 export const userApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     getProfile: builder.mutation({

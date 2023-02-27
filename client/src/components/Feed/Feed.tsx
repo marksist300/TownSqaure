@@ -26,9 +26,11 @@ const Feed = () => {
       let data: PostType[];
       if (user?.username !== pageUserName && pageUserName) {
         data = await getSpecificUsersPosts(pageUserName).unwrap();
-      } else if (user?._id) {
-        data = postGlobalState;
-      } else {
+      }
+      // else if (user?._id) {
+      //   data = postGlobalState;
+      // }
+      else {
         return;
       }
       if (data) {
@@ -43,22 +45,39 @@ const Feed = () => {
       }
     };
     fetcher();
-  }, [pageUserName, user, postGlobalState]);
+  }, [pageUserName, user._id]);
 
+  const ownUserPostState = [...postGlobalState].sort(
+    (a: PostType, b: PostType) =>
+      Number(new Date(b.date)) - Number(new Date(a.date))
+  );
   const posts =
-    postsData &&
-    postsData.map(item => (
-      <Post
-        key={item._id}
-        likes={item.likes}
-        img={item.img}
-        userId={item.userId}
-        desc={item.description}
-        comments={item.comments}
-        date={item.date}
-        postId={item._id}
-      />
-    ));
+    !pageUserName || pageUserName === user.username
+      ? ownUserPostState.map(item => (
+          <Post
+            key={item._id}
+            likes={item.likes}
+            img={item.img}
+            userId={item.userId}
+            desc={item.description}
+            comments={item.comments}
+            date={item.date}
+            postId={item._id}
+          />
+        ))
+      : postsData &&
+        postsData.map(item => (
+          <Post
+            key={item._id}
+            likes={item.likes}
+            img={item.img}
+            userId={item.userId}
+            desc={item.description}
+            comments={item.comments}
+            date={item.date}
+            postId={item._id}
+          />
+        ));
 
   return (
     <main className={style.feedContainer}>

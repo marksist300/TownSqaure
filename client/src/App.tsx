@@ -26,8 +26,7 @@ type JWT = {
   loggedIn: string;
 };
 function App() {
-  //TODO: Fetch all current Global users own and followed posts and set them into global state.
-
+  //TODO: Manage new posts by placing them into state.
   const authState = useSelector((state: RootState) => state.auth);
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();

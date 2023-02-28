@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import { useGetProfileMutation } from "../../features/user/userApiSlice";
 import CoverImg from "../../components/CoverImg/CoverImg";
+import { Edit } from "@mui/icons-material";
 interface User {
   cover: string;
   profilePic: string;
@@ -55,25 +56,37 @@ const Profile = () => {
               )}
 
               {currentUser?.username === params.username ? (
-                <img
-                  className={style.userImg}
-                  src={
-                    currentUser?.profilePic
-                      ? currentUser?.profilePic
-                      : `/assets/profile/default.png`
-                  }
-                  alt="profile picture"
-                />
+                <div className={style.userImgBlock}>
+                  <img
+                    className={style.userImg}
+                    src={
+                      currentUser?.profilePic
+                        ? currentUser?.profilePic
+                        : `/assets/profile/default.png`
+                    }
+                    alt="profile picture"
+                  />
+                  <button
+                    className={style.editUserImgBtn}
+                    onClick={() => {
+                      console.log("clicked edit photo");
+                    }}
+                  >
+                    <Edit className={style.editUserImg} />
+                  </button>
+                </div>
               ) : (
-                <img
-                  className={style.userImg}
-                  src={
-                    user?.profilePic
-                      ? user?.profilePic
-                      : `/assets/profile/default.png`
-                  }
-                  alt="profile picture"
-                />
+                <div className={style.userImgBlock}>
+                  <img
+                    className={style.userImg}
+                    src={
+                      user?.profilePic
+                        ? user?.profilePic
+                        : `/assets/profile/default.png`
+                    }
+                    alt="profile picture"
+                  />
+                </div>
               )}
             </div>
           </div>

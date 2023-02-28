@@ -14,19 +14,69 @@
     height: 15.7rem;
     object-fit: cover;
   }
-  .userImg {
-    width: 9rem;
-    height: 9rem;
-    border-radius: 50%;
-    border: solid 2px rgba(255, 255, 255, 0.87);
-    object-fit: cover;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-  }
 
+  .userImgBlock {
+    .userImg {
+      width: 9rem;
+      height: 9rem;
+      border-radius: 50%;
+      border: solid 2px rgba(255, 255, 255, 0.87);
+      object-fit: cover;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+    }
+    .editUserImgBtn {
+      padding: 0;
+      border: 0;
+      background: none;
+      box-shadow: none;
+      background: none;
+      position: absolute;
+      left: 6rem;
+      right: 0;
+      bottom: 7.5rem;
+      margin: auto;
+      cursor: pointer;
+      width: 2rem;
+      height: 2rem;
+    }
+
+    .editUserImgBtn:focus > :first-child {
+      border-bottom: 2px solid #fff;
+      border-right: 2px solid #fff;
+      border-left: 2px solid #fffffff1;
+      border-top: 1px solid #ffffffcc;
+      border-radius: 8px;
+      color: gold;
+      box-shadow: 2px 1px 1px #ffffff56;
+      transition: 0.07s;
+    }
+
+    .editUserImg {
+      font-size: 2.5rem;
+      color: rgba(255, 255, 255, 0.87);
+      border-bottom: 2px solid #fff;
+      border-right: 2px solid #fff;
+      border-left: 1px solid #ffffff9b;
+      border-top: 1px solid #ffffff56;
+      box-shadow: 2px 1px 1px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .editUserImg:hover {
+      border-bottom: 2px solid #fff;
+      border-right: 2px solid #fff;
+      border-left: 2px solid #fffffff1;
+      border-top: 1px solid #ffffffcc;
+      border-radius: 8px;
+      color: gold;
+      box-shadow: 2px 1px 1px #ffffff56;
+      transition: 0.07s;
+    }
+  }
   .profileBottom {
     display: flex;
   }

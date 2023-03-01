@@ -2,7 +2,6 @@ import style from "./Modal.module.scss";
 import { useEffect, useRef, useState } from "react";
 import { Close } from "@mui/icons-material";
 import { AddAPhoto, InsertPhoto } from "@mui/icons-material";
-
 type Props = {
   photoModal: boolean;
   setPhotoModal: (active: boolean) => void;
@@ -10,10 +9,13 @@ type Props = {
 //SETBIO as props
 const PhotoModal = ({ photoModal, setPhotoModal }: Props) => {
   const clickRef = useRef<HTMLFormElement>(null);
-
+  const uploadProfilePic = useRef<HTMLInputElement>(null);
+  const uploadCoverPic = useRef<HTMLInputElement>(null);
   const [clicked, setClicked] = useState(false);
   const [error, setError] = useState(false);
+  //Handle shift key
 
+  //Manage clicks outside the modal form section & escape key: close modal
   useEffect(() => {
     function handleClickOutside(e: Event) {
       if (clickRef.current) {
@@ -22,66 +24,63 @@ const PhotoModal = ({ photoModal, setPhotoModal }: Props) => {
         }
       }
     }
+    function handleEscKey(e: KeyboardEvent) {
+      if (e.code === "Escape") {
+        closeModal();
+      } else if (e.code === "Tab" || e.key === "Shift") {
+        if (e.code !== "Tab") return;
+        if (clickRef.current) {
+          const elements = Array.from(
+            clickRef.current.querySelectorAll("button")
+          );
+          const firstElement = elements[0];
+          const lastElement = elements[elements.length - 1];
+
+          if (e.shiftKey) {
+            if (
+              //Shift key down cycle backwards through all tab elements in open modal
+              !clickRef.current.contains(document.activeElement) ||
+              document.activeElement === firstElement
+            ) {
+              lastElement.focus();
+              e.preventDefault();
+            }
+          } else if (
+            //Shift ket not down, cycle through all tab elements in open modal.
+            !clickRef.current.contains(document.activeElement) ||
+            document.activeElement === lastElement
+          ) {
+            firstElement.focus();
+            e.preventDefault();
+          }
+        }
+      }
+    }
     document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleEscKey);
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleEscKey);
     };
   }, [clickRef]);
 
   const closeModal = (e?: any) => {
-    e.preventDefault();
-    // setPhotoModal(false);
+    if (e) {
+      e.preventDefault();
+    }
+    setPhotoModal(false);
     setClicked(false);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setClicked(true);
-
-    let aboutData, hobbiesData, missionData;
-    if (!e.target) {
-      throw new Error("no event target");
-    }
-    const { about, hobbies, mission } = (e.target as any).elements;
-
-    if (about.value !== null && about.value.trim() !== "") {
-      aboutData = about.value;
-    }
-    if (hobbies.value !== null && hobbies.value.trim() !== "") {
-      hobbiesData = hobbies.value;
-    }
-    if (mission.value !== null && mission.value.trim() !== "") {
-      missionData = mission.value;
-    }
-
-    if (!aboutData && !hobbiesData && !missionData) {
-      return setError(true);
-    } else {
-      setError(false);
-
-      // const res = await updateBio(
-      //   user.id,
-      //   aboutData,
-      //   hobbiesData,
-      //   missionData,
-      //   auth.token
-      // );
-
-      // if (res) {
-      //   closeModal();
-      //   dispatch(
-      //     setBio({
-      //       hobbies: hobbiesData,
-      //       about: aboutData,
-      //       mission: missionData,
-      //     })
-      //   );
-      // }
-    }
   };
+
   return (
     <div className={style.modalContainer}>
-      <form ref={clickRef} onSubmit={handleSubmit}>
+      <form ref={clickRef} onSubmit={handleSubmit} id="formContainer">
         <button
           onClick={e => {
             closeModal(e);
@@ -100,11 +99,16 @@ const PhotoModal = ({ photoModal, setPhotoModal }: Props) => {
               Profile Photo
             </label>
             <button
+              type="button"
+              onClick={e => {
+                uploadProfilePic.current?.click();
+              }}
               className={style.profilePicParentBtn}
               aria-label="Upload Profile Photo"
             >
               <AddAPhoto className={style.imgBtns} />
               <input
+                ref={uploadProfilePic}
                 type="file"
                 name="profilePic"
                 id="profilePic"
@@ -118,11 +122,16 @@ const PhotoModal = ({ photoModal, setPhotoModal }: Props) => {
               Cover Photo
             </label>
             <button
+              type="button"
               className={style.profilePicParentBtn}
               aria-label="Upload Cover Photo"
+              onClick={e => {
+                uploadCoverPic.current?.click();
+              }}
             >
               <InsertPhoto className={style.imgBtns} />
               <input
+                ref={uploadCoverPic}
                 type="file"
                 name="cover"
                 id="cover"

@@ -30,7 +30,6 @@ const Profile = () => {
   const currentUser = useSelector((state: RootState) => state.user);
   const [user, setUser] = useState<any>(null);
   const [photoModal, setPhotoModal] = useState<boolean>(false);
-
   const [getProfile, { data, isError, isLoading, error }] =
     useGetProfileMutation();
 
@@ -44,6 +43,16 @@ const Profile = () => {
       fetchUserProfilePage();
     }
   }, [params]);
+
+  //Lock screen position when modal is open
+  useEffect(() => {
+    if (photoModal) {
+      window.document.body.style.overflow = "hidden";
+    } else if (!photoModal) {
+      window.document.body.style.overflow = "unset";
+    }
+  }, [photoModal]);
+
   return (
     <>
       <Nav />

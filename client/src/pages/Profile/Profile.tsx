@@ -29,7 +29,7 @@ const Profile = () => {
   const params = useParams();
   const currentUser = useSelector((state: RootState) => state.user);
   const [user, setUser] = useState<any>(null);
-  const [photoModal, setPhotoModal] = useState(false);
+  const [photoModal, setPhotoModal] = useState<boolean>(false);
 
   const [getProfile, { data, isError, isLoading, error }] =
     useGetProfileMutation();

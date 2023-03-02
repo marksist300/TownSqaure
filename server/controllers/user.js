@@ -29,7 +29,6 @@ const updateUser = async (req, res) => {
 
 const updateUserPhoto = async (req, res) => {
   try {
-    // console.log("body", req.body);
     const { id } = req.params;
     if (!id) {
       return res.status(400).json("User ID Missing");
@@ -71,27 +70,21 @@ const updateUserPhoto = async (req, res) => {
     //THEN:
     //Set the photo(s) on cloudinary and respond so they can be set into the DB and into state
 
-    const newProfilePic = {
-      newProfilePicId: "",
-      newProfilePicUrl: "",
-    };
-    const newCover = {
-      newCoverId: "",
-      newCoverUrl: "",
-    };
+    const newProfilePic = {};
+    const newCover = {};
     if (profilePic) {
       const { public_id, secure_url } = await cloudinary.uploader.upload(
         profilePic.path
       );
-      newProfilePic.newProfilePicId = public_id;
-      newProfilePic.newProfilePicUrl = secure_url;
+      public_id ? (newProfilePic.newProfilePicId = public_id) : null;
+      secure_url ? (newProfilePic.newProfilePicUrl = secure_url) : null;
     }
     if (cover) {
       const { public_id, secure_url } = await cloudinary.uploader.upload(
         cover.path
       );
-      newCover.newCoverId = public_id;
-      newCover.newCoverUrl = secure_url;
+      public_id ? (newCover.newCoverId = public_id) : null;
+      secure_url ? (newCover.newCoverUrl = secure_url) : null;
     }
 
     const updatePhotoInDB = await User.findByIdAndUpdate(
@@ -105,7 +98,6 @@ const updateUserPhoto = async (req, res) => {
       { new: true }
     ).lean();
 
-    console.log(updatePhotoInDB);
     if (updatePhotoInDB) {
       return res.status(200).json({
         coverPhotoId: newCover.newCoverId,

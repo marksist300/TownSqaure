@@ -28,6 +28,8 @@ const INITIAL_STATE: INIT_USER_STATE = {
   followers: [],
   relationship: null,
   _id: "",
+  profilePicId: "",
+  coverId: "",
 };
 
 export const userSlice = createSlice({
@@ -37,27 +39,18 @@ export const userSlice = createSlice({
     setUser: (state, action) => {
       return action.payload;
     },
-    updateUser: (state, action) => {
-      const { user } = action.payload;
-      state._id = user._id ? user._id : state._id;
-      state.cover = user.cover ? user.cover : state.cover;
-      state.profilePic = user.profilePic ? user.profilePic : state.profilePic;
-      state.username = user.username ? user.username : state.username;
-      state.description = user.description
-        ? user.description
-        : state.description;
-      state.location = user.location ? user.location : state.location;
-      state.hometown = user.hometown ? user.hometown : state.hometown;
-      state.email = user.email ? user.email : state.email;
-      state.following = user.following
-        ? user.following.push(action.payload)
-        : state.following;
-      state.followers = user.followers
-        ? user.followers.push(action.payload)
-        : state.followers;
-      state.relationship = user.relationship
-        ? user.relationship
-        : state.relationship;
+    updateUserProfileImgs: (state, action) => {
+      const { user, cover, coverId, profilePic, profilePicId, following } =
+        action.payload;
+      //remove destructuring to improve this && make work with modal image upload
+      state.cover = cover ? (state.cover = cover) : state.cover;
+      state.profilePic = profilePic
+        ? (state.profilePic = profilePic)
+        : state.profilePic;
+      state.profilePicId = profilePicId
+        ? (state.profilePicId = profilePicId)
+        : state.profilePicId;
+      state.coverId = coverId ? (state.coverId = coverId) : state.coverId;
     },
     setUnfollowUser: (state, action) => {
       state.following = state.following.filter(elem => elem !== action.payload);
@@ -68,8 +61,12 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setUser, updateUser, setUnfollowUser, setFollowUser } =
-  userSlice.actions;
+export const {
+  setUser,
+  updateUserProfileImgs,
+  setUnfollowUser,
+  setFollowUser,
+} = userSlice.actions;
 
 export default userSlice.reducer;
 

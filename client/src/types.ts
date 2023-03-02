@@ -26,6 +26,8 @@ export interface INIT_USER_STATE {
   followers: string[];
   relationship: number | null;
   _id: string;
+  profilePicId: string | null;
+  coverId: string | null;
 }
 
 export interface PostType {

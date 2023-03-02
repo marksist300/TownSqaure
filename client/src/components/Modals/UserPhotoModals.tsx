@@ -5,7 +5,7 @@ import { AddAPhoto, InsertPhoto } from "@mui/icons-material";
 import { RootState } from "../../app/store";
 import { useSelector, useDispatch } from "react-redux";
 import { useUploadPhotoMutation } from "../../features/user/userApiSlice";
-
+import { updateUserProfileImgs } from "../../features/user/userSlice";
 type Props = {
   photoModal: boolean;
   setPhotoModal: (active: boolean) => void;
@@ -101,13 +101,24 @@ const PhotoModal = ({ photoModal, setPhotoModal }: Props) => {
           if (cover) {
             formData.append("cover", cover.files[0]);
           }
-          const newPhoto: Promise<Upload> = await uploadPhoto({
+          //CHANGE TO PROMISE AND UPDATE TYPES
+          const newPhoto: any = await uploadPhoto({
             userId: user._id,
             formData,
           }).unwrap();
-          console.log("data sent...");
-          console.log(newPhoto);
-          // dispatch(newPostToState(newPost));
+          if (newPhoto) {
+            const { coverPhotoUrl, coverPhotoId, profilePicUrl, profilePicId } =
+              newPhoto;
+            dispatch(
+              updateUserProfileImgs({
+                cover: coverPhotoUrl,
+                coverId: coverPhotoId,
+                profilePic: profilePicUrl,
+                profilePicId,
+              })
+            );
+            closeModal();
+          }
         } else {
           console.log("No images attached");
           return;

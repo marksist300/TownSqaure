@@ -11,6 +11,8 @@ import { useGetProfileMutation } from "../../features/user/userApiSlice";
 import CoverImg from "../../components/CoverImg/CoverImg";
 import { Edit } from "@mui/icons-material";
 import PhotoModal from "../../components/Modals/UserPhotoModals";
+import EditInfoModal from "../../components/Modals/EditInfoModal";
+import { INIT_USER_STATE } from "../../types";
 
 interface User {
   cover: string;
@@ -28,8 +30,9 @@ interface User {
 const Profile = () => {
   const params = useParams();
   const currentUser = useSelector((state: RootState) => state.user);
-  const [user, setUser] = useState<any>(null);
-  const [photoModal, setPhotoModal] = useState<boolean>(false);
+  const [user, setUser] = useState<INIT_USER_STATE | null>();
+  const [photoModal, setPhotoModal] = useState(false);
+  const [editInfo, setEditInfo] = useState(false);
   const [getProfile, { data, isError, isLoading, error }] =
     useGetProfileMutation();
 
@@ -46,18 +49,21 @@ const Profile = () => {
 
   //Lock screen position when modal is open
   useEffect(() => {
-    if (photoModal) {
+    if (photoModal || editInfo) {
       window.document.body.style.overflow = "hidden";
-    } else if (!photoModal) {
+    } else if (!photoModal && !editInfo) {
       window.document.body.style.overflow = "unset";
     }
-  }, [photoModal]);
+  }, [photoModal, editInfo]);
 
   return (
     <>
       <Nav />
       {photoModal && (
         <PhotoModal setPhotoModal={setPhotoModal} photoModal={photoModal} />
+      )}
+      {editInfo && (
+        <EditInfoModal editInfo={editInfo} setEditInfo={setEditInfo} />
       )}
       <div className={style.profileContainer}>
         <Sidebar />
@@ -67,7 +73,7 @@ const Profile = () => {
               {currentUser?.username === params.username ? (
                 <CoverImg user={currentUser} />
               ) : (
-                <CoverImg user={user} />
+                <CoverImg user={user as INIT_USER_STATE} />
               )}
 
               {currentUser?.username === params.username ? (
@@ -105,21 +111,37 @@ const Profile = () => {
               )}
             </div>
           </div>
-          <div className={style.profileInfo}>
-            {currentUser?.username === params.username ? (
+          {currentUser?.username === params.username ? (
+            <div className={style.profileInfo}>
               <h4 className={style.profileName}>{currentUser?.username}</h4>
-            ) : (
+              <button
+                className={style.editInfoBtn}
+                onClick={() => setEditInfo(true)}
+              >
+                {" "}
+                Edit info
+              </button>
+            </div>
+          ) : (
+            <div className={style.profileInfo}>
               <h4 className={style.profileName}>{user?.username}</h4>
-            )}
+              <button
+                className={style.editInfoBtn}
+                onClick={e => setEditInfo(true)}
+              >
+                {" "}
+                Edit info
+              </button>
+            </div>
+          )}
 
-            {currentUser?.username === params.username ? (
-              <p className={style.profileDescription}>
-                {currentUser?.description}
-              </p>
-            ) : (
-              <p className={style.profileDescription}>{user?.description}</p>
-            )}
-          </div>
+          {currentUser?.username === params.username ? (
+            <p className={style.profileDescription}>
+              {currentUser?.description}
+            </p>
+          ) : (
+            <p className={style.profileDescription}>{user?.description}</p>
+          )}
           <div className={style.profileBottom}>
             <Feed />
             {currentUser?.username === params.username ? (

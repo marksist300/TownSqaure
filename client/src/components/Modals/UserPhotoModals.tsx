@@ -1,7 +1,6 @@
 import style from "./Modal.module.scss";
 import { useEffect, useRef, useState } from "react";
-import { Close } from "@mui/icons-material";
-import { AddAPhoto, InsertPhoto } from "@mui/icons-material";
+import { AddAPhoto, InsertPhoto, Close } from "@mui/icons-material";
 import { RootState } from "../../app/store";
 import { useSelector, useDispatch } from "react-redux";
 import { useUploadPhotoMutation } from "../../features/user/userApiSlice";
@@ -16,7 +15,6 @@ type Upload = {
   cover?: string;
 };
 
-//TODO: handle form data sending to DB Updating state.
 const PhotoModal = ({ photoModal, setPhotoModal }: Props) => {
   const user = useSelector((state: RootState) => state.user);
   const clickRef = useRef<HTMLFormElement>(null);
@@ -24,7 +22,8 @@ const PhotoModal = ({ photoModal, setPhotoModal }: Props) => {
   const uploadCoverPic = useRef<HTMLInputElement>(null);
   const [clicked, setClicked] = useState(false);
   const [error, setError] = useState(false);
-  const [uploadPhoto] = useUploadPhotoMutation();
+  const [uploadPhoto, { isLoading: uploadIsLoading }] =
+    useUploadPhotoMutation();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -101,7 +100,7 @@ const PhotoModal = ({ photoModal, setPhotoModal }: Props) => {
           if (cover) {
             formData.append("cover", cover.files[0]);
           }
-          //CHANGE TO PROMISE AND UPDATE TYPES
+          //TODO: CHANGE TO PROMISE AND UPDATE TYPES
           const newPhoto: any = await uploadPhoto({
             userId: user._id,
             formData,
@@ -121,6 +120,7 @@ const PhotoModal = ({ photoModal, setPhotoModal }: Props) => {
           }
         } else {
           console.log("No images attached");
+          setError(true);
           return;
         }
       } catch (error) {
@@ -141,7 +141,6 @@ const PhotoModal = ({ photoModal, setPhotoModal }: Props) => {
         >
           <Close />
         </button>
-        {/* TODO: ADD lock focus into modal when open */}
         <h3 className={style.title}>Upload Your Photo</h3>
 
         <div className={style.uploadBtns}>
@@ -193,12 +192,13 @@ const PhotoModal = ({ photoModal, setPhotoModal }: Props) => {
         </div>
 
         {error && (
-          <p className="self-center text-red-500">
-            At least one field must be filled
-          </p>
+          <p className="self-center text-red-500">No Photos attached</p>
         )}
 
-        <button className={clicked ? style.submitBtnClicked : style.submitBtn}>
+        <button
+          disabled={uploadIsLoading}
+          className={clicked ? style.submitBtnClicked : style.submitBtn}
+        >
           {clicked ? "Sending..." : "Submit"}
         </button>
       </form>

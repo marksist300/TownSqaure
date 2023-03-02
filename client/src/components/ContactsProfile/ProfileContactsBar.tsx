@@ -32,7 +32,6 @@ const ProfileContactsBar = ({ user }: User) => {
 
   //Get the displayed user and if different from current user set into state all the people followed by the displayed user
   useEffect(() => {
-    //TODO => for current Global User run this function at root level and set all followed users data into global state.
     //Function to fetch all followed users and set them into local state so as to have access to their images.
     const getFollowing = async () => {
       try {
@@ -84,7 +83,7 @@ const ProfileContactsBar = ({ user }: User) => {
     }
   };
 
-  //replace with ENUM
+  //TODO: replace with ENUM
   const relationshipStatus = (num: number) => {
     switch (Number(num)) {
       case 1:

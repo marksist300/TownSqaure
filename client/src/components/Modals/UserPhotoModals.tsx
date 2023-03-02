@@ -2,20 +2,31 @@ import style from "./Modal.module.scss";
 import { useEffect, useRef, useState } from "react";
 import { Close } from "@mui/icons-material";
 import { AddAPhoto, InsertPhoto } from "@mui/icons-material";
+import { RootState } from "../../app/store";
+import { useSelector, useDispatch } from "react-redux";
+import { useUploadPhotoMutation } from "../../features/user/userApiSlice";
+
 type Props = {
   photoModal: boolean;
   setPhotoModal: (active: boolean) => void;
 };
-//SETBIO as props
+
+type Upload = {
+  profilePic?: string;
+  cover?: string;
+};
+
+//TODO: handle form data sending to DB Updating state.
 const PhotoModal = ({ photoModal, setPhotoModal }: Props) => {
+  const user = useSelector((state: RootState) => state.user);
   const clickRef = useRef<HTMLFormElement>(null);
   const uploadProfilePic = useRef<HTMLInputElement>(null);
   const uploadCoverPic = useRef<HTMLInputElement>(null);
   const [clicked, setClicked] = useState(false);
   const [error, setError] = useState(false);
-  //Handle shift key
+  const [uploadPhoto] = useUploadPhotoMutation();
+  const dispatch = useDispatch();
 
-  //Manage clicks outside the modal form section & escape key: close modal
   useEffect(() => {
     function handleClickOutside(e: Event) {
       if (clickRef.current) {
@@ -73,9 +84,38 @@ const PhotoModal = ({ photoModal, setPhotoModal }: Props) => {
     setClicked(false);
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     setClicked(true);
+    //Take form data, parse it and send it to the back end.
+    const { profilePic, cover } = e.target.elements;
+    if (user) {
+      try {
+        if (profilePic.files[0] !== undefined || cover.files[0] !== undefined) {
+          //if an image file is attached upload image
+          const formData: FormData = new FormData();
+          formData.append("userId", user._id);
+          if (profilePic) {
+            formData.append("profilePic", profilePic.files[0]);
+          }
+          if (cover) {
+            formData.append("cover", cover.files[0]);
+          }
+          const newPhoto: Promise<Upload> = await uploadPhoto({
+            userId: user._id,
+            formData,
+          }).unwrap();
+          console.log("data sent...");
+          console.log(newPhoto);
+          // dispatch(newPostToState(newPost));
+        } else {
+          console.log("No images attached");
+          return;
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
   };
 
   return (

@@ -26,7 +26,15 @@ const User = new Schema({
     type: String,
     default: "",
   },
+  profilePicId: {
+    type: String,
+    default: "",
+  },
   cover: {
+    type: String,
+    default: "",
+  },
+  coverId: {
     type: String,
     default: "",
   },

@@ -6,7 +6,10 @@ const {
   followUser,
   unfollowUser,
   getFollowingList,
+  updateUserPhoto,
 } = require("../controllers/user");
+const upload = require("../middleware/multer");
+
 //Get user
 router.get("/", getUser);
 
@@ -15,6 +18,9 @@ router.delete("/delete/:id", deleteUser);
 
 //Update user
 router.put("/update/:id", updateUser);
+
+//Update user Photos
+router.put("/photo/:id", upload.any(), updateUserPhoto);
 
 //Follow user
 router.put("/follow/:id", followUser);

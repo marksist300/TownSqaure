@@ -869,13 +869,6 @@ find-root@^1.1.0:
   resolved "https://registry.yarnpkg.com/find-root/-/find-root-1.1.0.tgz#abcfc8ba76f708c42a97b3d685b7e9450bfb9ce4"
   integrity sha512-NKfW6bec6GfKc0SGx1e07QZY9PE99u0Bft/0rzSD5k3sO/vwkVUpDUKVm5Gpp5Ue3YfShPFTX2070tDs5kB9Ng==
 
-focus-trap@^7.3.1:
-  version "7.3.1"
-  resolved "https://registry.yarnpkg.com/focus-trap/-/focus-trap-7.3.1.tgz#417c98e5f1ab94e717d31f1bafa2da45dabcd65f"
-  integrity sha512-bX/u4FJ+F0Pp6b/8Q9W8Br/JaLJ7rrhOJAzai9JU8bh4BPdOjEATy4pxHcbBBxFjPN4d1oHy7/KqknEdOetm9w==
-  dependencies:
-    tabbable "^6.1.1"
-
 fsevents@~2.3.2:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.3.2.tgz#8a526f78b8fdf4623b709e0b975c52c24c02fd1a"
@@ -1264,11 +1257,6 @@ supports-preserve-symlinks-flag@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz#6eda4bd344a3c94aea376d4cc31bc77311039e09"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
-
-tabbable@^6.1.1:
-  version "6.1.1"
-  resolved "https://registry.yarnpkg.com/tabbable/-/tabbable-6.1.1.tgz#40cfead5ed11be49043f04436ef924c8890186a0"
-  integrity sha512-4kl5w+nCB44EVRdO0g/UGoOp3vlwgycUVtkk/7DPyeLZUCuNFFKCFG6/t/DgHLrUPHjrZg6s5tNm+56Q2B0xyg==
 
 timeago.js@^4.0.2:
   version "4.0.2"

@@ -4,7 +4,8 @@ const cloudinary = require("../config/cloudinaryConfig");
 
 const updateUser = async (req, res) => {
   //TODO: add cloudinary
-  if (req.body.userId === req.params.id || req.user.isAdmin) {
+  console.log("Update user controller fired");
+  if (req.body.userId === req.params.id) {
     if (req.body.password) {
       try {
         const salt = await crypto.genSalt(10);
@@ -23,6 +24,100 @@ const updateUser = async (req, res) => {
     }
   } else {
     return res.status(403).json("Permission not granted to edit this account.");
+  }
+};
+
+const updateUserPhoto = async (req, res) => {
+  try {
+    // console.log("body", req.body);
+    const { id } = req.params;
+    if (!id) {
+      return res.status(400).json("User ID Missing");
+    }
+    if (!req.files) {
+      return res.status(400).json("Image(s) Missing");
+    }
+
+    let profilePic, cover;
+
+    req.files.forEach(elem => {
+      if (elem.fieldname === "profilePic") {
+        profilePic = elem;
+      } else if (elem.fieldname === "cover") {
+        cover = elem;
+      }
+    });
+
+    // console.log(profilePic.path, cover.path);
+
+    //GO TO DB and search for current user image???
+    //IF it exists go to cloudinary and destroy the image
+    const {
+      cover: oldCover,
+      profilePic: oldProfilePic,
+      coverId: oldCoverId,
+      profilePicId: oldProfilePicId,
+    } = await User.findById(id).lean();
+    // console.log(user);
+    // console.log("ODL IDS =S=S=S=S=S=>", oldCoverId, oldProfilePicId);
+    if (oldCoverId || oldProfilePicId) {
+      if (oldProfilePicId) {
+        await cloudinary.uploader.destroy(oldProfilePicId);
+      }
+      if (oldCoverId) {
+        await cloudinary.uploader.destroy(oldCoverId);
+      }
+    }
+    //THEN:
+    //Set the photo(s) on cloudinary and respond so they can be set into the DB and into state
+
+    const newProfilePic = {
+      newProfilePicId: "",
+      newProfilePicUrl: "",
+    };
+    const newCover = {
+      newCoverId: "",
+      newCoverUrl: "",
+    };
+    if (profilePic) {
+      const { public_id, secure_url } = await cloudinary.uploader.upload(
+        profilePic.path
+      );
+      newProfilePic.newProfilePicId = public_id;
+      newProfilePic.newProfilePicUrl = secure_url;
+    }
+    if (cover) {
+      const { public_id, secure_url } = await cloudinary.uploader.upload(
+        cover.path
+      );
+      newCover.newCoverId = public_id;
+      newCover.newCoverUrl = secure_url;
+    }
+
+    const updatePhotoInDB = await User.findByIdAndUpdate(
+      id,
+      {
+        cover: newCover.newCoverUrl,
+        coverId: newCover.newCoverId,
+        profilePic: newProfilePic.newProfilePicUrl,
+        profilePicId: newProfilePic.newProfilePicId,
+      },
+      { new: true }
+    ).lean();
+
+    console.log(updatePhotoInDB);
+    if (updatePhotoInDB) {
+      return res.status(200).json({
+        coverPhotoId: newCover.newCoverId,
+        coverPhotoUrl: newCover.newCoverUrl,
+        profilePicId: newProfilePic.newProfilePicId,
+        profilePicUrl: newProfilePic.newProfilePicUrl,
+      });
+    } else {
+      return res.status(500).json({ Error_Updating_User_Image: error });
+    }
+  } catch (error) {
+    return res.status(500).json({ Error_updating_User_Image: error });
   }
 };
 
@@ -128,4 +223,5 @@ module.exports = {
   followUser,
   unfollowUser,
   getFollowingList,
+  updateUserPhoto,
 };

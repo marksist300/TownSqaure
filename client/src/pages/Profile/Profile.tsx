@@ -10,6 +10,8 @@ import { RootState } from "../../app/store";
 import { useGetProfileMutation } from "../../features/user/userApiSlice";
 import CoverImg from "../../components/CoverImg/CoverImg";
 import { Edit } from "@mui/icons-material";
+import PhotoModal from "../../components/Modals/UserPhotoModals";
+
 interface User {
   cover: string;
   profilePic: string;
@@ -27,7 +29,7 @@ const Profile = () => {
   const params = useParams();
   const currentUser = useSelector((state: RootState) => state.user);
   const [user, setUser] = useState<any>(null);
-
+  const [photoModal, setPhotoModal] = useState<boolean>(false);
   const [getProfile, { data, isError, isLoading, error }] =
     useGetProfileMutation();
 
@@ -41,9 +43,22 @@ const Profile = () => {
       fetchUserProfilePage();
     }
   }, [params]);
+
+  //Lock screen position when modal is open
+  useEffect(() => {
+    if (photoModal) {
+      window.document.body.style.overflow = "hidden";
+    } else if (!photoModal) {
+      window.document.body.style.overflow = "unset";
+    }
+  }, [photoModal]);
+
   return (
     <>
       <Nav />
+      {photoModal && (
+        <PhotoModal setPhotoModal={setPhotoModal} photoModal={photoModal} />
+      )}
       <div className={style.profileContainer}>
         <Sidebar />
         <div className={style.profileRight}>
@@ -69,7 +84,7 @@ const Profile = () => {
                   <button
                     className={style.editUserImgBtn}
                     onClick={() => {
-                      console.log("clicked edit photo");
+                      setPhotoModal(true);
                     }}
                   >
                     <Edit className={style.editUserImg} />

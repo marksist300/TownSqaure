@@ -35,6 +35,13 @@ export const userApiSlice = apiSlice.injectEndpoints({
         body: { currentUserId: currentUserId },
       }),
     }),
+    uploadPhoto: builder.mutation({
+      query: ({ userId, formData }) => ({
+        url: `/users/photo/${userId}`,
+        method: "PUT",
+        body: formData,
+      }),
+    }),
   }),
 });
 
@@ -44,4 +51,5 @@ export const {
   useFetchFollowerListMutation,
   useFollowUserMutation,
   useUnFollowUserMutation,
+  useUploadPhotoMutation,
 } = userApiSlice;

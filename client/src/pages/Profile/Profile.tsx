@@ -122,18 +122,7 @@ const Profile = () => {
                 Edit info
               </button>
             </div>
-          ) : (
-            <div className={style.profileInfo}>
-              <h4 className={style.profileName}>{user?.username}</h4>
-              <button
-                className={style.editInfoBtn}
-                onClick={e => setEditInfo(true)}
-              >
-                {" "}
-                Edit info
-              </button>
-            </div>
-          )}
+          ) : null}
 
           {currentUser?.username === params.username ? (
             <p className={style.profileDescription}>

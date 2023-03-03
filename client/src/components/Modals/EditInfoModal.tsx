@@ -173,9 +173,7 @@ const EditInfoModal = ({ editInfo, setEditInfo }: Props) => {
         </div>
 
         {error && (
-          <p className="self-center text-red-500">
-            At least one field must be filled
-          </p>
+          <p className={style.errorText}>At least one field must be filled</p>
         )}
 
         <button className={clicked ? style.submitBtnClicked : style.submitBtn}>

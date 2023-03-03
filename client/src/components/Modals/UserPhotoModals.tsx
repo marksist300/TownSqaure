@@ -196,9 +196,7 @@ const PhotoModal = ({ photoModal, setPhotoModal }: Props) => {
           </div>
         </div>
 
-        {error && (
-          <p className="self-center text-red-500">No Photos attached</p>
-        )}
+        {error && <p className={style.errorText}>No Photos attached</p>}
 
         <button
           disabled={uploadIsLoading}

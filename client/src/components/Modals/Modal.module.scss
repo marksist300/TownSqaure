@@ -78,6 +78,10 @@
       width: 100%;
       margin: 1rem 0;
     }
+
+    .errorText {
+      color: #ef3340;
+    }
   }
 
   .photoForm {
@@ -127,7 +131,7 @@
     }
 
     .editInfoInput {
-      width: 50%;
+      width: 60%;
       padding: 0.3rem 0.7rem 0.3rem 0.5rem;
     }
   }

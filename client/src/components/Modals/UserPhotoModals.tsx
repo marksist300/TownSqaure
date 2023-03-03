@@ -131,7 +131,12 @@ const PhotoModal = ({ photoModal, setPhotoModal }: Props) => {
 
   return (
     <div className={style.modalContainer}>
-      <form ref={clickRef} onSubmit={handleSubmit} id="formContainer">
+      <form
+        ref={clickRef}
+        onSubmit={handleSubmit}
+        id="formContainer"
+        className={style.photoForm}
+      >
         <button
           onClick={e => {
             closeModal(e);

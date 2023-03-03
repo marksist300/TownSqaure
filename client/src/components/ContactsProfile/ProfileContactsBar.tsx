@@ -126,7 +126,7 @@ const ProfileContactsBar = ({ user }: User) => {
       <h4 className={style.infoTitle}>About {user?.username.split(" ")[0]}</h4>
       <div className={style.infoBarContainer}>
         <div className={style.infoItem}>
-          <span className={style.userInfoKey}>City: </span>
+          <span className={style.userInfoKey}>Location: </span>
           <span className={style.userInfoValue}>{user?.location}</span>
         </div>
         <div className={style.infoItem}>
@@ -138,6 +138,10 @@ const ProfileContactsBar = ({ user }: User) => {
           <span className={style.userInfoValue}>
             {user?.relationship && relationshipStatus(user?.relationship)}
           </span>
+          <div className={style.infoItem}>
+            <span className={style.userInfoKey}>Description: </span>
+            <span className={style.userInfoValue}>{user?.description}</span>
+          </div>
         </div>
         <h4 className={style.friendSection}>Friends</h4>
         {/*TODO: => FIX STYLING OF FOLLOWED USERS*/}

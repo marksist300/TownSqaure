@@ -95,9 +95,20 @@ const EditInfoModal = ({ editInfo, setEditInfo }: Props) => {
     }
   };
 
+  const relationships = ["Single", "In A Relationship", "Married", "Other"];
+
+  const options = [...Array(4)].map((elem, i) => (
+    <option value={i + 1}>{relationships[i]}</option>
+  ));
+
   return (
     <div className={style.modalContainer}>
-      <form ref={clickRef} onSubmit={handleSubmit} id="formContainer">
+      <form
+        ref={clickRef}
+        onSubmit={handleSubmit}
+        id="formContainer"
+        className={style.editInfoForm}
+      >
         <button
           onClick={e => {
             closeModal(e);
@@ -109,26 +120,55 @@ const EditInfoModal = ({ editInfo, setEditInfo }: Props) => {
         </button>
         {/* TODO: ADD lock focus into modal when open */}
         <h3 className={style.title}>Edit Your Info</h3>
-
         <div className={style.uploadBtns}>
-          <div className={style.profilePicSection}>
-            <label className={style.labelText} htmlFor=""></label>
+          <div className={style.editInputSections}>
+            <label className={style.labelText} htmlFor="name">
+              Your Name
+            </label>
             <input
               type="text"
-              name=""
-              id=""
-              className={style.profilePicInput}
+              name="name"
+              id="name"
+              className={style.editInfoInput}
             />
           </div>
 
-          <div className={style.profilePicSection}>
-            <label className={style.labelText} htmlFor=""></label>
+          <div className={style.editInputSections}>
+            <label className={style.labelText} htmlFor="location">
+              Your Current location
+            </label>
             <input
               type="text"
-              name=""
-              id=""
-              className={style.profilePicInput}
+              name="location"
+              id="location"
+              className={style.editInfoInput}
             />
+          </div>
+
+          <div className={style.editInputSections}>
+            <label className={style.labelText} htmlFor="hometown">
+              Where You're From
+            </label>
+            <input
+              type="text"
+              name="hometown"
+              id="hometown"
+              className={style.editInfoInput}
+            />
+          </div>
+
+          <div className={style.editInputSections}>
+            <label className={style.labelText} htmlFor="hometown">
+              Relationship Status
+            </label>
+            <select
+              className={style.editInfoInput}
+              name="relationship"
+              id="relationship"
+              onChange={e => console.log(e.target.value)}
+            >
+              {options}
+            </select>
           </div>
         </div>
 

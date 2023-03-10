@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { Close } from "@mui/icons-material";
 import { RootState } from "../../app/store";
 import { useSelector, useDispatch } from "react-redux";
+import { updateUserData } from "../../features/user/userSlice";
 type Props = {
   editInfo: boolean;
   setEditInfo: (active: boolean) => void;
@@ -11,8 +12,8 @@ type Props = {
 interface dataType {
   name?: string;
   location?: string;
-  home?: string;
-  relationship?: number;
+  hometown?: string;
+  relationship?: string;
 }
 
 //TODO: handle form data sending to DB Updating state.
@@ -97,19 +98,23 @@ const EditInfoModal = ({ editInfo, setEditInfo }: Props) => {
       try {
         //Check data exists and if so fit into object ready to send to BE.
         const data: dataType = {};
-        if (name.value !== null) {
+        if (name.value !== "") {
           data["name"] = name.value;
         }
-        if (location.value !== null) {
+        if (location.value !== "") {
           data["location"] = location.value;
         }
-        if (hometown.value !== null) {
-          data["home"] = hometown.value;
+        if (hometown.value !== "") {
+          data["hometown"] = hometown.value;
         }
-        if (relationship !== "0") {
+        if (relationship.value !== "0") {
           data["relationship"] = relationship.value;
         }
-        //TODO: HANDLE USER DATA UPLOAD;
+        //TODO: HANDLE USER DATA UPLOAD WITH RTKQ
+        //Push to DB first...
+
+        //Changing state depending on user supplied values.
+        dispatch(updateUserData(data));
         // if(input data){
         //   //Send data to the DB to update User info
         //   //If data update ok, set new data into state to update UI

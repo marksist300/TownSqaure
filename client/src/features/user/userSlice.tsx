@@ -52,6 +52,14 @@ export const userSlice = createSlice({
         : state.profilePicId;
       state.coverId = coverId ? (state.coverId = coverId) : state.coverId;
     },
+    updateUserData: (state, action) => {
+      console.log("action", action.payload);
+      const { name, location, hometown, relationship } = action.payload;
+      state.username = name ? name : state.username;
+      state.location = location ? location : state.location;
+      state.hometown = hometown ? hometown : state.hometown;
+      state.relationship = relationship ? relationship : state.relationship;
+    },
     setUnfollowUser: (state, action) => {
       state.following = state.following.filter(elem => elem !== action.payload);
     },
@@ -66,6 +74,7 @@ export const {
   updateUserProfileImgs,
   setUnfollowUser,
   setFollowUser,
+  updateUserData,
 } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -8,6 +8,13 @@ type Props = {
   setEditInfo: (active: boolean) => void;
 };
 
+interface dataType {
+  name?: string;
+  location?: string;
+  home?: string;
+  relationship?: number;
+}
+
 //TODO: handle form data sending to DB Updating state.
 const EditInfoModal = ({ editInfo, setEditInfo }: Props) => {
   const user = useSelector((state: RootState) => state.user);
@@ -77,9 +84,32 @@ const EditInfoModal = ({ editInfo, setEditInfo }: Props) => {
     e.preventDefault();
     setClicked(true);
     //Take userData and parse it
-    const {} = e.target.elements;
+    const { name, location, hometown, relationship } = e.target.elements;
     if (user) {
+      if (
+        !name.value &&
+        !location.value &&
+        !hometown.value &&
+        relationship.value === "0"
+      ) {
+        setError(true);
+      }
       try {
+        //Check data exists and if so fit into object ready to send to BE.
+        const data: dataType = {};
+        if (name.value !== null) {
+          data["name"] = name.value;
+        }
+        if (location.value !== null) {
+          data["location"] = location.value;
+        }
+        if (hometown.value !== null) {
+          data["home"] = hometown.value;
+        }
+        if (relationship !== "0") {
+          data["relationship"] = relationship.value;
+        }
+        //TODO: HANDLE USER DATA UPLOAD;
         // if(input data){
         //   //Send data to the DB to update User info
         //   //If data update ok, set new data into state to update UI
@@ -95,10 +125,18 @@ const EditInfoModal = ({ editInfo, setEditInfo }: Props) => {
     }
   };
 
-  const relationships = ["Single", "In A Relationship", "Married", "Other"];
+  const relationships = [
+    "Please Select",
+    "Single",
+    "In A Relationship",
+    "Married",
+    "Other",
+  ];
 
   const options = [...Array(4)].map((elem, i) => (
-    <option value={i + 1}>{relationships[i]}</option>
+    <option value={i} key={`${elem}${i}`}>
+      {relationships[i]}
+    </option>
   ));
 
   return (
@@ -118,7 +156,6 @@ const EditInfoModal = ({ editInfo, setEditInfo }: Props) => {
         >
           <Close />
         </button>
-        {/* TODO: ADD lock focus into modal when open */}
         <h3 className={style.title}>Edit Your Info</h3>
         <div className={style.uploadBtns}>
           <div className={style.editInputSections}>
@@ -132,7 +169,6 @@ const EditInfoModal = ({ editInfo, setEditInfo }: Props) => {
               className={style.editInfoInput}
             />
           </div>
-
           <div className={style.editInputSections}>
             <label className={style.labelText} htmlFor="location">
               Your Current location
@@ -165,7 +201,6 @@ const EditInfoModal = ({ editInfo, setEditInfo }: Props) => {
               className={style.editInfoInput}
               name="relationship"
               id="relationship"
-              onChange={e => console.log(e.target.value)}
             >
               {options}
             </select>

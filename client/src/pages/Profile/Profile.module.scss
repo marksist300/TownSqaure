@@ -88,6 +88,19 @@
     justify-content: center;
   }
 
+  .editInfoBtn {
+    border-radius: 0.3rem;
+    border: 1px solid #8c8a8a;
+    padding: 0.5rem 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 1rem;
+    background-color: #242628;
+  }
+  .editInfoBtn:hover {
+    background-color: #3c3e41;
+  }
+
   .profileName {
     margin: 0.7rem 0 0 0;
     padding: 0;

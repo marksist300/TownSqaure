@@ -32,7 +32,6 @@ const ProfileContactsBar = ({ user }: User) => {
 
   //Get the displayed user and if different from current user set into state all the people followed by the displayed user
   useEffect(() => {
-    //TODO => for current Global User run this function at root level and set all followed users data into global state.
     //Function to fetch all followed users and set them into local state so as to have access to their images.
     const getFollowing = async () => {
       try {
@@ -84,7 +83,7 @@ const ProfileContactsBar = ({ user }: User) => {
     }
   };
 
-  //replace with ENUM
+  //TODO: replace with ENUM
   const relationshipStatus = (num: number) => {
     switch (Number(num)) {
       case 1:
@@ -127,7 +126,7 @@ const ProfileContactsBar = ({ user }: User) => {
       <h4 className={style.infoTitle}>About {user?.username.split(" ")[0]}</h4>
       <div className={style.infoBarContainer}>
         <div className={style.infoItem}>
-          <span className={style.userInfoKey}>City: </span>
+          <span className={style.userInfoKey}>Location: </span>
           <span className={style.userInfoValue}>{user?.location}</span>
         </div>
         <div className={style.infoItem}>
@@ -139,6 +138,10 @@ const ProfileContactsBar = ({ user }: User) => {
           <span className={style.userInfoValue}>
             {user?.relationship && relationshipStatus(user?.relationship)}
           </span>
+          <div className={style.infoItem}>
+            <span className={style.userInfoKey}>Description: </span>
+            <span className={style.userInfoValue}>{user?.description}</span>
+          </div>
         </div>
         <h4 className={style.friendSection}>Friends</h4>
         {/*TODO: => FIX STYLING OF FOLLOWED USERS*/}

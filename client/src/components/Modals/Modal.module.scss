@@ -34,9 +34,6 @@
     .labelText {
       font-size: 1.3rem;
     }
-    .imgBtns {
-      font-size: 2rem;
-    }
 
     .onCloseBtn {
       padding: 0;
@@ -51,6 +48,45 @@
       cursor: pointer;
       width: 2rem;
       height: 2rem;
+    }
+
+    .submitBtn {
+      align-self: center;
+      padding: 0.4rem 1rem;
+      border: 1px solid #8c8a8a;
+      border-radius: 0.5rem;
+      background-color: #242628;
+    }
+    .submitBtn:hover {
+      background-color: #3c3e41;
+    }
+
+    .submitBtnClicked {
+      align-self: center;
+      padding: 0.4rem 1rem;
+    }
+
+    textarea {
+      max-height: 150px;
+      min-height: 3rem;
+      background: #e5e7eb;
+    }
+
+    hr {
+      display: inline-block;
+      border: 0.5px solid rgba(191, 188, 188, 0.738);
+      width: 100%;
+      margin: 1rem 0;
+    }
+
+    .errorText {
+      color: #ef3340;
+    }
+  }
+
+  .photoForm {
+    .imgBtns {
+      font-size: 2rem;
     }
 
     .uploadBtns {
@@ -79,37 +115,25 @@
       background: none;
       cursor: pointer;
     }
+
     .profilePicInput {
       display: none;
     }
+  }
 
-    textarea {
-      max-height: 150px;
-      min-height: 3rem;
-      background: #e5e7eb;
-    }
-
-    hr {
-      display: inline-block;
-      border: 0.5px solid rgba(191, 188, 188, 0.738);
-      width: 100%;
+  .editInfoForm {
+    .editInputSections {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
       margin: 1rem 0;
     }
-  }
 
-  .submitBtn {
-    align-self: center;
-    padding: 0.4rem 1rem;
-    border: none;
-    border-radius: 0.5rem;
-  }
-  .submitBtn:hover {
-    background-color: #3c3e41;
-  }
-
-  .submitBtnClicked {
-    align-self: center;
-    padding: 0.4rem 1rem;
+    .editInfoInput {
+      width: 60%;
+      padding: 0.3rem 0.7rem 0.3rem 0.5rem;
+    }
   }
 }
 
@@ -123,4 +147,11 @@
   100% {
     opacity: 1;
   }
+}
+
+.editInfoInput {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }

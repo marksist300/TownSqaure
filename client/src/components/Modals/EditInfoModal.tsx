@@ -24,10 +24,11 @@ interface dataType {
 const EditInfoModal = ({ editInfo, setEditInfo }: Props) => {
   const user = useSelector((state: RootState) => state.user);
   const clickRef = useRef<HTMLFormElement>(null);
+  const submitEnter = useRef<HTMLButtonElement>(null);
   const [clicked, setClicked] = useState(false);
   const [error, setError] = useState(false);
   const dispatch = useDispatch();
-  const [editUserData] = useEditUserDataMutation();
+  const [editUserData, { isLoading }] = useEditUserDataMutation();
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -41,6 +42,9 @@ const EditInfoModal = ({ editInfo, setEditInfo }: Props) => {
     function handleEscKey(e: KeyboardEvent) {
       if (e.code === "Escape") {
         closeModal();
+      } else if (e.code === "Enter" && submitEnter.current) {
+        e.preventDefault();
+        submitEnter.current.click();
       } else if (e.code === "Tab" || e.key === "Shift") {
         if (e.code !== "Tab") return;
         if (clickRef.current) {
@@ -216,7 +220,11 @@ const EditInfoModal = ({ editInfo, setEditInfo }: Props) => {
           <p className={style.errorText}>At least one field must be filled</p>
         )}
 
-        <button className={clicked ? style.submitBtnClicked : style.submitBtn}>
+        <button
+          disabled={isLoading}
+          ref={submitEnter}
+          className={clicked ? style.submitBtnClicked : style.submitBtn}
+        >
           {clicked ? "Sending..." : "Submit"}
         </button>
       </form>

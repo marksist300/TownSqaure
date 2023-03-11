@@ -1,3 +1,4 @@
+import { PublicTwoTone } from "@mui/icons-material";
 import { apiSlice } from "../../app/apiSlice";
 
 //TODO: Manage new posts by placing them into state.
@@ -42,6 +43,13 @@ export const userApiSlice = apiSlice.injectEndpoints({
         body: formData,
       }),
     }),
+    editUserData: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/users/update/${id}`,
+        method: "PUT",
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -52,4 +60,5 @@ export const {
   useFollowUserMutation,
   useUnFollowUserMutation,
   useUploadPhotoMutation,
+  useEditUserDataMutation,
 } = userApiSlice;

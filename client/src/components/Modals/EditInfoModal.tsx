@@ -1,19 +1,23 @@
 import style from "./Modal.module.scss";
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Close } from "@mui/icons-material";
 import { RootState } from "../../app/store";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUserData } from "../../features/user/userSlice";
+import { useEditUserDataMutation } from "../../features/user/userApiSlice";
+
 type Props = {
   editInfo: boolean;
   setEditInfo: (active: boolean) => void;
 };
 
 interface dataType {
-  name?: string;
+  username?: string;
   location?: string;
   hometown?: string;
   relationship?: string;
+  userId: string;
 }
 
 //TODO: handle form data sending to DB Updating state.
@@ -23,6 +27,8 @@ const EditInfoModal = ({ editInfo, setEditInfo }: Props) => {
   const [clicked, setClicked] = useState(false);
   const [error, setError] = useState(false);
   const dispatch = useDispatch();
+  const [editUserData] = useEditUserDataMutation();
+  let navigate = useNavigate();
 
   useEffect(() => {
     function handleClickOutside(e: Event) {
@@ -88,42 +94,36 @@ const EditInfoModal = ({ editInfo, setEditInfo }: Props) => {
     const { name, location, hometown, relationship } = e.target.elements;
     if (user) {
       if (
-        !name.value &&
-        !location.value &&
-        !hometown.value &&
+        name.value.trim() === "" &&
+        location.value.trim() === "" &&
+        hometown.value.trim() === "" &&
         relationship.value === "0"
       ) {
-        setError(true);
+        return setError(true);
       }
       try {
         //Check data exists and if so fit into object ready to send to BE.
-        const data: dataType = {};
-        if (name.value !== "") {
-          data["name"] = name.value;
+        const data: dataType = { userId: user._id };
+        if (name.value.trim() !== "") {
+          data["username"] = name.value;
         }
-        if (location.value !== "") {
+        if (location.value.trim() !== "") {
           data["location"] = location.value;
         }
-        if (hometown.value !== "") {
+        if (hometown.value.trim() !== "") {
           data["hometown"] = hometown.value;
         }
-        if (relationship.value !== "0") {
+        if (relationship.value.trim() !== "0") {
           data["relationship"] = relationship.value;
         }
-        //TODO: HANDLE USER DATA UPLOAD WITH RTKQ
-        //Push to DB first...
-
-        //Changing state depending on user supplied values.
-        dispatch(updateUserData(data));
-        // if(input data){
-        //   //Send data to the DB to update User info
-        //   //If data update ok, set new data into state to update UI
-        //     // closeModal();
-        // } else {
-        //   console.log("No images attached");
-        //   setError()
-        //   return;
-        // }
+        const edits = await editUserData({ id: user._id, data }).unwrap();
+        if (edits) {
+          if (name.value.trim().length > 0 && data.username !== "") {
+            navigate(`/profile/${data.username}`);
+          }
+          dispatch(updateUserData(data));
+          closeModal();
+        }
       } catch (error) {
         console.error(error);
       }

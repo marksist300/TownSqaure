@@ -54,8 +54,8 @@ export const userSlice = createSlice({
     },
     updateUserData: (state, action) => {
       console.log("action", action.payload);
-      const { name, location, hometown, relationship } = action.payload;
-      state.username = name ? name : state.username;
+      const { username, location, hometown, relationship } = action.payload;
+      state.username = username ? username : state.username;
       state.location = location ? location : state.location;
       state.hometown = hometown ? hometown : state.hometown;
       state.relationship = relationship ? relationship : state.relationship;

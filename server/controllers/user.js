@@ -3,8 +3,6 @@ const crypto = require("bcrypt");
 const cloudinary = require("../config/cloudinaryConfig");
 
 const updateUser = async (req, res) => {
-  //TODO: add cloudinary
-  console.log("Update user controller fired");
   if (req.body.userId === req.params.id) {
     if (req.body.password) {
       try {
@@ -18,6 +16,7 @@ const updateUser = async (req, res) => {
       const user = await User.findByIdAndUpdate(req.params.id, {
         $set: req.body,
       });
+      console.log("USer info reached and returned: ", user);
       res.status(200).json("User details have been updated");
     } catch (err) {
       res.status(500).json("Error updating user: ", err.message);

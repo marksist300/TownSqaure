@@ -189,7 +189,6 @@ const unfollowUser = async (req, res) => {
 };
 
 //Get Followers List
-
 const getFollowingList = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
@@ -207,6 +206,20 @@ const getFollowingList = async (req, res) => {
   }
 };
 
+const searchForUsers = async (req, res) => {
+  //TODO TEST SEARCH FUNCTIONALITY
+  const { person } = req.query;
+  try {
+    const users = await User.find(
+      { $text: { $search: person } },
+      { score: { $meta: "textScore" } }
+    ).sort({ score: { $meta: "textScore" } });
+    res.status(200).json({ users });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 module.exports = {
   updateUser,
   deleteUser,
@@ -215,4 +228,5 @@ module.exports = {
   unfollowUser,
   getFollowingList,
   updateUserPhoto,
+  searchForUsers,
 };

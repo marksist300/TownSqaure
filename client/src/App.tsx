@@ -26,7 +26,10 @@ type JWT = {
   loggedIn: string;
 };
 function App() {
-  //TODO: Handle Like and Unlike via Redux and RTKQ => POST component
+  //TODO => Search page BE and FE
+  //TODO => Refactor following to already existing user state in userSlice
+  //TODO => Accessibility for dotmenus on posts
+  //TODO => Logout dropw down on photo?
   const authState = useSelector((state: RootState) => state.auth);
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();

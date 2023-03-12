@@ -7,11 +7,15 @@ const {
   unfollowUser,
   getFollowingList,
   updateUserPhoto,
+  searchForUsers,
 } = require("../controllers/user");
 const upload = require("../middleware/multer");
 
 //Get user
 router.get("/", getUser);
+
+//Search for user
+router.get("/search", searchForUsers);
 
 //Delete user
 router.delete("/delete/:id", deleteUser);

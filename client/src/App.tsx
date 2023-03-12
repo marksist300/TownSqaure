@@ -9,6 +9,7 @@ import Home from "./pages/Home/Home";
 import Profile from "./pages/Profile/Profile";
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
+import SearchPage from "./pages/Search/Search";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "./app/store";
 import { setUser } from "./features/user/userSlice";
@@ -112,6 +113,7 @@ function App() {
               authState?.isLoggedIn ? <Navigate to="/" replace /> : <Signup />
             }
           />
+          <Route path="/search" element={<SearchPage />} />
         </Routes>
       </div>
     </Router>

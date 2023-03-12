@@ -16,7 +16,6 @@ const updateUser = async (req, res) => {
       const user = await User.findByIdAndUpdate(req.params.id, {
         $set: req.body,
       });
-      console.log("USer info reached and returned: ", user);
       res.status(200).json("User details have been updated");
     } catch (err) {
       res.status(500).json("Error updating user: ", err.message);

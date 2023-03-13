@@ -10,7 +10,10 @@ function SearchPage() {
   const [error, setError] = useState(false);
   const [searchParams] = useSearchParams();
   const userFound = searchParams.get("person");
-  // Handle submit for native search bar
+
+  //TODO => set up follow and view profile button links
+
+  // Handle submit for nav search bar
   const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
@@ -22,19 +25,12 @@ function SearchPage() {
       try {
         if (userFound) {
           console.log("Running Effect in SEARCH => ", userFound);
-          // get request
           const result = await UserSearch(userFound).unwrap();
-          // console.log("results", result.users);
           if (result.users.length > 0) {
             setSearchedUserData(result.users);
           } else if (result.users.length === 0) {
             setNoResult(true);
           }
-          //IF Data
-          // Take data => store it in state and pass as props to SearchCard Component.
-          //if no result set noResult = true
-
-          // Else if an error respond appropriately
         }
       } catch (error) {
         setError(true);

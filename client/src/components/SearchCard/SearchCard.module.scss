@@ -1,0 +1,53 @@
+.container {
+  border: 1px solid rgba(255, 255, 255, 0.87);
+  border-radius: 1rem;
+  padding: 1.5rem 1rem;
+  margin: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+
+  .btns {
+    border-radius: 0.3rem;
+    border: 1px solid #8c8a8a;
+    padding: 0.5em 0.8em;
+    font-weight: 500;
+    cursor: pointer;
+    background-color: #242628;
+  }
+  .btnSection {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .userImgSec {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    .userImg {
+      width: 5rem;
+      height: 5rem;
+      border-radius: 50%;
+      border: solid 2px rgba(255, 255, 255, 0.87);
+      object-fit: cover;
+    }
+  }
+
+  .userDetails {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.4rem;
+    .username {
+      line-height: 1.2rem;
+    }
+
+    .userFrom {
+      line-height: 1.2rem;
+      margin-bottom: 0.4rem;
+    }
+  }
+}

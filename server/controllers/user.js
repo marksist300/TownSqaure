@@ -16,7 +16,6 @@ const updateUser = async (req, res) => {
       const user = await User.findByIdAndUpdate(req.params.id, {
         $set: req.body,
       });
-      console.log("USer info reached and returned: ", user);
       res.status(200).json("User details have been updated");
     } catch (err) {
       res.status(500).json("Error updating user: ", err.message);
@@ -189,7 +188,6 @@ const unfollowUser = async (req, res) => {
 };
 
 //Get Followers List
-
 const getFollowingList = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
@@ -207,6 +205,21 @@ const getFollowingList = async (req, res) => {
   }
 };
 
+const searchForUsers = async (req, res) => {
+  //TODO TEST SEARCH FUNCTIONALITY
+  console.log("REACHED");
+  const { person } = req.query;
+  try {
+    const users = await User.find(
+      { $text: { $search: person } },
+      { score: { $meta: "textScore" } }
+    ).sort({ score: { $meta: "textScore" } });
+    res.status(200).json({ users });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 module.exports = {
   updateUser,
   deleteUser,
@@ -215,4 +228,5 @@ module.exports = {
   unfollowUser,
   getFollowingList,
   updateUserPhoto,
+  searchForUsers,
 };

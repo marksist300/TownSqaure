@@ -63,5 +63,5 @@ const User = new Schema({
     enum: [1, 2, 3, 4],
   },
 });
-
+User.index({ username: "text", email: "text", description: "text" });
 module.exports = mongoose.model("User", User);

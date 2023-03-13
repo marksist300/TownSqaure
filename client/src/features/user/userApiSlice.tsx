@@ -50,6 +50,12 @@ export const userApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    userSearch: builder.mutation({
+      query: user => ({
+        url: `/users/search?person=${user}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -61,4 +67,5 @@ export const {
   useUnFollowUserMutation,
   useUploadPhotoMutation,
   useEditUserDataMutation,
+  useUserSearchMutation,
 } = userApiSlice;

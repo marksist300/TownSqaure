@@ -207,6 +207,7 @@ const getFollowingList = async (req, res) => {
 
 const searchForUsers = async (req, res) => {
   //TODO TEST SEARCH FUNCTIONALITY
+  console.log("REACHED");
   const { person } = req.query;
   try {
     const users = await User.find(

@@ -28,9 +28,8 @@ type JWT = {
 };
 function App() {
   //TODO => Search page BE and FE
-  //TODO => Refactor following to already existing user state in userSlice
   //TODO => Accessibility for dotmenus on posts
-  //TODO => Logout dropw down on photo?
+  //TODO => Logout drop down on photo?
   const authState = useSelector((state: RootState) => state.auth);
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();

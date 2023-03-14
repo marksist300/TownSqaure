@@ -1,16 +1,15 @@
-import style from "./ProfileContactsBar.module.scss";
 import { useEffect, useState } from "react";
-import { User } from "../../types";
-import { Add, Remove } from "@mui/icons-material";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../app/store";
+
+import FollowBtn from "../FollowBtn/FollowBtn";
 import Following from "../Following/Following";
-import {
-  useFetchFollowerListMutation,
-  useUnFollowUserMutation,
-  useFollowUserMutation,
-} from "../../features/user/userApiSlice";
-import { setUnfollowUser, setFollowUser } from "../../features/user/userSlice";
+
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
+import { useFetchFollowerListMutation } from "../../features/user/userApiSlice";
+
+import style from "./ProfileContactsBar.module.scss";
+
+import { User } from "../../types";
 
 const ProfileContactsBar = ({ user }: User) => {
   //Who the user displayed on the page is following:
@@ -20,15 +19,8 @@ const ProfileContactsBar = ({ user }: User) => {
   );
 
   const [following, setFollowing] = useState([]);
-  const [alreadyFollowed, setAlreadyFollowed] = useState(
-    currentUser.following.includes(user._id)
-  );
-
-  const dispatch = useDispatch();
 
   const [fetchFollowerList] = useFetchFollowerListMutation();
-  const [unFollowUser] = useUnFollowUserMutation();
-  const [followUser] = useFollowUserMutation();
 
   //Get the displayed user and if different from current user set into state all the people followed by the displayed user
   useEffect(() => {
@@ -43,45 +35,11 @@ const ProfileContactsBar = ({ user }: User) => {
         console.error(error);
       }
     };
-
-    //if not current user's own page check if page displayed user's page is followed by current user
-    if (user && currentUser.following.includes(user?._id)) {
-      setAlreadyFollowed(true);
-    } else {
-      setAlreadyFollowed(false);
-    }
     // Fetch all the users that the displayed user follows and set them into state
     if (user._id !== currentUser._id) {
       getFollowing();
     }
   }, [user!._id]);
-
-  const handleClick = async () => {
-    if (currentUser._id !== user?._id) {
-      if (currentUser.following.includes(user._id)) {
-        // UNFOLLOW USER
-        await unFollowUser({
-          userId: user._id,
-          currentUserId: currentUser._id,
-        }).unwrap();
-
-        setAlreadyFollowed(false);
-        // Dispatch to CurrentUser GlobalState
-        dispatch(setUnfollowUser(user._id));
-      } else {
-        // FOLLOW USER
-        const output = await followUser({
-          userId: user._id,
-          currentUserId: currentUser._id,
-        }).unwrap();
-        setAlreadyFollowed(true);
-        // Dispatch to CurrentUser GlobalState
-        dispatch(setFollowUser(user._id));
-      }
-    } else {
-      throw new Error("User or Current User missing");
-    }
-  };
 
   //TODO: replace with ENUM
   const relationshipStatus = (num: number) => {
@@ -113,16 +71,7 @@ const ProfileContactsBar = ({ user }: User) => {
 
   return (
     <section className={style.sideBarSection}>
-      {currentUser._id !== user?._id &&
-        (alreadyFollowed ? (
-          <button className={style.followBtn} onClick={handleClick}>
-            Unfollow <Remove className={style.add} />
-          </button>
-        ) : (
-          <button className={style.followBtn} onClick={handleClick}>
-            Follow <Add className={style.add} />
-          </button>
-        ))}
+      <FollowBtn user={user} />
       <h4 className={style.infoTitle}>About {user?.username.split(" ")[0]}</h4>
       <div className={style.infoBarContainer}>
         <div className={style.infoItem}>

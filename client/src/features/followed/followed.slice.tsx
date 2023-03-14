@@ -10,7 +10,6 @@ export const followedSlice = createSlice({
   reducers: {
     setFollowedUsers: (state, action) => {
       return action.payload;
-      // return action.payload;
     },
   },
 });

@@ -1,0 +1,21 @@
+.followBtn {
+  border-radius: 0.3rem;
+  border: 1px solid #8c8a8a;
+  padding: 0.5rem 0.8rem;
+  cursor: pointer;
+  background-color: #242628;
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  .add {
+    font-weight: 500;
+    font-size: 0.9rem;
+  }
+}
+
+.followBtn:hover {
+  background-color: #3c3e41;
+  .add {
+    color: #ffbd20;
+  }
+}

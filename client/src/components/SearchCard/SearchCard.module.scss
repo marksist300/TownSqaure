@@ -16,6 +16,16 @@
     cursor: pointer;
     background-color: #242628;
   }
+  .profileBtn {
+    border-radius: 0.3rem;
+    border: 1px solid #8c8a8a;
+    padding: 0.5rem 0.8rem;
+    cursor: pointer;
+    background-color: #242628;
+  }
+  .profileBtn:hover {
+    background-color: #3c3e41;
+  }
   .btnSection {
     display: flex;
     gap: 0.5rem;
@@ -32,6 +42,7 @@
       border-radius: 50%;
       border: solid 2px rgba(255, 255, 255, 0.87);
       object-fit: cover;
+      cursor: pointer;
     }
   }
 

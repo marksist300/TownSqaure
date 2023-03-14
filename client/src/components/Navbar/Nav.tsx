@@ -15,6 +15,7 @@ const Nav = () => {
     if (searchRef.current !== null) {
       navigateSearch(`/search?person=${searchRef.current.value}`);
     }
+    searchRef.current.value = "";
   };
 
   return (

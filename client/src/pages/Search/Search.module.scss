@@ -25,14 +25,15 @@ main {
   }
 }
 
-@media screen and (min-width: 700px) {
+@media screen and (min-width: 787px) {
   .cardContainer {
     display: grid;
-    grid-template-columns: minmax(5rem, 20rem) minmax(5rem, 20rem) minmax(
-        5rem,
+    grid-template-columns: minmax(12rem, 20rem) minmax(12rem, 20rem) minmax(
+        12rem,
         20rem
       );
     gap: 1rem;
     justify-content: center;
+    margin: auto;
   }
 }

@@ -1,7 +1,19 @@
-import { INIT_USER_STATE } from "../../types";
+import { useNavigate } from "react-router";
+
+import FollowBtn from "../FollowBtn/FollowBtn";
+
 import style from "./SearchCard.module.scss";
 
-const SearchCard = ({ user }: { user: INIT_USER_STATE | null }) => {
+import { User } from "../../types";
+
+const SearchCard = ({ user }: User) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    // <Link to={`/profile/${username}`} className={style.parentLink}>
+    navigate(`/profile/${user.username}`);
+  };
+
   return (
     <article className={style.container}>
       <div className={style.userImgSec}>
@@ -12,6 +24,7 @@ const SearchCard = ({ user }: { user: INIT_USER_STATE | null }) => {
           }
           alt=""
           className={style.userImg}
+          onClick={handleClick}
         />
       </div>
       <div className={style.userDetails}>
@@ -19,8 +32,10 @@ const SearchCard = ({ user }: { user: INIT_USER_STATE | null }) => {
           From: {user?.location ? user.location : "Unknown"}
         </span>
         <div className={style.btnSection}>
-          <button className={style.btns}>View Profile</button>
-          <button className={style.btns}>Follow</button>
+          <button className={style.profileBtn} onClick={handleClick}>
+            View Profile
+          </button>
+          <FollowBtn user={user} />
         </div>
       </div>
     </article>

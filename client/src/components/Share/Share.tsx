@@ -1,11 +1,18 @@
-import style from "./Share.module.scss";
+import { useRef } from "react";
+
 import { PermMedia, EmojiEmotions, Label, Room } from "@mui/icons-material";
+
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../app/store";
 import { useCreatePostMutation } from "../../features/post/postApiSlice";
 import { newPostToState } from "../../features/post/postSlice";
+
+import style from "./Share.module.scss";
+
 import { PostType } from "../../types";
+
 const Share = () => {
+  const textRef = useRef<HTMLInputElement>(null);
   const user = useSelector((state: RootState) => state.user);
   const [createPost] = useCreatePostMutation();
   const dispatch = useDispatch();
@@ -17,7 +24,7 @@ const Share = () => {
       try {
         if (img.files[0] !== undefined) {
           //if an image file is attached upload a post with an image
-          const formData: any = new FormData();
+          const formData: FormData = new FormData();
           formData.append("userId", user._id);
           formData.append("description", description.value);
           formData.append("img", img.files[0]);
@@ -27,11 +34,19 @@ const Share = () => {
           dispatch(newPostToState(newPost));
         } else {
           //No Image file is attached, create a post without an image.
-          const newPost: Promise<PostType> = await createPost({
-            userId: user._id,
-            description: description.value,
-          }).unwrap();
-          dispatch(newPostToState(newPost));
+          if (description.value.trim() !== "") {
+            const newPost: Promise<PostType> = await createPost({
+              userId: user._id,
+              description: description.value,
+            }).unwrap();
+            dispatch(newPostToState(newPost));
+            if (textRef.current) {
+              textRef.current.value = "";
+            }
+          } else {
+            console.error("Nothing was uploaded to share.");
+            return;
+          }
         }
       } catch (error) {
         return console.error("Error with submit");
@@ -54,6 +69,7 @@ const Share = () => {
             type="text"
             placeholder="What's on your mind?"
             name="description"
+            ref={textRef}
           />
         </div>
         <hr />

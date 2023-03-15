@@ -26,6 +26,7 @@ const PhotoModal = ({ photoModal, setPhotoModal }: Props) => {
     useUploadPhotoMutation();
   const dispatch = useDispatch();
 
+  //FOCUS Trap
   useEffect(() => {
     function handleClickOutside(e: Event) {
       if (clickRef.current) {
@@ -34,6 +35,7 @@ const PhotoModal = ({ photoModal, setPhotoModal }: Props) => {
         }
       }
     }
+
     function handleEscKey(e: KeyboardEvent) {
       if (e.code === "Escape") {
         closeModal();

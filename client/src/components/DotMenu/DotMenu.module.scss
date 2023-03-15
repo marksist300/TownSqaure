@@ -16,7 +16,7 @@
     border-radius: 0.5rem;
     transform: translateY(-10px);
     transition: opacity 250ms ease-in-out, transform 250ms ease-in-out;
-    opacity: 0;
+    display: none;
     pointer-events: none;
   }
   .dropdownMenuActive {
@@ -30,7 +30,6 @@
     transform: translateY(0);
     transition: opacity 250ms ease-in-out, transform 250ms ease-in-out;
     display: block;
-    opacity: 1;
     pointer-events: auto;
   }
 
@@ -40,6 +39,9 @@
     margin: 0;
   }
   .dropdownList > :hover {
+    color: #ffbd20;
+  }
+  li:focus {
     color: #ffbd20;
   }
 

@@ -13,7 +13,7 @@ const DotMenu = ({ postId }: { postId: string }) => {
 
   const [displayMenu, setDisplayMenu] = useState(false);
   const clickRef = useRef<HTMLDivElement>(null);
-  const menuRef = useRef<any>(null);
+  const menuRef = useRef<HTMLUListElement>(null);
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (clickRef.current && !clickRef.current.contains(e.target as Node)) {
@@ -29,12 +29,11 @@ const DotMenu = ({ postId }: { postId: string }) => {
   useEffect(() => {
     if (displayMenu === true) {
       function handleEscKey(e: KeyboardEvent) {
-        console.log(e.code);
         if (e.code === "Escape") {
           setDisplayMenu(false);
         } else if (e.code === "Tab" || e.key === "Shift") {
           if (e.code !== "Tab") return;
-          if (clickRef.current) {
+          if (clickRef.current && menuRef.current) {
             const elements = Array.from(
               clickRef.current.querySelectorAll("li")
             );
@@ -59,10 +58,14 @@ const DotMenu = ({ postId }: { postId: string }) => {
               e.preventDefault();
             }
           }
-        } else if (e.code === "Enter") {
+        } else if (e.code === "Enter" && menuRef.current) {
           const name = document.activeElement?.id;
-          const targetEl = menuRef.current.querySelector(`#${name}`);
-          targetEl.click();
+          const targetEl = menuRef.current.querySelector(
+            `#${name}`
+          ) as HTMLButtonElement;
+          if (targetEl) {
+            targetEl.click();
+          }
         }
       }
 

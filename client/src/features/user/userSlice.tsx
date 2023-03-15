@@ -53,7 +53,6 @@ export const userSlice = createSlice({
       state.coverId = coverId ? (state.coverId = coverId) : state.coverId;
     },
     updateUserData: (state, action) => {
-      console.log("action", action.payload);
       const { username, location, hometown, relationship } = action.payload;
       state.username = username ? username : state.username;
       state.location = location ? location : state.location;
@@ -66,6 +65,21 @@ export const userSlice = createSlice({
     setFollowUser: (state, action: { payload: string }) => {
       state.following.push(action.payload);
     },
+    logoutUser: state => {
+      state.cover = "";
+      state.profilePic = "";
+      state.username = "";
+      state.description = "";
+      state.location = "";
+      state.hometown = "";
+      state.email = "";
+      state.following = [];
+      state.followers = [];
+      state.relationship = null;
+      state._id = "";
+      state.profilePicId = "";
+      state.coverId = "";
+    },
   },
 });
 
@@ -75,6 +89,7 @@ export const {
   setUnfollowUser,
   setFollowUser,
   updateUserData,
+  logoutUser,
 } = userSlice.actions;
 
 export default userSlice.reducer;

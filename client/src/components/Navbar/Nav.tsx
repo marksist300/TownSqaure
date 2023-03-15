@@ -11,14 +11,16 @@ const Nav = () => {
     (state: RootState) => state.auth.isLoggedIn
   );
   const navigateSearch = useNavigate();
-  const searchRef = useRef<any>(null);
+  const searchRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (searchRef.current !== null) {
       navigateSearch(`/search?person=${searchRef.current.value}`);
     }
-    searchRef.current.value = "";
+    if (searchRef.current) {
+      searchRef.current.value = "";
+    }
   };
 
   return (

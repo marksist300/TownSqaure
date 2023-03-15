@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
-
+import NavDropDown from "./NavDropdown";
 const Nav = () => {
   const user = useSelector((state: RootState) => state.user);
   const navigateSearch = useNavigate();
@@ -53,15 +53,7 @@ const Nav = () => {
           <Notifications />
           <span className={style.navIconBadge}>3</span>
         </div>
-        <Link to={`/profile/${user?.username}`}>
-          <img
-            src={
-              user?.profilePic ? user.profilePic : `/assets/profile/default.png`
-            }
-            alt=""
-            className={style.userImg}
-          />
-        </Link>
+        <NavDropDown />
       </div>
     </nav>
   );

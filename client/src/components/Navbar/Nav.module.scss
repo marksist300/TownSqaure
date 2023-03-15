@@ -70,6 +70,15 @@ nav {
     margin-left: auto;
     gap: 0.4rem;
     cursor: pointer;
+    color: rgba(255, 255, 255, 0.87);
+  }
+  .navLinks > :hover {
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.947);
+  }
+  .navLinks > :focus {
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.947);
   }
 
   .navIcons {

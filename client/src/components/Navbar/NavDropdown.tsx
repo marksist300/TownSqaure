@@ -2,6 +2,10 @@ import { useState, useRef, useEffect } from "react";
 
 import NavItem from "./NavItem";
 
+import { logoutUser } from "../../features/user/userSlice";
+import { resetFollowers } from "../../features/followed/followed.slice";
+import { resetPosts } from "../../features/post/postSlice";
+import { logoutAuth } from "../../features/auth/authSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../app/store";
 
@@ -12,7 +16,7 @@ const NavDropDown = () => {
   const dispatch = useDispatch();
   const [click, setClick] = useState(false);
   const [loggedInMenuHidden, setLoggedInMenuHidden] = useState(false);
-  const clickRef = useRef(null);
+  const clickRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     function handleClickOutside(e: any) {
@@ -37,7 +41,11 @@ const NavDropDown = () => {
 
   const handleLogout = (e: any) => {
     e.preventDefault();
-    // dispatch(logOut());
+    localStorage.clear();
+    dispatch(logoutUser());
+    dispatch(resetFollowers());
+    dispatch(resetPosts());
+    dispatch(logoutAuth());
   };
   return (
     <div className={style.dropDownMenu} ref={clickRef}>
@@ -65,7 +73,7 @@ const NavDropDown = () => {
         >
           <NavItem
             output={"Logout"}
-            direction={"/"}
+            direction={"/login"}
             setClicker={setClick}
             clicker={click}
             setLoggedInMenuHidden={setLoggedInMenuHidden}

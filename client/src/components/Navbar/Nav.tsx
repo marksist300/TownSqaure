@@ -7,6 +7,9 @@ import { RootState } from "../../app/store";
 import NavDropDown from "./NavDropdown";
 const Nav = () => {
   const user = useSelector((state: RootState) => state.user);
+  const userIsLoggedIn = useSelector(
+    (state: RootState) => state.auth.isLoggedIn
+  );
   const navigateSearch = useNavigate();
   const searchRef = useRef<any>(null);
 
@@ -37,23 +40,37 @@ const Nav = () => {
         </div>
       </form>
       <div className={style.navRight}>
-        <ul className={style.navLinks}>
-          <li className="nav-link">Homepage</li>
-          <li className="nav-link">TimeLine</li>
-        </ul>
-        <div className={style.navIcons}>
-          <Person />
-          <span className={style.navIconBadge}>1</span>
-        </div>
-        <div className={style.navIcons}>
-          <Chat />
-          <span className={style.navIconBadge}>2</span>
-        </div>
-        <div className={style.navIcons}>
-          <Notifications />
-          <span className={style.navIconBadge}>3</span>
-        </div>
-        <NavDropDown />
+        {user._id && userIsLoggedIn ? (
+          <>
+            <ul className={style.navLinks}>
+              <li className={style.navLinks}>Homepage</li>
+              <li className={style.navLinks}>TimeLine</li>
+            </ul>
+            <div className={style.navIcons}>
+              <Person />
+              <span className={style.navIconBadge}>1</span>
+            </div>
+            <div className={style.navIcons}>
+              <Chat />
+              <span className={style.navIconBadge}>2</span>
+            </div>
+            <div className={style.navIcons}>
+              <Notifications />
+              <span className={style.navIconBadge}>3</span>
+            </div>
+            <NavDropDown />
+          </>
+        ) : (
+          <ul className={style.navLinks}>
+            <Link to={"/login"} className={style.navLinks}>
+              Login
+            </Link>
+            <Link to={"/signup"} className={style.navLinks}>
+              Sign Up
+            </Link>
+          </ul>
+        )}
+        {/* {user._id && userIsLoggedIn && <NavDropDown />} */}
       </div>
     </nav>
   );

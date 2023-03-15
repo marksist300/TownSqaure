@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Root } from "react-dom/client";
-import { setSignup, setLogin, logout } from "../features/auth/authSlice";
+import { setSignup, setLogin, logoutAuth } from "../features/auth/authSlice";
 import { RootState } from "./store";
 
 const TSBaseQuery = fetchBaseQuery({

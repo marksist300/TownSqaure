@@ -28,14 +28,14 @@ export const authSlice = createSlice({
       state.isLoggedIn = isLoggedIn;
       state.token = token;
     },
-    logout: (state, action) => {
+    logoutAuth: state => {
       state.isLoggedIn = false;
       state.token = null;
     },
   },
 });
 
-export const { setSignup, setLogin, logout } = authSlice.actions;
+export const { setSignup, setLogin, logoutAuth } = authSlice.actions;
 
 export default authSlice.reducer;
 

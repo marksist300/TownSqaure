@@ -11,10 +11,13 @@ export const followedSlice = createSlice({
     setFollowedUsers: (state, action) => {
       return action.payload;
     },
+    resetFollowers: state => {
+      return [];
+    },
   },
 });
 
-export const { setFollowedUsers } = followedSlice.actions;
+export const { setFollowedUsers, resetFollowers } = followedSlice.actions;
 
 export default followedSlice.reducer;
 

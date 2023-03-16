@@ -1,4 +1,9 @@
 .homeContainer {
   width: 100%;
-  display: flex;
+}
+
+@media screen and (min-width: 650px) {
+  .homeContainer {
+    display: flex;
+  }
 }

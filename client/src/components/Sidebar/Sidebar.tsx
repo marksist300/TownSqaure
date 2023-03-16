@@ -1,5 +1,7 @@
-import style from "./Sidebar.module.scss";
+import { useEffect, useState } from "react";
+
 import FriendsSide from "../FriendsSide/FriendsSide";
+
 import {
   RssFeed,
   Chat,
@@ -11,14 +13,36 @@ import {
   Star,
   Bookmark,
 } from "@mui/icons-material";
+
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
+
+import style from "./Sidebar.module.scss";
 const Sidebar = () => {
+  const [display, setDisplay] = useState(window.innerWidth > 870);
+
   const globalFollowedUsers = useSelector((state: RootState) => state.followed);
   const users = globalFollowedUsers.map(user => (
     <FriendsSide key={`KeY1${user._id}`} user={user} />
   ));
-  return (
+
+  useEffect(() => {
+    const monitorWindowWidth = () => {
+      if (window.innerWidth > 870 && display === false) {
+        setDisplay(true);
+      } else if (window.innerWidth <= 870 && display === true) {
+        setDisplay(false);
+      }
+    };
+
+    window.addEventListener("resize", monitorWindowWidth);
+
+    return () => {
+      window.removeEventListener("resize", monitorWindowWidth);
+    };
+  }, [display]);
+
+  return display === true ? (
     <section className={style.sidebarContainer}>
       <div className={style.wrapper}>
         <ul className={style.list}>
@@ -65,7 +89,7 @@ const Sidebar = () => {
         <ul className={style.friendList}>{users}</ul>
       </div>
     </section>
-  );
+  ) : null;
 };
 
 export default Sidebar;

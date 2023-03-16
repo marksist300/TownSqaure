@@ -4,7 +4,7 @@ import FriendsOnline from "../FriendsOnline/FriendsOnline";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 
-const HomepageContactsBar = () => {
+const HomepageContactsBar = ({ display }: { display: boolean }) => {
   // TODO =>  REFACTOR -> make data dynamic
   const globalFollowedUsers = useSelector((state: RootState) => state.followed);
 
@@ -13,7 +13,7 @@ const HomepageContactsBar = () => {
   ));
   const assetsPath = import.meta.env.VITE_PUBLIC_FOLDER;
 
-  return (
+  return display === true ? (
     <>
       <div className={style.infoSection}>
         <div className={style.newsTitle}>
@@ -36,7 +36,7 @@ const HomepageContactsBar = () => {
       <h4 className={style.title}>Friends Online</h4>
       <ul className={style.friendList}>{users}</ul>
     </>
-  );
+  ) : null;
 };
 
 export default HomepageContactsBar;

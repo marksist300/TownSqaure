@@ -7,27 +7,13 @@ import Contactsbar from "../../components/Contacts/Contactsbar";
 
 import style from "./Home.module.scss";
 const Home = () => {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  useEffect(() => {
-    console.log(window.innerWidth);
-    const monitorWindowWidth = () => {
-      setWindowWidth(() => window.innerWidth);
-    };
-
-    window.addEventListener("resize", monitorWindowWidth);
-
-    return () => {
-      window.removeEventListener("resize", monitorWindowWidth);
-    };
-  }, []);
-
   return (
     <>
       <Nav />
       <div className={style.homeContainer}>
-        {windowWidth > 750 && <Sidebar />}
+        <Sidebar />
         <Feed />
-        {windowWidth > 670 && <Contactsbar />}
+        <Contactsbar />
       </div>
     </>
   );

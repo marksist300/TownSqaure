@@ -20,7 +20,7 @@ nav {
   }
 
   .logo {
-    font-size: 2rem;
+    font-size: 1.3rem;
     font-weight: 700;
   }
 
@@ -29,7 +29,7 @@ nav {
     flex: 3;
   }
   .navCenter {
-    flex: 5;
+    flex: 6;
     padding: 0.4rem 0.6rem 0.4rem 0.6rem;
     border-radius: 0.5rem;
     border: 1px solid #8c8a8a;
@@ -61,7 +61,7 @@ nav {
 
   .navRight {
     margin-left: auto;
-    flex: 4;
+    flex: 3;
     gap: 0.5rem;
     padding-right: 0.5rem;
   }
@@ -102,6 +102,10 @@ nav {
     position: absolute;
     top: 0rem;
     left: 1rem;
+  }
+
+  .profileMenuImg {
+    margin-left: auto;
   }
 }
 
@@ -155,5 +159,14 @@ nav {
   }
   .navItem > :focus {
     color: #ffbd20;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  nav {
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
   }
 }

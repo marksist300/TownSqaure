@@ -44,7 +44,7 @@ const Nav = () => {
       <div className={style.navRight}>
         {user._id && userIsLoggedIn ? (
           <>
-            <ul className={style.navLinks}>
+            {/* <ul className={style.navLinks}>
               <li className={style.navLinks}>Homepage</li>
               <li className={style.navLinks}>TimeLine</li>
             </ul>
@@ -59,8 +59,10 @@ const Nav = () => {
             <div className={style.navIcons}>
               <Notifications />
               <span className={style.navIconBadge}>3</span>
+            </div> */}
+            <div className={style.profileMenuImg}>
+              <NavDropDown />
             </div>
-            <NavDropDown />
           </>
         ) : (
           <ul className={style.navLinks}>

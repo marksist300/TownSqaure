@@ -1,7 +1,13 @@
 .feedContainer {
-  flex: 5.5;
+  width: 100%;
 
   .wrapper {
     padding-top: 0.5rem;
+  }
+}
+
+@media screen and (min-width: 500px) {
+  .feedContainer {
+    flex: 5.5;
   }
 }

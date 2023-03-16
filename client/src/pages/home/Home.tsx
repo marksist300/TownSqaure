@@ -1,20 +1,33 @@
-import style from "./Home.module.scss";
+import { useEffect, useState } from "react";
+
 import Nav from "../../components/Navbar/Nav";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Feed from "../../components/Feed/Feed";
 import Contactsbar from "../../components/Contacts/Contactsbar";
-import { useSelector } from "react-redux";
-import { RootState } from "../../app/store";
+
+import style from "./Home.module.scss";
 const Home = () => {
-  const user = useSelector((state: RootState) => state.user);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    console.log(window.innerWidth);
+    const monitorWindowWidth = () => {
+      setWindowWidth(() => window.innerWidth);
+    };
+
+    window.addEventListener("resize", monitorWindowWidth);
+
+    return () => {
+      window.removeEventListener("resize", monitorWindowWidth);
+    };
+  }, []);
 
   return (
     <>
       <Nav />
       <div className={style.homeContainer}>
-        <Sidebar />
+        {windowWidth > 750 && <Sidebar />}
         <Feed />
-        <Contactsbar />
+        {windowWidth > 670 && <Contactsbar />}
       </div>
     </>
   );

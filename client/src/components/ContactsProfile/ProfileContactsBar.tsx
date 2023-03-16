@@ -13,7 +13,6 @@ import { INIT_USER_STATE } from "../../types";
 
 const ProfileContactsBar = ({
   user,
-  display,
 }: {
   user: INIT_USER_STATE;
   display: boolean;
@@ -23,7 +22,7 @@ const ProfileContactsBar = ({
   const globalUserFollowingList = useSelector(
     (state: RootState) => state.followed
   );
-
+  const display = true;
   const [following, setFollowing] = useState([]);
 
   const [fetchFollowerList] = useFetchFollowerListMutation();
@@ -78,8 +77,10 @@ const ProfileContactsBar = ({
   return display === true ? (
     <section className={style.sideBarSection}>
       <FollowBtn user={user} />
-      <h4 className={style.infoTitle}>About {user?.username.split(" ")[0]}</h4>
       <div className={style.infoBarContainer}>
+        <h4 className={style.infoTitle}>
+          About {user?.username.split(" ")[0]}
+        </h4>
         <div className={style.infoItem}>
           <span className={style.userInfoKey}>Location: </span>
           <span className={style.userInfoValue}>{user?.location}</span>

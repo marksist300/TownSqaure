@@ -111,6 +111,7 @@ const Profile = () => {
               )}
             </div>
           </div>
+
           {currentUser?.username === params.username ? (
             <div className={style.profileInfo}>
               <h4 className={style.profileName}>{currentUser?.username}</h4>
@@ -131,14 +132,26 @@ const Profile = () => {
           ) : (
             <p className={style.profileDescription}>{user?.description}</p>
           )}
-          <div className={style.profileBottom}>
-            <Feed />
-            {currentUser?.username === params.username ? (
-              <Contactsbar />
-            ) : (
-              <Contactsbar user={user} />
-            )}
-          </div>
+
+          {currentUser?.username === params.username ? (
+            <div className={style.profileBottomUser}>
+              <div className={style.profileFeedSectionUser}>
+                <Feed />
+              </div>
+              <div className={style.contactsSectionUser}>
+                <Contactsbar />
+              </div>
+            </div>
+          ) : (
+            <div className={style.profileBottomNotUser}>
+              <div className={style.profileFeedSectionNotUser}>
+                <Feed />
+              </div>
+              <div className={style.profileInfoSectionNotUser}>
+                <Contactsbar user={user} />
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </>

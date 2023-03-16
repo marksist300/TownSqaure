@@ -23,10 +23,16 @@
       font-weight: 600;
       margin: 0 0.7rem 0 0;
       cursor: pointer;
+      line-height: 1.1rem;
     }
     .postDate {
+      display: flex;
+      flex-wrap: wrap;
+      text-align: center;
       font-size: 0.7rem;
       position: relative;
+      line-height: 0.8rem;
+      margin: none;
       top: 1px;
     }
   }

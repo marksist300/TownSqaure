@@ -78,6 +78,18 @@
     }
   }
 
+  .profileBottomNotUser {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .profileFeedSectionNotUser {
+    order: 2;
+  }
+  .profileInfoSectionNotUser {
+    order: 1;
+  }
+
   @media screen and (min-width: 650px) {
     .profileBottomUser {
       display: flex;
@@ -90,18 +102,18 @@
       display: flex;
       flex: 5.5;
     }
-  }
-
-  .profileBottomNotUser {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .profileFeedSectionNotUser {
-    order: 2;
-  }
-  .profileInfoSectionNotUser {
-    order: 1;
+    .profileBottomNotUser {
+      display: flex;
+      flex-direction: row;
+    }
+    .profileFeedSectionNotUser {
+      order: 1;
+      flex: 5.5;
+    }
+    .profileInfoSectionNotUser {
+      order: 2;
+      flex: 3.5;
+    }
   }
 
   .profileInfo {

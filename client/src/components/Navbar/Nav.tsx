@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import NavDropDown from "./NavDropdown";
 const Nav = () => {
+  //TODO => make the nav responsive, on smaller screens a A full slide menu when usermenu opened
   const user = useSelector((state: RootState) => state.user);
   const userIsLoggedIn = useSelector(
     (state: RootState) => state.auth.isLoggedIn

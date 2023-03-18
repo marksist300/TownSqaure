@@ -1,13 +1,13 @@
 nav {
   display: flex;
   position: sticky;
-  z-index: 2;
   top: 0px;
   border-bottom: 1px solid #efefef;
   justify-content: space-between;
   align-items: center;
   padding: 0 0.5rem;
   background-color: #242628;
+  z-index: 1;
 
   * {
     display: flex;
@@ -110,10 +110,11 @@ nav {
 }
 
 //Dropdown menu rules
+//small screens
+
 .dropDownMenu {
   display: flex;
   flex-direction: column;
-  position: relative;
   .imageContainer {
     background: none;
     border: none;
@@ -131,20 +132,32 @@ nav {
   }
 
   .menuBox {
-    display: flex;
+    background: #242628;
     flex-direction: column;
-    align-items: center;
-    gap: 0.3rem;
+    width: 100%;
     position: absolute;
-    top: 2rem;
-    right: 0.2rem;
-    padding: 1.2rem 1.8rem;
-    background-color: #242628;
-    border: 1px solid rgba(255, 255, 255, 0.604);
-    border-radius: 0.5rem;
+    top: 2.7rem;
+    right: 0;
+    height: 100vh;
+    transition: all 0.5s ease;
+    z-index: 0;
+    justify-content: flex-start;
+    gap: 2rem;
+    padding-top: 2rem;
   }
   .hidden {
-    display: none;
+    background: #242628;
+    flex-direction: column;
+    width: 100%;
+    position: absolute;
+    top: 2.7rem;
+    z-index: 0;
+    right: 110%;
+    height: 100vh;
+    transition: all 0.5s ease;
+    justify-content: flex-start;
+    gap: 2rem;
+    padding-top: 2rem;
   }
 
   .navLinks {
@@ -158,6 +171,62 @@ nav {
   }
   .navItem > :focus {
     color: #ffbd20;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .dropDownMenu {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    .imageContainer {
+      background: none;
+      border: none;
+      border-radius: 50%;
+      padding: 0;
+      margin: 0;
+      .userImg {
+        height: 2.8rem;
+        width: 2.8rem;
+        object-fit: cover;
+        border: 1px solid rgba(255, 255, 255, 0.87);
+        border-radius: 50%;
+        cursor: pointer;
+      }
+    }
+
+    .menuBox {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: auto;
+      height: auto;
+      gap: 0.3rem;
+      position: absolute;
+      top: 2rem;
+      right: 0.2rem;
+      padding: 1.2rem 1.8rem;
+      background-color: #242628;
+      border: 1px solid rgba(255, 255, 255, 0.604);
+      border-radius: 0.5rem;
+    }
+    .hidden {
+      display: none;
+      z-index: 0;
+    }
+
+    .navLinks {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.87);
+    }
+    .navItem > :hover {
+      color: #ffbd20;
+    }
+    .navItem > :focus {
+      color: #ffbd20;
+    }
   }
 }
 

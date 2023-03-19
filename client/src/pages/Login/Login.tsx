@@ -1,19 +1,27 @@
-import style from "./Login.module.scss";
-import React, { useRef, useEffect } from "react";
-import { useLoginMutation } from "../../features/auth/authApiSlice";
-import { setLogin } from "../../features/auth/authSlice";
+import React, { useRef } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { useSelector, useDispatch } from "react-redux";
 import { setUser } from "../../features/user/userSlice";
 import { RootState } from "../../app/store";
+import { useLoginMutation } from "../../features/auth/authApiSlice";
+import { setLogin } from "../../features/auth/authSlice";
+
+import style from "./Login.module.scss";
 const Login = () => {
   const email = useRef<HTMLInputElement>(null);
   const password = useRef<HTMLInputElement>(null);
   const user = useSelector((state: RootState) => state);
-
+  const navigate = useNavigate();
   const [login, { data, isLoading, isSuccess, isError, error }] =
     useLoginMutation();
 
   const dispatch = useDispatch();
+
+  const redirectToSignup = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    navigate("/signup");
+  };
 
   //Handle login request and set user data into state if log successful
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -66,7 +74,11 @@ const Login = () => {
             <span className={style.forgottenPassword}>
               Forgotten Your Password?
             </span>
-            <button className={style.registerBtn} disabled={isLoading}>
+            <button
+              onClick={e => redirectToSignup(e)}
+              className={style.registerBtn}
+              disabled={isLoading}
+            >
               Create an account
             </button>
           </form>

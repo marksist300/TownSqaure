@@ -20,8 +20,9 @@ nav {
   }
 
   .logo {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     font-weight: 700;
+    padding-left: 0.5rem;
   }
 
   .navLeft {
@@ -51,6 +52,9 @@ nav {
       background: transparent;
       padding-right: 0.2rem;
     }
+    .searchInput::placeholder {
+      font-size: 0.8rem;
+    }
     .searchInput:focus {
       outline: none;
     }
@@ -60,14 +64,18 @@ nav {
   }
 
   .navRight {
-    margin-left: auto;
     flex: 3;
     gap: 0.5rem;
     padding-right: 0.5rem;
   }
 
-  .navLinks {
+  .navIconCollection {
     margin-left: auto;
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .navLinks {
     gap: 0.4rem;
     cursor: pointer;
     color: rgba(255, 255, 255, 0.87);
@@ -81,31 +89,12 @@ nav {
     color: rgba(255, 255, 255, 0.947);
   }
 
-  .navIcons {
-    cursor: pointer;
-    position: relative;
-    gap: 0.5rem;
-  }
-  .navIcons:nth-child(4) {
-    margin-right: 0.5rem;
+  .navIconMsgBtns {
+    display: none;
   }
 
-  .navIconBadge {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #ef3340;
-    font-size: 0.7rem;
-    border-radius: 50%;
-    width: 15px;
-    height: 15px;
-    position: absolute;
-    top: 0rem;
-    left: 1rem;
-  }
-
-  .profileMenuImg {
-    margin-left: auto;
+  .navLinkHome {
+    display: none;
   }
 }
 
@@ -134,30 +123,33 @@ nav {
   .menuBox {
     background: #242628;
     flex-direction: column;
+    font-size: 2rem;
     width: 100%;
     position: absolute;
-    top: 2.7rem;
+    top: 2.1rem;
     right: 0;
     height: 100vh;
     transition: all 0.5s ease;
-    z-index: 0;
+    z-index: -1;
     justify-content: flex-start;
-    gap: 2rem;
-    padding-top: 2rem;
+    gap: 4rem;
+    padding-top: 4rem;
   }
+
   .hidden {
     background: #242628;
     flex-direction: column;
+    font-size: 2rem;
     width: 100%;
     position: absolute;
-    top: 2.7rem;
-    z-index: 0;
+    top: 2.1rem;
+    z-index: -1;
     right: 110%;
     height: 100vh;
     transition: all 0.5s ease;
     justify-content: flex-start;
-    gap: 2rem;
-    padding-top: 2rem;
+    gap: 4rem;
+    padding-top: 4rem;
   }
 
   .navLinks {
@@ -172,13 +164,58 @@ nav {
   .navItem > :focus {
     color: #ffbd20;
   }
+  .navItemSmallOnly > :hover {
+    color: #ffbd20;
+  }
+  .navItemSmallOnly > :focus {
+    color: #ffbd20;
+  }
 }
 
 @media screen and (min-width: 700px) {
+  nav {
+    .navLinkHome {
+      display: flex;
+      cursor: pointer;
+      color: rgba(255, 255, 255, 0.87);
+      margin-left: 0.5rem;
+    }
+    .navLinkHome:hover {
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.947);
+    }
+
+    .navIconMsgBtns {
+      display: flex;
+      gap: 0.5rem;
+      margin-right: 0.5rem;
+      .navIcons {
+        cursor: pointer;
+        position: relative;
+        gap: 0.5rem;
+      }
+      .navIconBadge {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #ef3340;
+        font-size: 0.7rem;
+        border-radius: 50%;
+        width: 15px;
+        height: 15px;
+        position: absolute;
+        top: 0rem;
+        left: 1rem;
+      }
+    }
+  }
+
+  //Drop down on large screens, i.e. small dropdown menu
   .dropDownMenu {
     display: flex;
     flex-direction: column;
     position: relative;
+
     .imageContainer {
       background: none;
       border: none;
@@ -199,6 +236,7 @@ nav {
       display: flex;
       flex-direction: column;
       align-items: center;
+      font-size: 1rem;
       width: auto;
       height: auto;
       gap: 0.3rem;
@@ -212,29 +250,44 @@ nav {
     }
     .hidden {
       display: none;
-      z-index: 0;
     }
-
     .navLinks {
       list-style: none;
       padding: 0;
       margin: 0;
       color: rgba(255, 255, 255, 0.87);
     }
-    .navItem > :hover {
-      color: #ffbd20;
+
+    .navItemSmallOnly {
+      display: none;
     }
-    .navItem > :focus {
-      color: #ffbd20;
+  }
+}
+
+@media screen and (min-width: 450px) {
+  nav {
+    .logo {
+      visibility: hidden;
+      position: relative;
+    }
+    .logo:before {
+      content: "TownSquare";
+      visibility: visible;
+      font-size: 1.3rem;
+      left: 0;
+      top: 0;
     }
   }
 }
 
 @media screen and (min-width: 700px) {
   nav {
-    .logo {
-      font-size: 1.8rem;
-      font-weight: 700;
+    .logo:before {
+      content: "TownSquare";
+      visibility: visible;
+      font-size: 2rem;
+      left: 0;
+      top: 0;
     }
   }
 }

@@ -110,6 +110,33 @@ const NavDropDown = () => {
           clicker={click}
           setLoggedInMenuHidden={setLoggedInMenuHidden}
         />
+        <NavItem
+          tabIndex={2}
+          output={"Search"}
+          direction={"/search"}
+          setClicker={setClick}
+          clicker={click}
+          setLoggedInMenuHidden={setLoggedInMenuHidden}
+          smallOnly={true}
+        />
+        <NavItem
+          tabIndex={2}
+          output={"Messages"}
+          direction={"/"}
+          setClicker={setClick}
+          clicker={click}
+          setLoggedInMenuHidden={setLoggedInMenuHidden}
+          smallOnly={true}
+        />
+        <NavItem
+          tabIndex={2}
+          output={"Friends"}
+          direction={"/"}
+          setClicker={setClick}
+          clicker={click}
+          setLoggedInMenuHidden={setLoggedInMenuHidden}
+          smallOnly={true}
+        />
 
         <div
           onClick={e => {

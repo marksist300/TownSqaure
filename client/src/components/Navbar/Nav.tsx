@@ -28,7 +28,7 @@ const Nav = () => {
     <nav className="nav-container">
       <div className={style.navLeft}>
         <Link to="/" className={style.linkElement}>
-          <h2 className={style.logo}>TownSquare</h2>
+          <h2 className={style.logo}>TS</h2>
         </Link>
       </div>
       <form className={style.navCenter} onSubmit={handleSubmit}>
@@ -45,24 +45,27 @@ const Nav = () => {
       <div className={style.navRight}>
         {user._id && userIsLoggedIn ? (
           <>
-            {/* <ul className={style.navLinks}>
-              <li className={style.navLinks}>Homepage</li>
-              <li className={style.navLinks}>TimeLine</li>
-            </ul>
-            <div className={style.navIcons}>
-              <Person />
-              <span className={style.navIconBadge}>1</span>
-            </div>
-            <div className={style.navIcons}>
-              <Chat />
-              <span className={style.navIconBadge}>2</span>
-            </div>
-            <div className={style.navIcons}>
-              <Notifications />
-              <span className={style.navIconBadge}>3</span>
-            </div> */}
-            <div className={style.profileMenuImg}>
-              <NavDropDown />
+            <div className={style.navIconCollection}>
+              <Link to="/" className={style.navLinkHome}>
+                Homepage
+              </Link>
+              <div className={style.navIconMsgBtns}>
+                <div className={style.navIcons}>
+                  <Person />
+                  <span className={style.navIconBadge}>1</span>
+                </div>
+                <div className={style.navIcons}>
+                  <Chat />
+                  <span className={style.navIconBadge}>2</span>
+                </div>
+                <div className={style.navIcons}>
+                  <Notifications />
+                  <span className={style.navIconBadge}>3</span>
+                </div>
+              </div>
+              <div className={style.profileMenuImg}>
+                <NavDropDown />
+              </div>
             </div>
           </>
         ) : (

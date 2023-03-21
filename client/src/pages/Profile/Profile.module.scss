@@ -77,8 +77,43 @@
       transition: 0.07s;
     }
   }
-  .profileBottom {
+
+  .profileBottomNotUser {
     display: flex;
+    flex-direction: column;
+  }
+
+  .profileFeedSectionNotUser {
+    order: 2;
+  }
+  .profileInfoSectionNotUser {
+    order: 1;
+  }
+
+  @media screen and (min-width: 650px) {
+    .profileBottomUser {
+      display: flex;
+    }
+    .contactsSectionUser {
+      display: flex;
+      flex: 3.5;
+    }
+    .profileFeedSectionUser {
+      display: flex;
+      flex: 5.5;
+    }
+    .profileBottomNotUser {
+      display: flex;
+      flex-direction: row;
+    }
+    .profileFeedSectionNotUser {
+      order: 1;
+      flex: 5.5;
+    }
+    .profileInfoSectionNotUser {
+      order: 2;
+      flex: 3.5;
+    }
   }
 
   .profileInfo {

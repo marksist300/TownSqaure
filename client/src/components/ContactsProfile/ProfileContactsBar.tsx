@@ -9,15 +9,20 @@ import { useFetchFollowerListMutation } from "../../features/user/userApiSlice";
 
 import style from "./ProfileContactsBar.module.scss";
 
-import { User } from "../../types";
+import { INIT_USER_STATE } from "../../types";
 
-const ProfileContactsBar = ({ user }: User) => {
+const ProfileContactsBar = ({
+  user,
+}: {
+  user: INIT_USER_STATE;
+  display: boolean;
+}) => {
   //Who the user displayed on the page is following:
   const currentUser = useSelector((state: RootState) => state.user);
   const globalUserFollowingList = useSelector(
     (state: RootState) => state.followed
   );
-
+  const display = true;
   const [following, setFollowing] = useState([]);
 
   const [fetchFollowerList] = useFetchFollowerListMutation();
@@ -69,11 +74,13 @@ const ProfileContactsBar = ({ user }: User) => {
           <Following profilePic={profilePic} username={username} key={i} />
         ));
 
-  return (
+  return display === true ? (
     <section className={style.sideBarSection}>
       <FollowBtn user={user} />
-      <h4 className={style.infoTitle}>About {user?.username.split(" ")[0]}</h4>
       <div className={style.infoBarContainer}>
+        <h4 className={style.infoTitle}>
+          About {user?.username.split(" ")[0]}
+        </h4>
         <div className={style.infoItem}>
           <span className={style.userInfoKey}>Location: </span>
           <span className={style.userInfoValue}>{user?.location}</span>
@@ -97,7 +104,7 @@ const ProfileContactsBar = ({ user }: User) => {
         <div className={style.followingSection}>{followedUsers}</div>
       </div>
     </section>
-  );
+  ) : null;
 };
 
 export default ProfileContactsBar;

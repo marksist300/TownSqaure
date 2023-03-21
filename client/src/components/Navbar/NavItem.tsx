@@ -7,6 +7,7 @@ const NavItem = ({
   clicker,
   setClicker,
   setLoggedInMenuHidden,
+  smallOnly,
 }: any) => {
   const handleClick = () => {
     if (clicker) {
@@ -28,7 +29,7 @@ const NavItem = ({
   }
 
   return (
-    <li className={style.navItem}>
+    <li className={smallOnly === true ? style.navItemSmallOnly : style.navItem}>
       <NavLink
         onClick={() => {
           handleClick();

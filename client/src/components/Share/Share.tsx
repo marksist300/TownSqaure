@@ -76,7 +76,7 @@ const Share = () => {
         <div className={style.bottom}>
           <label htmlFor="img" className={style.shareOptions}>
             <PermMedia htmlColor="#f9f9f9" className={style.shareIcon} />
-            <span className={style.ShareOptionText}>Image or Video</span>
+            <span className={style.ShareOptionText}>Images</span>
             <input
               type="file"
               id="img"
@@ -85,15 +85,15 @@ const Share = () => {
               className={style.dataFileInput}
             />
           </label>
-          <div className={style.shareOptions}>
+          <div className={style.shareOptionsLG}>
             <Label htmlColor="#2e86e0" className={style.shareIcon} />
-            <span className={style.ShareOptionText}>Tag Friends</span>
+            <span className={style.ShareOptionText}>Friends</span>
           </div>
-          <div className={style.shareOptions}>
+          <div className={style.shareOptionsLG}>
             <Room htmlColor="#ef3340" className={style.shareIcon} />
-            <span className={style.ShareOptionText}>Tag Locations</span>
+            <span className={style.ShareOptionText}>Locations</span>
           </div>
-          <div className={style.shareOptions}>
+          <div className={style.shareOptionsLG}>
             <EmojiEmotions htmlColor="#ffbd20" className={style.shareIcon} />
             <span className={style.ShareOptionText}>React</span>
           </div>

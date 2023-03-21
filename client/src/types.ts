@@ -11,6 +11,8 @@ export interface User {
     followers: string[];
     relationship: number | null;
     _id: string;
+    profilePicId: string | null;
+    coverId: string | null;
   };
 }
 

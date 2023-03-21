@@ -1,16 +1,15 @@
 import { useState, useRef, useEffect } from "react";
 
-import NavItem from "./NavItem";
+import NavItem from "../NavItem";
 
-import { logoutUser } from "../../features/user/userSlice";
-import { resetFollowers } from "../../features/followed/followed.slice";
-import { resetPosts } from "../../features/post/postSlice";
-import { logoutAuth } from "../../features/auth/authSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../app/store";
+import { RootState } from "../../../app/store";
+import { logoutUser } from "../../../features/user/userSlice";
+import { resetFollowers } from "../../../features/followed/followed.slice";
+import { resetPosts } from "../../../features/post/postSlice";
+import { logoutAuth } from "../../../features/auth/authSlice";
 
-import style from "./Nav.module.scss";
-
+import style from "./NavSmallMenu.module.scss";
 const NavDropDown = () => {
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
@@ -109,33 +108,6 @@ const NavDropDown = () => {
           setClicker={setClick}
           clicker={click}
           setLoggedInMenuHidden={setLoggedInMenuHidden}
-        />
-        <NavItem
-          tabIndex={2}
-          output={"Search"}
-          direction={"/search"}
-          setClicker={setClick}
-          clicker={click}
-          setLoggedInMenuHidden={setLoggedInMenuHidden}
-          smallOnly={true}
-        />
-        <NavItem
-          tabIndex={2}
-          output={"Messages"}
-          direction={"/"}
-          setClicker={setClick}
-          clicker={click}
-          setLoggedInMenuHidden={setLoggedInMenuHidden}
-          smallOnly={true}
-        />
-        <NavItem
-          tabIndex={2}
-          output={"Friends"}
-          direction={"/"}
-          setClicker={setClick}
-          clicker={click}
-          setLoggedInMenuHidden={setLoggedInMenuHidden}
-          smallOnly={true}
         />
 
         <div

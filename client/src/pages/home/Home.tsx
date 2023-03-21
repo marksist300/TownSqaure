@@ -1,13 +1,12 @@
-import style from "./Home.module.scss";
+import { useEffect, useState } from "react";
+
 import Nav from "../../components/Navbar/Nav";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Feed from "../../components/Feed/Feed";
 import Contactsbar from "../../components/Contacts/Contactsbar";
-import { useSelector } from "react-redux";
-import { RootState } from "../../app/store";
-const Home = () => {
-  const user = useSelector((state: RootState) => state.user);
 
+import style from "./Home.module.scss";
+const Home = () => {
   return (
     <>
       <Nav />

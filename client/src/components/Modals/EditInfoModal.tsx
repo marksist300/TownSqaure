@@ -44,7 +44,13 @@ const EditInfoModal = ({ editInfo, setEditInfo }: Props) => {
         closeModal();
       } else if (e.code === "Enter" && submitEnter.current) {
         e.preventDefault();
-        submitEnter.current.click();
+        if (document.activeElement) {
+          if (document.activeElement.id === "closeMenu") {
+            closeModal();
+          } else {
+            submitEnter.current.click();
+          }
+        } else submitEnter.current.click();
       } else if (e.code === "Tab" || e.key === "Shift") {
         if (e.code !== "Tab") return;
         if (clickRef.current) {
@@ -83,7 +89,7 @@ const EditInfoModal = ({ editInfo, setEditInfo }: Props) => {
     };
   }, [clickRef]);
 
-  const closeModal = (e?: any) => {
+  const closeModal = (e?: React.SyntheticEvent) => {
     if (e) {
       e.preventDefault();
     }
@@ -162,6 +168,7 @@ const EditInfoModal = ({ editInfo, setEditInfo }: Props) => {
           }}
           aria-label="Exit Edit User Information Page"
           className={style.onCloseBtn}
+          id="closeMenu"
         >
           <Close />
         </button>
@@ -203,7 +210,7 @@ const EditInfoModal = ({ editInfo, setEditInfo }: Props) => {
           </div>
 
           <div className={style.editInputSections}>
-            <label className={style.labelText} htmlFor="hometown">
+            <label className={style.labelText} htmlFor="relationship">
               Relationship Status
             </label>
             <select
@@ -225,7 +232,7 @@ const EditInfoModal = ({ editInfo, setEditInfo }: Props) => {
           ref={submitEnter}
           className={clicked ? style.submitBtnClicked : style.submitBtn}
         >
-          {clicked ? "Sending..." : "Submit"}
+          {isLoading ? "Sending..." : "Submit"}
         </button>
       </form>
     </div>

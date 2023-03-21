@@ -35,7 +35,15 @@
 }
 
 .followingSection {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   justify-content: space-between;
+}
+
+@media screen and (min-width: 650px) {
+  .followingSection {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: space-between;
+  }
 }

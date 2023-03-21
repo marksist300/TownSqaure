@@ -75,7 +75,6 @@ const Profile = () => {
               ) : (
                 <CoverImg user={user as INIT_USER_STATE} />
               )}
-
               {currentUser?.username === params.username ? (
                 <div className={style.userImgBlock}>
                   <img

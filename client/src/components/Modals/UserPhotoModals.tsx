@@ -204,7 +204,7 @@ const PhotoModal = ({ photoModal, setPhotoModal }: Props) => {
           disabled={uploadIsLoading}
           className={clicked ? style.submitBtnClicked : style.submitBtn}
         >
-          {clicked ? "Sending..." : "Submit"}
+          {uploadIsLoading ? "Sending..." : "Submit"}
         </button>
       </form>
     </div>

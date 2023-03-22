@@ -45,8 +45,6 @@ const updateUserPhoto = async (req, res) => {
       }
     });
 
-    // console.log(profilePic.path, cover.path);
-
     //GO TO DB and search for current user image???
     //IF it exists go to cloudinary and destroy the image
     const {
@@ -55,13 +53,12 @@ const updateUserPhoto = async (req, res) => {
       coverId: oldCoverId,
       profilePicId: oldProfilePicId,
     } = await User.findById(id).lean();
-    // console.log(user);
-    // console.log("ODL IDS =S=S=S=S=S=>", oldCoverId, oldProfilePicId);
+
     if (oldCoverId || oldProfilePicId) {
-      if (oldProfilePicId) {
+      if (oldProfilePicId && profilePic) {
         await cloudinary.uploader.destroy(oldProfilePicId);
       }
-      if (oldCoverId) {
+      if (oldCoverId && cover) {
         await cloudinary.uploader.destroy(oldCoverId);
       }
     }
@@ -167,9 +164,9 @@ const unfollowUser = async (req, res) => {
   try {
     if (req.body.currentUserId !== req.params.id) {
       const user = await User.findById(req.params.id);
-      // console.log("user from page:", user);
+
       const requestingUser = await User.findById(req.body.currentUserId);
-      // console.log("current user: ", requestingUser);
+
       if (user.followers.includes(req.body.currentUserId)) {
         await user.updateOne({ $pull: { followers: req.body.currentUserId } });
         await requestingUser.updateOne({
@@ -206,8 +203,6 @@ const getFollowingList = async (req, res) => {
 };
 
 const searchForUsers = async (req, res) => {
-  //TODO TEST SEARCH FUNCTIONALITY
-  console.log("REACHED");
   const { person } = req.query;
   try {
     const users = await User.find(

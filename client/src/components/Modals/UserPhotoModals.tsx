@@ -25,7 +25,6 @@ const PhotoModal = ({ photoModal, setPhotoModal }: Props) => {
   const [uploadPhoto, { isLoading: uploadIsLoading }] =
     useUploadPhotoMutation();
   const dispatch = useDispatch();
-
   //FOCUS Trap
   useEffect(() => {
     function handleClickOutside(e: Event) {
@@ -121,7 +120,6 @@ const PhotoModal = ({ photoModal, setPhotoModal }: Props) => {
             closeModal();
           }
         } else {
-          console.log("No images attached");
           setError(true);
           return;
         }

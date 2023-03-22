@@ -54,12 +54,17 @@ const Post = ({
     }
   };
 
-  const renderProfilePic = () => {
-    if (currentUser.profilePic !== "") {
-      return currentUser.profilePic;
-    } else {
-      return "/assets/profile/default.png";
+  const renderProfilePic = (current: boolean) => {
+    if (current === true) {
+      if (currentUser.profilePic !== "") {
+        return currentUser.profilePic;
+      }
+    } else if (user) {
+      if (user.profilePic !== "") {
+        return user.profilePic;
+      }
     }
+    return "/assets/profile/default.png";
   };
 
   const likeCountText = (count: number) => {
@@ -83,7 +88,9 @@ const Post = ({
               <img
                 className={style.posterProfileImg}
                 src={
-                  postFromCurrentUser ? renderProfilePic() : user?.profilePic
+                  postFromCurrentUser
+                    ? renderProfilePic(true)
+                    : renderProfilePic(false)
                 }
                 alt="profile pic"
               />
@@ -101,7 +108,11 @@ const Post = ({
         </div>
         <div className={style.center}>
           <p className={style.postText}>{desc}</p>
-          <img src={img} alt="User post" className={style.postImg} />
+          <img
+            src={img}
+            alt="User post"
+            className={img ? style.postImg : style.hideNoImg}
+          />
         </div>
         <div className={style.bottom}>
           <div className={style.bottomLeft}>

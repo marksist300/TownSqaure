@@ -10,8 +10,6 @@ function SearchPage() {
   const [error, setError] = useState(false);
   const [searchParams] = useSearchParams();
   const userFound = searchParams.get("person");
-  console.log(searchParams.get("person"));
-  //TODO => set up follow and view profile button links
 
   // Handle submit for nav search bar
   const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {

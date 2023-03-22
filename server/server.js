@@ -7,14 +7,13 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const cors = require("cors");
 const PORT = process.env.PORT;
-
 //connection to DB
 connectionToMongoDB();
 
 //middleware to control CORS
 app.use(
   cors({
-    origin: "*",
+    origin: "http://localhost:5173",
     methods: ["GET", "PUT", "POST", "DELETE"],
   })
 );
@@ -28,6 +27,7 @@ app.use(
 app.use(helmet());
 app.use(morgan("common"));
 //Routes
+
 app.use("/users", require("./routes/users"));
 app.use("/auth", require("./routes/auth"));
 app.use("/post", require("./routes/posts"));

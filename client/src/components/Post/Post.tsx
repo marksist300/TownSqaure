@@ -42,7 +42,10 @@ const Post = ({
   //Handle the like button, increment or decrement count
   const likeClicker = async () => {
     try {
-      const data = await likePostApiCall({ postId, userId }).unwrap();
+      const data = await likePostApiCall({
+        postId,
+        userId: currentUser._id,
+      }).unwrap();
 
       if (data === "Post liked") {
         setLike(liked => liked + 1);

@@ -76,7 +76,7 @@ const ProfileContactsBar = ({
 
   return display === true ? (
     <section className={style.sideBarSection}>
-      <FollowBtn user={user} />
+      {currentUser._id && <FollowBtn user={user} />}
       <div className={style.infoBarContainer}>
         <h4 className={style.infoTitle}>
           About {user?.username.split(" ")[0]}

@@ -69,13 +69,9 @@ const Nav = () => {
             </div>
           </>
         ) : (
-          <ul className={style.navLinks}>
-            <Link to={"/login"} className={style.navLinks}>
-              Login
-            </Link>
-            <Link to={"/signup"} className={style.navLinks}>
-              Sign Up
-            </Link>
+          <ul className={style.signupLinks}>
+            <Link to={"/login"}>Login</Link>
+            <Link to={"/signup"}>Sign Up</Link>
           </ul>
         )}
         {/* {user._id && userIsLoggedIn && <NavDropDown />} */}

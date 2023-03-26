@@ -75,16 +75,30 @@ nav {
     gap: 0.5rem;
   }
 
+  .signupLinks {
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+  }
+
+  .signupLinks > * {
+    gap: 0.4rem;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.87);
+  }
+
   .navLinks {
     gap: 0.4rem;
     cursor: pointer;
     color: rgba(255, 255, 255, 0.87);
   }
-  .navLinks > :hover {
+  .navLinks,
+  .signupLinks > :hover {
     font-weight: 600;
     color: rgba(255, 255, 255, 0.947);
   }
-  .navLinks > :focus {
+  .navLinks,
+  .signupLinks > :focus {
     font-weight: 600;
     color: rgba(255, 255, 255, 0.947);
   }
@@ -172,8 +186,32 @@ nav {
   }
 }
 
+@media screen and (min-width: 450px) {
+  nav {
+    .logo {
+      visibility: hidden;
+      position: relative;
+    }
+    .logo:before {
+      content: "TownSquare";
+      visibility: visible;
+      font-size: 1.3rem;
+      left: 0;
+      top: 0;
+    }
+  }
+}
+
 @media screen and (min-width: 700px) {
   nav {
+    .logo:before {
+      content: "TownSquare";
+      visibility: visible;
+      font-size: 2rem;
+      left: 0;
+      top: 0;
+    }
+
     .navLinkHome {
       display: flex;
       cursor: pointer;
@@ -207,6 +245,10 @@ nav {
         top: 0rem;
         left: 1rem;
       }
+    }
+    .signupLinks {
+      flex-direction: row;
+      gap: 1rem;
     }
   }
 
@@ -260,34 +302,6 @@ nav {
 
     .navItemSmallOnly {
       display: none;
-    }
-  }
-}
-
-@media screen and (min-width: 450px) {
-  nav {
-    .logo {
-      visibility: hidden;
-      position: relative;
-    }
-    .logo:before {
-      content: "TownSquare";
-      visibility: visible;
-      font-size: 1.3rem;
-      left: 0;
-      top: 0;
-    }
-  }
-}
-
-@media screen and (min-width: 700px) {
-  nav {
-    .logo:before {
-      content: "TownSquare";
-      visibility: visible;
-      font-size: 2rem;
-      left: 0;
-      top: 0;
     }
   }
 }

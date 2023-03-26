@@ -4,8 +4,8 @@ import ProfileContactsBar from "../ContactsProfile/ProfileContactsBar";
 import HomepageContactsBar from "./HomepageContactsBar";
 
 import style from "./Contactsbar.module.scss";
-import { User } from "../../types";
-const Contactsbar = ({ user }: User) => {
+import { INIT_USER_STATE } from "../../types";
+const Contactsbar = ({ user }: { user?: INIT_USER_STATE }) => {
   const [display, setDisplay] = useState(window.innerWidth > 650);
 
   useEffect(() => {

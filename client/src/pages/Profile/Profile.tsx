@@ -147,7 +147,7 @@ const Profile = () => {
                 <Feed />
               </div>
               <div className={style.profileInfoSectionNotUser}>
-                <Contactsbar user={user} />
+                <Contactsbar user={user as INIT_USER_STATE} />
               </div>
             </div>
           )}

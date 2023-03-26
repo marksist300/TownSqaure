@@ -27,9 +27,8 @@ type JWT = {
   loggedIn: string;
 };
 function App() {
-  //TODO => Search page BE and FE
-  //TODO => Accessibility for dotmenus on posts
-  //TODO => Logout drop down on photo?
+  //TODO =====> add description section to EDITUSER MODAL
+
   const authState = useSelector((state: RootState) => state.auth);
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();

@@ -74,7 +74,7 @@ function App() {
           fetchData(id);
         }
       } else if (!currentToken && token) {
-        localStorage.setItem("token", JSON.stringify(token));
+        localStorage.setItem("token", token);
         dispatch(setLogin({ isLoggedIn: true, token: token }));
       }
     }

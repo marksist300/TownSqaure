@@ -30,15 +30,21 @@ const Login = () => {
     const emailVal = email.current?.value;
     const passwordVal = password.current?.value;
     try {
-      const userData = await login({ email: emailVal, password: passwordVal });
+      const userData = await login({
+        email: emailVal,
+        password: passwordVal,
+      }).unwrap();
 
       // @ts-ignore
-      const { token, user } = userData.data;
+      const { token, user } = userData;
       if (token) {
+        console.log("setting token");
         dispatch(setLogin({ isLoggedIn: true, token }));
         dispatch(setUser({ ...user }));
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

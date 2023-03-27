@@ -13,7 +13,7 @@ connectionToMongoDB();
 //middleware to control CORS
 app.use(
   cors({
-    origin: "https://townsquareapp.netlify.app",
+    origin: false,
     credentials: true,
     methods: ["GET", "PUT", "POST", "DELETE"],
   })

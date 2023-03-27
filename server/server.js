@@ -13,7 +13,7 @@ connectionToMongoDB();
 //middleware to control CORS
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: process.env.CLIENT_HOST,
     methods: ["GET", "PUT", "POST", "DELETE"],
   })
 );

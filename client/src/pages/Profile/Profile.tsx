@@ -1,18 +1,23 @@
 import { useEffect, useState } from "react";
-import style from "./Profile.module.scss";
+
+import { useParams } from "react-router";
+
 import Nav from "../../components/Navbar/Nav";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Feed from "../../components/Feed/Feed";
 import Contactsbar from "../../components/Contacts/Contactsbar";
-import { useParams } from "react-router";
+import CoverImg from "../../components/CoverImg/CoverImg";
+import PhotoModal from "../../components/Modals/UserPhotoModals";
+import EditInfoModal from "../../components/Modals/EditInfoModal";
+
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import { useGetProfileMutation } from "../../features/user/userApiSlice";
-import CoverImg from "../../components/CoverImg/CoverImg";
+
 import { Edit } from "@mui/icons-material";
-import PhotoModal from "../../components/Modals/UserPhotoModals";
-import EditInfoModal from "../../components/Modals/EditInfoModal";
 import { INIT_USER_STATE } from "../../types";
+
+import style from "./Profile.module.scss";
 
 interface User {
   cover: string;

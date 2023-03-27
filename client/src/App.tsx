@@ -5,11 +5,13 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+
 import Home from "./pages/Home/Home";
 import Profile from "./pages/Profile/Profile";
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
 import SearchPage from "./pages/Search/Search";
+
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "./app/store";
 import { setUser } from "./features/user/userSlice";
@@ -17,9 +19,10 @@ import { setLogin } from "./features/auth/authSlice";
 import { useGetUserDataMutation } from "./features/auth/authApiSlice";
 import { useGetGlobalFollowedUsersMutation } from "./features/followed/followedApiSlice";
 import { useGetUserAndFollowedPostsMutation } from "./features/post/postApiSlice";
-import jwtDecode from "jwt-decode";
 import { setFollowedUsers } from "./features/followed/followed.slice";
 import { getAllPosts } from "./features/post/postSlice";
+
+import jwtDecode from "jwt-decode";
 
 type JWT = {
   id: string;

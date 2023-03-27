@@ -1,9 +1,13 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
+
 import Nav from "../../components/Navbar/Nav";
 import SearchCard from "../../components/SearchCard/SearchCard";
+
 import { useUserSearchMutation } from "../../features/user/userApiSlice";
+
 import style from "./Search.module.scss";
+
 function SearchPage() {
   const [noResult, setNoResult] = useState(false);
   const [searchedUserData, setSearchedUserData] = useState([]);

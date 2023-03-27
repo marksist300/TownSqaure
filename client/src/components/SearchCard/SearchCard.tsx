@@ -10,7 +10,6 @@ const SearchCard = ({ user }: User) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    // <Link to={`/profile/${username}`} className={style.parentLink}>
     navigate(`/profile/${user.username}`);
   };
 

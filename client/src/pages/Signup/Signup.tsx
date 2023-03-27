@@ -1,11 +1,14 @@
-import style from "./Signup.module.scss";
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import { Link } from "react-router-dom";
+
 import { useSignupMutation } from "../../features/auth/authApiSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../features/user/userSlice";
 import { setLogin } from "../../features/auth/authSlice";
 import { RootState } from "../../app/store";
+
+import style from "./Signup.module.scss";
+
 const Signup = () => {
   const [signup, { data, isLoading, isSuccess, isError, error }] =
     useSignupMutation();

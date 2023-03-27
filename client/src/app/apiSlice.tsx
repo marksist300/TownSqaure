@@ -10,6 +10,7 @@ const TSBaseQuery = fetchBaseQuery({
     const token = (getState() as RootState).auth.token;
     if (token) {
       headers.set("authorization", `bearer ${token}`);
+      headers.set("Accept", "application/json");
     }
     return headers;
   },

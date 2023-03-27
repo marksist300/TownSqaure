@@ -14,6 +14,7 @@ connectionToMongoDB();
 app.use(
   cors({
     origin: "*",
+    credentials: true,
     methods: ["GET", "PUT", "POST", "DELETE"],
   })
 );

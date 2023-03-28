@@ -11,7 +11,6 @@ const HomepageContactsBar = ({ display }: { display: boolean }) => {
   const users = globalFollowedUsers.map(user => (
     <FriendsOnline key={`Key${user._id}`} user={user} />
   ));
-  const assetsPath = import.meta.env.VITE_PUBLIC_FOLDER;
 
   return display === true ? (
     <>
@@ -30,7 +29,7 @@ const HomepageContactsBar = ({ display }: { display: boolean }) => {
       </div>
       <img
         className={style.sponsorImg}
-        src={assetsPath + "/ad/ad.png"}
+        src={"/assets/ad/ad.png"}
         alt="Advert"
       />
       <h4 className={style.title}>Friends Online</h4>

@@ -38,7 +38,6 @@ const Login = () => {
       // @ts-ignore
       const { token, user } = userData;
       if (token) {
-        console.log("setting token");
         dispatch(setLogin({ isLoggedIn: true, token }));
         dispatch(setUser({ ...user }));
       }

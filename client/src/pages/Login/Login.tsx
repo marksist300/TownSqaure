@@ -23,7 +23,7 @@ const Login = () => {
     navigate("/signup");
   };
 
-  //Handle login request and set user data into state if log successful
+  //Handle login request and set user data into state if login successful
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -35,7 +35,25 @@ const Login = () => {
         password: passwordVal,
       }).unwrap();
 
-      // @ts-ignore
+      const { token, user } = userData;
+      if (token) {
+        dispatch(setLogin({ isLoggedIn: true, token }));
+        dispatch(setUser({ ...user }));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const demoLogin = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+
+    try {
+      const userData = await login({
+        email: "qwe@email.com",
+        password: "qwe123",
+      }).unwrap();
+
       const { token, user } = userData;
       if (token) {
         dispatch(setLogin({ isLoggedIn: true, token }));
@@ -75,6 +93,16 @@ const Login = () => {
             />
             <button className={style.submitBtn} disabled={isLoading}>
               {isLoading ? "Logging in..." : "Log in"}
+            </button>
+            <button
+              type="button"
+              onClick={e => {
+                demoLogin(e);
+              }}
+              className={style.submitBtn}
+              disabled={isLoading}
+            >
+              {isLoading ? "Logging in..." : "Demo Login"}
             </button>
             <span className={style.forgottenPassword}>
               Forgotten Your Password?

@@ -128,10 +128,10 @@ const EditInfoModal = ({ editInfo, setEditInfo }: Props) => {
         }
         const edits = await editUserData({ id: user._id, data }).unwrap();
         if (edits) {
-          if (name.value.trim().length > 0 && data.username !== "") {
-            navigate(`/profile/${data.username}`);
-          }
           dispatch(updateUserData(data));
+          if (name.value.trim().length > 0 && data.username !== "") {
+            navigate(`/profile/${data.username}`, { replace: true });
+          }
           closeModal();
         }
       } catch (error) {

@@ -36,14 +36,18 @@
 
 .followingSection {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   justify-content: space-between;
 }
-
+@media screen and (min-width: 500px) {
+  .followingSection {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
 @media screen and (min-width: 650px) {
   .followingSection {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    justify-content: space-between;
   }
 }

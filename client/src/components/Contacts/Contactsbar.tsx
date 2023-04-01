@@ -28,8 +28,10 @@ const Contactsbar = ({ user }: { user?: INIT_USER_STATE }) => {
     <section className={style.contactsContainer}>
       <div className={style.wrapper}>
         {user ? (
+          //Profile contactsbar for otehr users
           <ProfileContactsBar user={user} display={display} />
         ) : (
+          //Profile contactsbar for current login user
           <HomepageContactsBar display={display} />
         )}
       </div>

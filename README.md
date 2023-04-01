@@ -1,6 +1,6 @@
 # TownSquare
 
-A Social media App to connect with friends
+A Social media App to connect with friends.
 
 <h2>
     <a href="https://townsquareapp.netlify.app">View Demo*</a>
@@ -26,9 +26,8 @@ A Social media App to connect with friends
 
 ## :star2: About the Project
 
-<div align="center"> 
-<img width="894" alt="Screenshot From TownSquare project" src="">
-</div>
+<video align="center" width="700" alt="Video demo of TownSquare app"  src="https://user-images.githubusercontent.com/88390425/229295975-526e58b8-50c2-476a-935b-67958b0e1376.mov"> 
+</video>
 
 ### What is TownSquare
 

@@ -6,6 +6,13 @@
   }
 }
 
+.noPosts {
+  font-size: 2.5rem;
+  line-height: 3rem;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.87);
+}
+
 @media screen and (min-width: 500px) {
   .feedContainer {
     flex: 5.5;

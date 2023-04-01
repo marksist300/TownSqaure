@@ -67,7 +67,7 @@ It is built using NodeJS on the back-end with MongoDB for the database. The fron
 - Create User account
 - Set up your account (add your information, your photos and personality)
 - Create posts and share them with your followers
-- Find other users (Follow friends, see and like their posts)
+- Search for other users (Follow friends, see and like their posts)
 
 <!-- Getting Started -->
 

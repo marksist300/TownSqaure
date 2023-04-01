@@ -12,6 +12,7 @@ import Profile from "./pages/Profile/Profile";
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
 import SearchPage from "./pages/Search/Search";
+import ScrollToTop from "./utilComponents/ScrollToTop";
 
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "./app/store";
@@ -96,6 +97,7 @@ function App() {
 
   return (
     <Router>
+      <ScrollToTop />
       <div className="App">
         <Routes>
           <Route

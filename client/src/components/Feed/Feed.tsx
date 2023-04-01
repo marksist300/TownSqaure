@@ -42,10 +42,35 @@ const Feed = () => {
     fetcher();
   }, [pageUserName, user._id]);
 
+  //Organise the posts by date and display most recent first
   const ownUserPostState = [...postGlobalState].sort(
     (a: PostType, b: PostType) =>
       Number(new Date(b.date)) - Number(new Date(a.date))
   );
+
+  const displayOwnUserPostsOrText = () => {
+    if (postsData.length >= 1) {
+      return postsData.map(item => (
+        <Post
+          key={item._id}
+          likes={item.likes}
+          img={item.img}
+          userId={item.userId}
+          desc={item.description}
+          comments={item.comments}
+          date={item.date}
+          postId={item._id}
+        />
+      ));
+    } else {
+      return (
+        <h3
+          className={style.noPosts}
+        >{`${pageUserName} doesn't currently have any posts`}</h3>
+      );
+    }
+  };
+
   const posts =
     !pageUserName || pageUserName === user.username
       ? ownUserPostState.map(item => (
@@ -60,19 +85,7 @@ const Feed = () => {
             postId={item._id}
           />
         ))
-      : postsData &&
-        postsData.map(item => (
-          <Post
-            key={item._id}
-            likes={item.likes}
-            img={item.img}
-            userId={item.userId}
-            desc={item.description}
-            comments={item.comments}
-            date={item.date}
-            postId={item._id}
-          />
-        ));
+      : displayOwnUserPostsOrText();
 
   return (
     <main className={style.feedContainer}>

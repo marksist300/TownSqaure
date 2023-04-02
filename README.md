@@ -98,7 +98,7 @@ Go to the client directory
 
 ```bash
   cd client
-  yarn install
+  yarn
   yarn  dev
 ```
 
@@ -106,6 +106,6 @@ Go to the server directory
 
 ```bash
   cd server
-  yarn install
+  yarn
   yarn dev
 ```

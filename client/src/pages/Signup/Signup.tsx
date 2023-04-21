@@ -32,10 +32,10 @@ const Signup = () => {
         email: email.current?.value,
         password: password.current?.value,
         username: usernameVal,
-      });
+      }).unwrap();
       if (userData) {
         //@ts-ignore
-        const { token, user } = userData.data;
+        const { token, user } = userData;
         dispatch(setLogin({ isLoggedIn: true, token }));
         dispatch(setUser({ ...user }));
       }
@@ -95,7 +95,9 @@ const Signup = () => {
               minLength={6}
               ref={passwordCheck}
             />
-            <button className={style.submitBtn}>Signup</button>
+            <button className={style.submitBtn} disabled={isLoading}>
+              Signup
+            </button>
             <Link to="/login">
               <span className={style.goToAccount}>
                 Already have an account?

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useLayoutEffect } from "react";
 
 import { useParams } from "react-router";
 
@@ -15,23 +15,10 @@ import { RootState } from "../../app/store";
 import { useGetProfileMutation } from "../../features/user/userApiSlice";
 
 import { Edit } from "@mui/icons-material";
-import { INIT_USER_STATE } from "../../types";
 
 import style from "./Profile.module.scss";
+import { INIT_USER_STATE } from "../../types";
 
-interface User {
-  cover: string;
-  profilePic: string;
-  username: string;
-  description: string;
-  location: string;
-  hometown: string;
-  email: string;
-  following: string[];
-  followers: string[];
-  relationship: number;
-  _id: string;
-}
 const Profile = () => {
   const params = useParams();
   const currentUser = useSelector((state: RootState) => state.user);
@@ -42,7 +29,7 @@ const Profile = () => {
     useGetProfileMutation();
 
   //GET user data if user not current global user in state
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (currentUser.username === params.username) {
       return;
     }
